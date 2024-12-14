@@ -22,8 +22,7 @@ export default function Hero() {
           </div>
           <div className='flex items-center justify-center gap-4'>
             <Link
-              href={siteConfig.links.posts}
-              target='_blank'
+              href={'/posts'}
               className={cn(buttonVariants({ variant: 'outline' }), 'gap-2')}
             >
               View my blog
