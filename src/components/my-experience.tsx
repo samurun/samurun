@@ -1,4 +1,5 @@
 import { experiences } from '@/data/experiences';
+import { calculateDuration } from '@/lib/utils';
 import Image from 'next/image';
 
 export default function MyExperience() {
@@ -32,9 +33,13 @@ export default function MyExperience() {
                 <div>
                   <p>{item.company}</p>
                   <div className='text-sm text-muted-foreground flex flex-col md:flex-row gap-x-2'>
-                    <span>{item.position}</span>
+                    <span>{item.position}</span>·
                     <span>
                       {item.startDate} - {item.endDate}
+                    </span>
+                    ·
+                    <span>
+                      {calculateDuration(item.startDate, item.endDate)}
                     </span>
                   </div>
                   <div

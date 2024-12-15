@@ -50,24 +50,24 @@ export function calculateDuration(
   startDateString: string,
   endDateString: string
 ): string {
-  const startYear = new Date(startDateString).getFullYear();
-  const startMonth = new Date(startDateString).getMonth();
-  const endYear = new Date(endDateString).getFullYear();
-  const endMonth = new Date(endDateString).getMonth();
-  // คำนวณจำนวนเดือนทั้งหมดระหว่าง start และ end
-  const totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+  const startDate = new Date(startDateString);
+  const endDate = new Date(endDateString);
 
-  // คำนวณจำนวนปีและเดือน
+  const totalMonths =
+    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+    (endDate.getMonth() - startDate.getMonth()) +
+    1;
+
   const years = Math.floor(totalMonths / 12);
-
   const months = totalMonths % 12;
 
   // ตรวจสอบเงื่อนไขตามที่กำหนด
   if (years > 0) {
     return years === 1
-      ? '1 yr'
-      : `${years} yrs` +
-          (months > 0 ? ` ${months === 1 ? '1 mo' : `${months} mos`}` : '');
+      ? `1 yr${months > 0 ? ` ${months} ${months > 1 ? 'mos' : 'mo'}` : ''}` // แก้ไขให้แสดงเดือนเมื่อ years === 1
+      : `${years} yrs${
+          months > 0 ? ` ${months === 1 ? '1 mo' : `${months} mos`}` : ''
+        }`;
   } else {
     return months === 1 ? '1 mo' : `${months} mos`;
   }
