@@ -43,7 +43,7 @@ export default function MyExperience() {
                     </span>
                   </div>
                   <div
-                    className='mt-3 text-muted-foreground group-hover:text-foreground line-clamp-3'
+                    className='mt-3 text-muted-foreground group-hover:text-foreground line-clamp-3 min-h-[72px]'
                     dangerouslySetInnerHTML={{ __html: item.description }}
                   />
                 </div>
