@@ -48,10 +48,10 @@ export function getRelativeTime(dateString: string): string {
 
 export function calculateDuration(
   startDateString: string,
-  endDateString: string
+  endDateString: string | null
 ): string {
   const startDate = new Date(startDateString);
-  const endDate = new Date(endDateString);
+  const endDate = new Date(endDateString || new Date());
 
   const totalMonths =
     (endDate.getFullYear() - startDate.getFullYear()) * 12 +
