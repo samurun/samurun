@@ -35,7 +35,7 @@ export default function MyExperience() {
                   <div className='text-sm text-muted-foreground flex flex-col md:flex-row gap-x-2'>
                     <span>{item.position}</span>·
                     <span>
-                      {item.startDate} - {item.endDate}
+                      {item.startDate} - {item.endDate || 'Present'}
                     </span>
                     ·
                     <span>
