@@ -43,8 +43,8 @@ I built a React.js application with TypeScript to calculate your greenhouse gas 
     company: 'iSAAC TECH',
     position: 'Frontend Web Developer',
     type: 'Full-time',
-    startDate: 'Sep 2021',
-    endDate: 'Sep 2023',
+    startDate: 'Jul 2019',
+    endDate: 'Oct 2020',
     description: `<ul>
     <li>Provide support for the implementation of E-commerce websites, including wireframing, front-end development, mobile application development, and user interface design with vue.js</li>
     <li>Built a powerful Content Management System (CMS) using React.js. This CMS allows for efficient media uploads and content management, ensuring seamless content display on any playback device (player).</li>
