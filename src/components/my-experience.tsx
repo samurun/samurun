@@ -1,3 +1,5 @@
+'use client'
+
 import { experiences } from '@/data/experiences';
 import { calculateDuration } from '@/lib/utils';
 import Image from 'next/image';
