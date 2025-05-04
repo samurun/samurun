@@ -21,19 +21,21 @@
     "@types/mdx": "^2.0.13",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
-    "class-variance-authority": "^0.7.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.454.0",
+    "dayjs": "^1.11.13",
+    "lucide-react": "^0.503.0",
     "next": "^15.1.0",
     "next-themes": "^0.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "shiki": "^1.22.2",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -45,7 +47,7 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-pretty-code": "^0.14.0",
     "rehype-slug": "^6.0.0",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^4.1.4",
     "typescript": "^5",
     "velite": "^0.2.1"
   }
