@@ -12,7 +12,7 @@ export default function Hero() {
           <div className='space-y-4'>
             <h1 className='text-5xl font-semibold sm:text-7xl tracking-tight '>
               Hi, I&apos;m
-              <span className='ml-2 font-black bg-gradient-to-r from-green-400 to-green-600 text-transparent bg-clip-text'>
+              <span className='ml-2 font-black bg-linear-to-r from-green-400 to-green-600 text-transparent bg-clip-text'>
                 Fadlan
               </span>
             </h1>

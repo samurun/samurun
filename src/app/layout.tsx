@@ -1,20 +1,21 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import './globals.css';
-import { siteConfig } from '@/config/siteConfig';
-import Providers from '@/components/providers';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+import { siteConfig } from "@/config/siteConfig";
+import Script from "next/script";
+import Providers from "@/components/providers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
 });
 const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -32,9 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang='en'
-      className='dark'
-      style={{ colorScheme: 'dark' }}
+      lang="en"
+      className="dark"
+      style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
       <body
@@ -44,6 +45,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
+      <Script src="https://strava-embeds.com/embed.js" strategy="lazyOnload" />
     </html>
   );
 }
