@@ -51,7 +51,12 @@ export const hikings = [
   {
     title: "เขาเหมน",
     hikes: [{ startDate: "2025-5-17", endDate: "2025-5-18" }],
-    distance: null,
+    distance: 3.7,
+  },
+  {
+    title: "ดอยหลวงตาก",
+    hikes: [{ startDate: "2025-6-28", endDate: "2025-6-29" }],
+    distance: 9.84,
   },
 ];
 
