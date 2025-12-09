@@ -6,7 +6,7 @@ const datawow = new Experience({
   position: 'Fullstack Developer',
   type: 'Full-time',
   startDate: 'Dec 2024',
-  endDate: null,
+  endDate: 'Dec 2025',
   description: ``,
   skills: ['JavaScript', 'TypeScript'],
   isRemote: true,
