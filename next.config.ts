@@ -2,9 +2,7 @@ import { NextConfig } from 'next';
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {},
-  },
+  experimental: {},
   images: {
     remotePatterns: [
       {
