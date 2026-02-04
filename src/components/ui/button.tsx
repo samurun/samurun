@@ -7,7 +7,25 @@ import { cn } from '@/lib/utils';
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-none text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
   {
+    defaultVariants: {
+      size: 'default',
+      variant: 'default',
+    },
     variants: {
+      size: {
+        default:
+          'min-h-8 px-[calc(--spacing(3)-1px)] py-[calc(--spacing(1.5)-1px)]',
+        icon: 'size-8',
+        'icon-lg': 'size-9',
+        'icon-sm': 'size-7',
+        'icon-xl': "size-10 [&_svg:not([class*='size-'])]:size-4.5",
+        'icon-xs':
+          'size-6 rounded-md before:rounded-[calc(var(--radius-md)-1px)]',
+        lg: 'min-h-9 px-[calc(--spacing(3.5)-1px)] py-[calc(--spacing(2)-1px)]',
+        sm: 'min-h-7 gap-1.5 px-[calc(--spacing(2.5)-1px)] py-[calc(--spacing(1)-1px)]',
+        xl: "min-h-10 px-[calc(--spacing(4)-1px)] py-[calc(--spacing(2)-1px)] text-base [&_svg:not([class*='size-'])]:size-4.5",
+        xs: "min-h-6 gap-1 rounded-md px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1)-1px)] text-xs before:rounded-[calc(var(--radius-md)-1px)] [&_svg:not([class*='size-'])]:size-3",
+      },
       variant: {
         default:
           'bg-foreground text-background shadow-sm hover:opacity-90 transition-all',
@@ -20,16 +38,6 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
-      size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 px-3 text-xs',
-        lg: 'h-10 px-8',
-        icon: 'size-9',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
     },
   },
 );
