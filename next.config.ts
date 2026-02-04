@@ -2,7 +2,9 @@ import { NextConfig } from 'next';
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  experimental: {},
+  experimental: {
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons", "clsx", "tailwind-merge"],
+  },
   images: {
     remotePatterns: [
       {

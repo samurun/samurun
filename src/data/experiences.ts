@@ -7,9 +7,20 @@ const datawow = new Experience({
   type: 'Full-time',
   startDate: 'Dec 2024',
   endDate: 'Dec 2025',
-  description: ``,
   skills: ['JavaScript', 'TypeScript'],
   isRemote: true,
+  description: `<ul>
+    <li>Built a scalable design system and dynamic schema-based form architecture using Next.js, MUI, React Query, Formik, Yup,
+integrated i18next, enforced high maintainability with ESLint, Prettier, and developed backend features for master-data CRUD
+that feed the water-data.</li>
+<li>Developed a responsive disaster data visualization platform using Next.js. Managed global state with React Context and built
+reusable UI components with Tailwind CSS. Integrated Axios and ECharts for data fetching and visualization. Enforced code
+quality with ESLint and Prettier. Implemented backend features for invitations, including email templates using react-mail and a
+cron-based user synchronization flow.</li>
+<li>Designed and developed an end-to-end dashboard using React, TypeScript, and Vite. Implemented data synchronization with
+TanStack Query and built dynamic forms using React Hook Form and Zod. Created reusable UI components with Tailwind CSS
+and shadcn/ui, and containerized the application with Docker.</li>
+  </ul>`,
 });
 
 const themonkgames = new Experience({
@@ -70,4 +81,4 @@ const isaac = new Experience({
 
 export const experiences = [datawow, themonkgames, kathi, isaac];
 
-export type WxperienceType = (typeof experiences)[0];
+export type ExperienceType = (typeof experiences)[0];

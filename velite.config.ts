@@ -2,9 +2,10 @@ import { defineCollection, defineConfig, s } from 'velite';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
-const computedFields = <T extends { slug: string }>(data: T) => ({
+const computedFields = <T extends { path: string }>(data: T) => ({
   ...data,
-  slugAsParams: data.slug.split('/').slice(1).join('/'),
+  slug: data.path,
+  slugAsParams: data.path.split('/').slice(1).join('/'),
 });
 
 const posts = defineCollection({
@@ -12,7 +13,7 @@ const posts = defineCollection({
   pattern: 'posts/**/*.mdx',
   schema: s
     .object({
-      slug: s.path(),
+      path: s.path(),
       title: s.string().max(99),
       tags: s.array(s.string()).optional(),
       description: s.string().max(999).optional(),
@@ -27,7 +28,7 @@ const projects = defineCollection({
   pattern: 'projects/**/*.mdx',
   schema: s
     .object({
-      slug: s.path(),
+      path: s.path(),
       title: s.string().max(99),
       cover: s.string(),
       tags: s.array(s.string()).optional(),
@@ -51,7 +52,7 @@ export default defineConfig({
   collections: { posts, projects },
   mdx: {
     rehypePlugins: [
-      [rehypePrettyCode],
+      [rehypePrettyCode, { theme: 'github-dark' }],
       [
         rehypeAutolinkHeadings,
         {

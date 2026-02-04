@@ -9,7 +9,7 @@ export const projects = [
       github: null,
       demo: 'https://xrb-farm.vercel.app/farm',
     },
-    tags: ['vite', 'react', 'typscript', 'shadcn', 'tailwindcss', 'viem.sh'],
+    tags: ['vite', 'react', 'typescript', 'shadcn', 'tailwindcss', 'viem.sh'],
   },
   {
     date: '2024-03-12',
@@ -23,10 +23,10 @@ export const projects = [
     },
     tags: [
       'next.js',
-      'typscript',
+      'typescript',
       'shadcn',
       'tailwindcss',
-      'leaft.js',
+      'leaflet.js',
       'viem.sh',
     ],
   },
