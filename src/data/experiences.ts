@@ -81,4 +81,4 @@ const isaac = new Experience({
 
 export const experiences = [datawow, themonkgames, kathi, isaac];
 
-export type WxperienceType = (typeof experiences)[0];
+export type ExperienceType = (typeof experiences)[0];

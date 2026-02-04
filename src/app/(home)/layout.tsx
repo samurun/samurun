@@ -9,7 +9,7 @@ export default function HomeLayout({ children }: Porps) {
   return (
     <div>
       <Header />
-      {children}
+      <div className='min-h-[calc(100vh-15rem)]'>{children}</div>
       <Footer />
     </div>
   );

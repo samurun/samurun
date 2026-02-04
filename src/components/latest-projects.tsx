@@ -1,26 +1,35 @@
-import { buttonVariants } from './ui/button';
-import { projects } from '@/data/project';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+
+import { buttonVariants } from './ui/button';
 import ProjectCard from './project-card';
+
+import { projects } from '@/data/project';
+import { cn } from '@/lib/utils';
 
 export default function LatestProjects() {
   return (
-    <section className=''>
-      <div className='max-w-5xl mx-auto px-6 md:px-4 py-20'>
-        <h2 className='text-2xl font-bold mb-8'>Latest Projects</h2>
-        <div className='grid sm:grid-cols-2 gap-6'>
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
-        <div className='mt-8 text-center'>
+    <section className='border-b border-border'>
+      <div className='container py-20'>
+        <div className='flex items-center justify-between mb-12'>
+          <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
+            // LATEST PROJECTS
+          </h2>
           <Link
             href={'/projects'}
-            className={cn(buttonVariants({ variant: 'link' }))}
+            className={cn(
+              buttonVariants({ variant: 'link' }),
+              'font-mono text-[10px] uppercase tracking-widest',
+            )}
           >
-            View all projects
+            All Projects &rarr;
           </Link>
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 border-t border-l border-border'>
+          {projects.map((project) => (
+            <div key={project.slug} className='border-r border-b border-border'>
+              <ProjectCard project={project} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

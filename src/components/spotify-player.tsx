@@ -1,8 +1,9 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
-import { SpotifyIcon } from './icons';
+
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+
+import { SpotifyIcon } from './icons';
 
 export type Song = {
   status: number;
@@ -14,6 +15,32 @@ export type Song = {
   title: string;
 };
 
+const SpotifySkeleton = () => (
+  <div className='border border-border p-2 bg-secondary/50 rounded-none w-fit flex items-center gap-3 animate-pulse'>
+    <div className='size-8 bg-border' />
+    <div className='space-y-1'>
+      <div className='w-24 h-3 bg-border' />
+      <div className='w-16 h-2 bg-border' />
+    </div>
+  </div>
+);
+
+const StatusIndicator = () => (
+  <div className='relative flex h-2 w-2'>
+    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75'></span>
+    <span className='relative inline-flex rounded-full h-2 w-2 bg-green-500'></span>
+  </div>
+);
+
+const NotPlaying = () => (
+  <>
+    <SpotifyIcon className='size-6 text-muted-foreground' />
+    <p className='text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground'>
+      Not Playing
+    </p>
+  </>
+);
+
 export default function SpotifyPlayer() {
   const { data, isLoading } = useQuery<{ isPlaying: boolean; song: Song }>({
     queryKey: ['now-playing'],
@@ -21,68 +48,38 @@ export default function SpotifyPlayer() {
   });
 
   if (isLoading) {
-    return (
-      <div className='border py-2 px-4 pl-2 bg-card dark:bg-card/44 rounded-md w-fit flex items-center gap-2 mx-auto'>
-        <SpotifyIcon className='size-10' />
-        <div className='space-y-1'>
-          <div className='w-28 h-5 bg-border rounded' />
-          <div className='w-20 h-3 bg-border rounded' />
-        </div>
-      </div>
-    );
+    return <SpotifySkeleton />;
   }
 
   return (
-    <div
-      className={cn(
-        'w-fit mx-auto [background:linear-gradient(45deg,#172033,--theme(--color-slate-800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),--theme(--color-slate-600/.48)_80%,--theme(--color-indigo-500)_86%,--theme(--color-indigo-300)_90%,--theme(--color-indigo-500)_94%,--theme(--color-slate-600/.48))_border-box] rounded-md border border-transparent overflow-hidden',
-        data?.isPlaying
-          ? 'animate-border'
-          : '[background:linear-gradient()] border-border',
-      )}
-    >
-      <div
-        className={cn(
-          'py-2 px-4 pl-2 bg-card dark:bg-card/44 w-fit flex items-center gap-2 mx-auto',
-          data?.isPlaying ? 'border-none' : '',
-        )}
-      >
-        {data?.isPlaying ? (
-          <>
-            <div className='size-10 aspect-square'>
-              <Image
-                className='rounded'
-                src={data.song.albumImageUrl}
-                width={40}
-                height={40}
-                alt={data.song.title}
-              />
-            </div>
-            <div className='text-start'>
-              <div className='flex gap-1'>
-                <Image
-                  src='/playing.gif'
-                  width={10}
-                  height={10}
-                  alt='playing'
-                  className='object-contain'
-                />
-                <p className='font-bold max-w-36 line-clamp-1'>
-                  {data?.song?.title}
-                </p>
-              </div>
-              <p className='text-xs text-muted-foreground'>
-                {data.song.artist}
+    <div className='group border border-border p-2 bg-secondary/30 hover:bg-secondary/50 transition-colors rounded-none w-fit flex items-center gap-3'>
+      {data?.isPlaying ? (
+        <>
+          <div className='size-8 relative grayscale group-hover:grayscale-0 transition-all'>
+            <Image
+              fill
+              src={data.song.albumImageUrl}
+              alt={data.song.title}
+              className='object-cover'
+            />
+          </div>
+          <div className='text-start'>
+            <div className='flex items-center gap-2'>
+              <StatusIndicator />
+              <p className='text-[11px] font-bold tracking-tight line-clamp-1 max-w-[120px]'>
+                {data.song.title}
               </p>
             </div>
-          </>
-        ) : (
-          <>
-            <SpotifyIcon className='size-10' />
-            <p className='font-bold'>Not playing</p>
-          </>
-        )}
-      </div>
+            <p className='text-[9px] font-mono text-muted-foreground uppercase tracking-widest'>
+              {data.song.artist}
+            </p>
+          </div>
+        </>
+      ) : (
+        <NotPlaying />
+      )}
     </div>
   );
 }
+
+export { SpotifySkeleton };

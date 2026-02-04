@@ -51,7 +51,7 @@ export default defineConfig({
   collections: { posts, projects },
   mdx: {
     rehypePlugins: [
-      [rehypePrettyCode],
+      [rehypePrettyCode, { theme: 'github-dark' }],
       [
         rehypeAutolinkHeadings,
         {
