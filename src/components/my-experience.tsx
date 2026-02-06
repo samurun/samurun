@@ -21,7 +21,10 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
               {item.position}
             </h3>
             <p className='text-xs font-mono text-muted-foreground'>
-              {item.company}
+              {item.company}{' '}
+              <span className='text-xs font-mono text-muted-foreground uppercase'>
+                ({item.type})
+              </span>
             </p>
           </div>
         </div>
@@ -34,10 +37,23 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
           </div>
         </div>
       </div>
-      <div
-        className='mt-4 text-[11px] text-muted-foreground leading-relaxed max-w-2xl'
-        dangerouslySetInnerHTML={{ __html: item.description }}
-      />
+      <ul className='mt-4 list-disc pl-4 space-y-2 max-w-2xl'>
+        {item.description.map((desc, i) => (
+          <li
+            key={i}
+            className='text-[11px] text-muted-foreground leading-relaxed'
+          >
+            {desc}
+          </li>
+        ))}
+      </ul>
+      <div className='mt-4 flex flex-wrap gap-2 pl-4'>
+        {item.skills.map((skill, i) => (
+          <span key={i} className='text-[10px] font-mono tracking-widest'>
+            #{skill}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -50,7 +66,7 @@ export default function MyExperience() {
           <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
             // EXPERIENCE
           </h2>
-          <div className='h-[1px] flex-1 bg-border/50' />
+          <div className='h-1px flex-1 bg-border/50' />
         </div>
         <div className='border-t border-x border-border'>
           {experiences.map((item, idx) => (

@@ -5,7 +5,7 @@ export class Experience {
   public type: string;
   public startDate: string;
   public endDate: string | null;
-  public description: string;
+  public description: string[];
   public skills: string[];
   public isRemote: boolean;
 
@@ -26,7 +26,7 @@ export class Experience {
     type: string;
     startDate: string;
     endDate: string | null;
-    description: string;
+    description: string[];
     skills: string[];
     isRemote: boolean;
   }) {

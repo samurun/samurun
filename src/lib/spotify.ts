@@ -73,3 +73,25 @@ export const currentlyPlayingSong = async () => {
     cache: 'no-cache',
   });
 };
+
+export const recentlyPlayed = async () => {
+  const { access_token } = await getAccessToken();
+
+  return fetch('https://api.spotify.com/v1/me/player/recently-played', {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    next: { revalidate: 60 },
+  });
+};
+
+export const getPlaylists = async () => {
+  const { access_token } = await getAccessToken();
+
+  return fetch('https://api.spotify.com/v1/me/playlists', {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    next: { revalidate: 3600 },
+  });
+};
