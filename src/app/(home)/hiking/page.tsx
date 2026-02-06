@@ -1,44 +1,27 @@
-import { hikings, HikingType } from '@/data/hikings';
+import { hikings } from '@/data/hikings';
+import HikingItem from '@/components/hiking/hiking-item';
+import { getHikingActivities } from '@/lib/strava';
 
 export const metadata = {
   title: 'Hiking',
   description: 'My hiking adventures',
 };
 
-function HikingItem({ item }: { item: HikingType }) {
-  return (
-    <div className='group border-b border-border p-6 hover:bg-secondary transition-colors'>
-      <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
-        <div className='flex items-center gap-4'>
-          <div>
-            <h3 className='text-sm font-bold uppercase tracking-widest'>
-              {item.title}
-            </h3>
-            {item.distance && (
-              <p className='text-[10px] font-mono text-muted-foreground uppercase tracking-widest mt-1'>
-                Total Distance: {item.distance} km
-              </p>
-            )}
-          </div>
-        </div>
-        <div className='flex flex-col items-end gap-2'>
-          {item.hikes.map((hike, idx) => (
-            <div key={idx} className='flex items-center gap-4'>
-              <div className='font-mono text-[10px] text-muted-foreground uppercase tracking-widest'>
-                {hike.startDate} — {hike.endDate ? hike.endDate : 'Present'}
-              </div>
-              <div className='hidden sm:block font-mono text-[10px] px-2 py-0.5 border border-border bg-background text-muted-foreground'>
-                Completed
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+// Helper to check if date is within range
+const isMatch = (activityDate: string, startDate: string, endDate?: string) => {
+  const act = new Date(activityDate).getTime();
+  const start = new Date(startDate).getTime();
+  const end = endDate ? new Date(endDate).getTime() : new Date().getTime();
 
-export default function Page() {
+  // Allow some buffer or check same day
+  // Simple check: start <= act <= end + 1 day (to cover full end day)
+  return act >= start && act <= end + 86400000;
+};
+
+export default async function Page() {
+  // Fetch dynamic data from Strava (Server Side)
+  const stravaActivities = await getHikingActivities(100);
+
   return (
     <main className='border-b border-border min-h-screen'>
       <div className='container py-20'>
@@ -49,9 +32,29 @@ export default function Page() {
           <div className='h-px flex-1 bg-border/50' />
         </div>
         <div className='border-t border-x border-border'>
-          {hikings.reverse().map((item, idx) => (
-            <HikingItem key={`${item.title}-${idx}`} item={item} />
-          ))}
+          {hikings
+            .sort(
+              (a, b) =>
+                new Date(b.hikes[0].startDate).getTime() -
+                new Date(a.hikes[0].startDate).getTime(),
+            )
+            .map((item, idx) => {
+              // Find matching Strava activity
+              // We check all 'hikes' ranges for this item
+              const matchedActivity = stravaActivities.find((act) => {
+                return item.hikes.some((hike) =>
+                  isMatch(act.startDate, hike.startDate, hike.endDate),
+                );
+              });
+
+              return (
+                <HikingItem
+                  key={`${item.title}-${idx}`}
+                  item={item}
+                  stravaActivity={matchedActivity}
+                />
+              );
+            })}
         </div>
       </div>
     </main>
