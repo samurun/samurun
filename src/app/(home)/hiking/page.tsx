@@ -44,12 +44,12 @@ export default function Page() {
       <div className='container py-20'>
         <div className='flex items-center gap-4 mb-12'>
           <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // HIKING TRIPS
+            // HIKING TRIPS ({hikings.length})
           </h1>
-          <div className='h-[1px] flex-1 bg-border/50' />
+          <div className='h-px flex-1 bg-border/50' />
         </div>
         <div className='border-t border-x border-border'>
-          {hikings.map((item, idx) => (
+          {hikings.reverse().map((item, idx) => (
             <HikingItem key={`${item.title}-${idx}`} item={item} />
           ))}
         </div>

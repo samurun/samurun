@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       {
         hostname: 'i.scdn.co',
       },
+      {
+        hostname: 'mosaic.scdn.co',
+      },
     ],
   },
 };
