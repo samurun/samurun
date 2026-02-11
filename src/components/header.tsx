@@ -1,12 +1,22 @@
 'use client';
 
-import { MountainIcon, MusicIcon, PercentIcon } from 'lucide-react';
+import {
+  CodeXmlIcon,
+  MountainIcon,
+  MusicIcon,
+  PercentIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 
 import ModeToggle from './mode-toggle';
 import { Button } from './ui/button';
 
-const NAV_ITEMS = [{ label: 'Projects', href: '/projects' }];
+const NAV_MAIN_ITEMS = [{ label: 'Projects', href: '/projects' }];
+const NAV_ITEMS = [
+  { label: 'Labs', href: '/labs', icon: CodeXmlIcon },
+  { label: 'Hiking', href: '/hiking', icon: MountainIcon },
+  { label: 'Music', href: '/music', icon: MusicIcon },
+];
 
 export default function Header() {
   return (
@@ -17,29 +27,22 @@ export default function Header() {
             <PercentIcon className='size-4' />
           </Link>
           <nav className='hidden md:flex items-center gap-6'>
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className='font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors'
-              >
-                {item.label}
-              </Link>
+            {NAV_MAIN_ITEMS.map((item) => (
+              <Button key={item.href} size='icon-sm' variant='ghost' asChild>
+                <Link href={item.href}>{item.label}</Link>
+              </Button>
             ))}
           </nav>
         </div>
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-2'>
-            <Button size='icon-sm' variant='ghost' asChild>
-              <Link href='/hiking'>
-                <MountainIcon />
-              </Link>
-            </Button>
-            <Button size='icon-sm' variant='ghost' asChild>
-              <Link href='/music'>
-                <MusicIcon />
-              </Link>
-            </Button>
+            {NAV_ITEMS.map((item) => (
+              <Button key={item.href} size='icon-sm' variant='ghost' asChild>
+                <Link href={item.href}>
+                  <item.icon />
+                </Link>
+              </Button>
+            ))}
           </div>
           <ModeToggle />
         </div>
