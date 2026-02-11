@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/card';
 import { ElectionSeatsMap } from './components/election-seats-map/election-seats-map';
 import ChartSkeleton from './components/chart-skeleton';
+import { Boeing737900ERSeatsMap } from './components/boeing-737-900er/boeing-737-900er';
 
 export default function Page() {
   const ECHART_LABS = [
@@ -18,11 +19,12 @@ export default function Page() {
       href: '/labs/echarts/election-seats',
       comp: ElectionSeatsMap,
     },
-    // {
-    //   title: 'Boeing 737 900ER',
-    //   description: 'Seat map of a Boeing 737 900ER.',
-    //   href: '/labs/echarts/boeing-737-900er',
-    // },
+    {
+      title: 'Boeing 737 900ER',
+      description: 'Seat map of a Boeing 737 900ER.',
+      href: '/labs/echarts/boeing-737-900er',
+      comp: Boeing737900ERSeatsMap,
+    },
   ];
   return (
     <div className='space-y-6'>
@@ -41,7 +43,7 @@ export default function Page() {
                   <CardTitle>{lab.title}</CardTitle>
                   <CardDescription>{lab.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='relative'>
                   {lab.comp && (
                     <Suspense fallback={<ChartSkeleton />}>
                       <lab.comp />
