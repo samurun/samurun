@@ -1,5 +1,6 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import {
   CodeXmlIcon,
   MountainIcon,
@@ -8,6 +9,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { Song } from './music/now-playing';
+import { Equalizer } from './music/equalizer';
 import ModeToggle from './mode-toggle';
 import { Button } from './ui/button';
 
@@ -19,6 +22,12 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
+  const { data } = useQuery<{ isPlaying: boolean; song: Song }>({
+    queryKey: ['now-playing-large'],
+    queryFn: () => fetch('/api/spotify/now-playing').then((res) => res.json()),
+    refetchInterval: 10000,
+  });
+
   return (
     <header className='sticky top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b border-border'>
       <div className='container h-14 flex items-center justify-between'>
@@ -39,7 +48,11 @@ export default function Header() {
             {NAV_ITEMS.map((item) => (
               <Button key={item.href} size='icon-sm' variant='ghost' asChild>
                 <Link href={item.href}>
-                  <item.icon />
+                  {item.label === 'Music' && data?.isPlaying ? (
+                    <Equalizer />
+                  ) : (
+                    <item.icon className='size-4' />
+                  )}
                 </Link>
               </Button>
             ))}

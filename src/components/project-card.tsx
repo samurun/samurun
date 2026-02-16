@@ -29,8 +29,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
       </div>
-      <div className='p-6 space-y-3 flex-1 flex flex-col'>
-        <div className='space-y-1 flex-1'>
+      <div className='space-y-3 flex-1 flex flex-col'>
+        <div className='space-y-1 flex-1 p-4 m-0'>
           <Link
             href={`/projects/${project.slug}`}
             scroll={true}
@@ -44,7 +44,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.description}
           </p>
         </div>
-        <div className='flex items-center justify-between pt-4 border-t border-border/50'>
+        <div className='flex items-center justify-between pt-4 border-t border-border/50 p-4'>
           <div className='flex gap-2'>
             {project.tags.slice(0, 3).map((tag) => (
               <span
