@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { SpotifyIcon } from '../icons';
-import { Equalizer } from './equalizer';
 
 export type Song = {
   status: number;
@@ -15,7 +14,12 @@ export type Song = {
   title: string;
 };
 
-// StatusIndicator removed in favor of Equalizer
+const StatusIndicator = () => (
+  <div className='relative flex h-3 w-3'>
+    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75'></span>
+    <span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
+  </div>
+);
 
 export default function NowPlaying() {
   const { data, isLoading } = useQuery<{ isPlaying: boolean; song: Song }>({
@@ -54,7 +58,7 @@ export default function NowPlaying() {
               >
                 {data.song.title}
               </a>
-              <Equalizer />
+              <StatusIndicator />
             </div>
             <p className='text-sm text-muted-foreground font-mono truncate'>
               {data.song.artist}
