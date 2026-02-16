@@ -40,12 +40,14 @@ export default function AboutMe() {
           {cards.map((card, i) => (
             <div
               key={i}
-              className='group border-r border-b border-border p-8 hover:bg-secondary transition-colors'
+              className='group border-r border-b border-border hover:bg-secondary transition-colors'
             >
-              <div className='font-mono text-[10px] text-muted-foreground mb-4 tracking-tighter'>
-                //{card.label} 0{i + 1}
+              <div className='border-b px-4 py-3'>
+                <div className='font-mono text-[10px] text-muted-foreground tracking-tighter'>
+                  //{card.label} 0{i + 1} s
+                </div>
               </div>
-              <div className='aspect-square relative mb-6 grayscale group-hover:grayscale-0 transition-all'>
+              <div className='aspect-square relative grayscale group-hover:grayscale-0 transition-all px-4 py-3 m-4'>
                 <Image
                   fill
                   src={card.image}
@@ -53,7 +55,7 @@ export default function AboutMe() {
                   className='object-contain transition-transform duration-500 group-hover:scale-105'
                 />
               </div>
-              <div className='space-y-2'>
+              <div className='space-y-2 px-4 py-3 border-t'>
                 <h2 className='text-sm font-bold uppercase tracking-widest'>
                   {card.title}
                 </h2>

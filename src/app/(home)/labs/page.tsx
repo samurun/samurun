@@ -2,12 +2,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { RectangleEllipsisIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArrowRightIcon } from 'lucide-react';
 
 export default function Page() {
   const labs = [
@@ -41,19 +42,26 @@ export default function Page() {
                   <CardTitle>{lab.title}</CardTitle>
                   <CardDescription>{lab.description}</CardDescription>
                 </CardHeader>
-                <CardContent className='space-y-2'>
+                <CardContent className='relative aspect-video p-0'>
                   {lab.image && (
-                    <div className='aspect-video bg-black relative'>
+                    <div className='bg-black absolute inset-0'>
                       <Image
                         fill
                         src={lab.image}
                         alt={lab.title}
-                        className='w-full h-auto object-contain'
+                        className='object-contain'
                       />
                     </div>
                   )}
-                  <Link href={lab.href}>View Lab</Link>
                 </CardContent>
+                <CardFooter>
+                  <Link
+                    href={lab.href}
+                    className='text-sx text-muted-foreground inline-flex items-center gap-1 hover:text-primary transition-colors'
+                  >
+                    View Lab <ArrowRightIcon size={12} />
+                  </Link>
+                </CardFooter>
               </Card>
             )}
           </li>
