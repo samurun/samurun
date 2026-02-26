@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import './rc-image.css';
 import { siteConfig } from '@/config/siteConfig';
 import Script from 'next/script';
 import Providers from '@/components/providers';

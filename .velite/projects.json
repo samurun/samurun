@@ -14,6 +14,20 @@
     "slugAsParams": "land-manager"
   },
   {
+    "path": "projects/net-zero-man",
+    "title": "Net Zero Man",
+    "cover": "/projects/net-zero-man/cover.png",
+    "description": "กิจกรรมในแต่ละวันของท่านมีการปล่อยก๊าซเรือนกระจก ซึ่งเป็นสาเหตุสำคัญที่ก่อให้เกิดภาวะโลกร้อนและการเปลี่ยนแปลง สภาพภูมิอากาศเท่าใดสามารถคำนวณได้แล้วง่ายๆ",
+    "date": "2022-03-04T00:00:00.000Z",
+    "links": {
+      "demo": "https://thainetzeroman.com",
+      "git": "www.example.com"
+    },
+    "body": "const{Fragment:n,jsx:e,jsxs:t}=arguments[0];function _createMdxContent(r){const c={h2:\"h2\",p:\"p\",...r.components};return t(n,{children:[e(c.h2,{children:\"Overview\"}),\"\\n\",e(c.p,{children:\"Net Zero Man คือ\"})]})}return{default:function(n={}){const{wrapper:t}=n.components||{};return t?e(t,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "slug": "projects/net-zero-man",
+    "slugAsParams": "net-zero-man"
+  },
+  {
     "path": "projects/xrb-farm",
     "title": "XRB Farm",
     "cover": "/projects/xrb-farm/farm.png",
