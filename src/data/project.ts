@@ -30,6 +30,18 @@ export const projects = [
       'viem.sh',
     ],
   },
+  {
+    date: '2022-03-12',
+    slug: 'net-zero-man',
+    name: 'Net Zero Man',
+    description:
+      'กิจกรรมในแต่ละวันของท่านมีการปล่อยก๊าซเรือนกระจก ซึ่งเป็นสาเหตุสำคัญที่ก่อให้เกิดภาวะโลกร้อนและการเปลี่ยนแปลง สภาพภูมิอากาศเท่าใดสามารถคำนวณได้แล้วง่ายๆ',
+    cover: '/projects/net-zero-man/cover.png',
+    links: {
+      demo: 'https://thainetzeroman.com/',
+    },
+    tags: ['vite', 'typescript', 'shadcn', 'tailwindcss'],
+  },
 ];
 
 export type ProjectType = (typeof projects)[0];
