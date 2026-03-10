@@ -21,7 +21,7 @@ export default function Page() {
     {
       title: 'ECharts',
       description: 'ECharts is a powerful charting library.',
-      image: '/echart-thumbnail.png',
+      image: '/labs/echart.svg',
       href: '/labs/echarts',
     },
     {
@@ -46,13 +46,13 @@ export default function Page() {
               </CardHeader>
               <CardContent className='relative aspect-video p-0'>
                 {lab.image && (
-                    <div className='bg-black absolute inset-0 w-full'>
+                  <div className='bg-black absolute inset-0 w-full'>
                     <Image
                       fill
                       src={lab.image}
                       alt={lab.title}
                       className='object-contain'
-                        sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                      sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     />
                   </div>
                 )}

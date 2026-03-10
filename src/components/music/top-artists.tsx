@@ -20,8 +20,6 @@ export default function TopArtists() {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;
   }
 
-  console.log(data);
-
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
