@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import dayjs from 'dayjs';
 
 import { hikings } from '@/data/hikings';
 import { DATE_FORMAT } from '@/constants/format';
+
+export const metadata: Metadata = {
+  title: 'Activities',
+  description: 'Recent hiking activities and dates.',
+};
 
 export default function Activities() {
   return (
@@ -17,8 +23,11 @@ export default function Activities() {
               )}
             </h2>
             <div>
-              {hiking.hikes.map((hike, index) => (
-                <div className='text-sm text-muted-foreground' key={index}>
+              {hiking.hikes.map((hike) => (
+                <div
+                  className='text-sm text-muted-foreground'
+                  key={hike.startDate}
+                >
                   <time dateTime={hike.startDate}>
                     <span className='px-0.5'>
                       {dayjs(hike.startDate).format(DATE_FORMAT)}

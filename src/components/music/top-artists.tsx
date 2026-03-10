@@ -20,15 +20,17 @@ export default function TopArtists() {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;
   }
 
+  console.log(data);
+
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        // Top Artists
+        {'// Top Artists'}
       </h2>
       <div className='grid grid-cols-2 sm:grid-cols-3 gap-4'>
-        {data?.artists.map((artist, idx) => (
+        {data?.artists.map((artist) => (
           <a
-            key={idx}
+            key={artist.url}
             href={artist.url}
             target='_blank'
             rel='noopener noreferrer'
@@ -40,6 +42,7 @@ export default function TopArtists() {
                 alt={artist.name}
                 fill
                 className='object-cover'
+                sizes='96px'
               />
             </div>
             <div>

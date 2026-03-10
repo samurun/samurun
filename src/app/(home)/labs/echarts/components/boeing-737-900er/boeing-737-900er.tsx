@@ -10,7 +10,7 @@ import {
 } from 'echarts/components';
 import { MapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import React from 'react';
 
 import { Boeing737900ERSeatsSVG } from '@/assets/election-seats-svg copy';
@@ -34,12 +34,14 @@ if (typeof window !== 'undefined') {
   });
 }
 
+type GeoClickEvent = {
+  componentType?: string;
+  name?: string;
+};
+
 export function Boeing737900ERSeatsMap() {
   const [selected, setSelected] = useState<string[]>([]);
-  const option = useMemo(
-    () => useBoeingSeatsMapOptions({ selected }),
-    [selected],
-  );
+  const option = useBoeingSeatsMapOptions({ selected });
 
   return (
     <React.Fragment>
@@ -55,8 +57,9 @@ export function Boeing737900ERSeatsMap() {
         notMerge={false}
         lazyUpdate={true}
         onEvents={{
-          click: (params: any) => {
+          click: (params: GeoClickEvent) => {
             if (params.componentType !== 'geo') return;
+            if (!params.name) return;
             if (selected.includes(params.name)) {
               setSelected(selected.filter((seat) => seat !== params.name));
             } else {
