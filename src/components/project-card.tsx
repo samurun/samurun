@@ -17,6 +17,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           alt={project.name}
           fill
           className='object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
         <div className='absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity'>
           {project.tags.slice(0, 2).map((tag) => (

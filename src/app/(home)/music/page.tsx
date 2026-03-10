@@ -1,16 +1,21 @@
-'use client';
+import type { Metadata } from 'next';
 
 import TopTracks from '@/components/music/top-tracks';
 import NowPlaying from '@/components/music/now-playing';
 import TopArtists from '@/components/music/top-artists';
 import Playlists from '@/components/music/playlists';
 
+export const metadata: Metadata = {
+  title: 'Music',
+  description: 'Now playing, top tracks, artists, and playlists from Spotify.',
+};
+
 export default function MusicPage() {
   return (
     <div className='container py-20'>
       <div className='flex items-center gap-4 mb-12'>
         <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-          // MUSIC DASHBOARD
+          {'// MUSIC DASHBOARD'}
         </h1>
         <div className='h-px flex-1 bg-border/50' />
       </div>

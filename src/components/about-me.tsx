@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Card, CardContent } from './ui/card';
 
 export default function AboutMe() {
   const cards = [
@@ -39,12 +38,13 @@ export default function AboutMe() {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-border'>
           {cards.map((card, i) => (
             <div
-              key={i}
+              key={card.label}
               className='group border-r border-b border-border hover:bg-secondary transition-colors'
             >
               <div className='border-b px-4 py-3'>
                 <div className='font-mono text-[10px] text-muted-foreground tracking-tighter'>
-                  //{card.label} 0{i + 1} s
+                  {'// '}
+                  {card.label} 0{i + 1} s
                 </div>
               </div>
               <div className='aspect-square relative grayscale group-hover:grayscale-0 transition-all px-4 py-3 m-4'>
@@ -53,6 +53,7 @@ export default function AboutMe() {
                   src={card.image}
                   alt={card.title}
                   className='object-contain transition-transform duration-500 group-hover:scale-105'
+                  sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
                 />
               </div>
               <div className='space-y-2 px-4 py-3 border-t'>
@@ -67,7 +68,7 @@ export default function AboutMe() {
           ))}
           <div className='col-span-1 md:col-span-2 lg:col-span-4 border-r border-b border-border p-8 flex flex-col items-center justify-center text-center space-y-4 hover:bg-secondary transition-colors'>
             <div className='font-mono text-[10px] text-muted-foreground tracking-tighter'>
-              //CONTACT
+              {'// CONTACT'}
             </div>
             <p className='text-xl sm:text-2xl font-bold tracking-tight'>
               fadlan.jehteerokee@gmail.com

@@ -61,6 +61,7 @@ export default function SpotifyPlayer() {
               src={data.song.albumImageUrl}
               alt={data.song.title}
               className='object-cover'
+              sizes='32px'
             />
           </div>
           <div className='text-start'>

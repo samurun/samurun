@@ -24,12 +24,12 @@ export default function TopTracks() {
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        // Top Tracks
+        {'// Top Tracks'}
       </h2>
       <div className='flex flex-col gap-4'>
         {data?.tracks.map((track, idx) => (
           <a
-            key={idx}
+            key={track.songUrl}
             href={track.songUrl}
             target='_blank'
             rel='noopener noreferrer'
@@ -44,6 +44,7 @@ export default function TopTracks() {
                 alt={track.title}
                 fill
                 className='object-cover'
+                sizes='48px'
               />
             </div>
             <div className='flex-1 min-w-0'>

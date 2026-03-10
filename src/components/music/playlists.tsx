@@ -23,12 +23,12 @@ export default function Playlists() {
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        // Playlists
+        {'// Playlists'}
       </h2>
       <div className='grid grid-cols-2 gap-4'>
-        {data?.playlists.map((playlist, idx) => (
+        {data?.playlists.map((playlist) => (
           <a
-            key={idx}
+            key={playlist.url}
             href={playlist.url}
             target='_blank'
             rel='noopener noreferrer'
@@ -41,6 +41,7 @@ export default function Playlists() {
                   alt={playlist.name}
                   fill
                   className='object-cover'
+                  sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
                 />
               ) : (
                 <div className='w-full h-full bg-secondary flex items-center justify-center'>

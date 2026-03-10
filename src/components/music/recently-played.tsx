@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
-import { calculateDuration } from '@/lib/utils'; // Assuming this can calculate time ago, or I'll implement a simple one here.
 
 const timeAgo = (date: string) => {
   const seconds = Math.floor(
@@ -43,12 +42,12 @@ export default function RecentlyPlayed() {
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        // Recently Played
+        {'// Recently Played'}
       </h2>
       <div className='flex flex-col gap-4'>
-        {data?.tracks.map((track, idx) => (
+        {data?.tracks.map((track) => (
           <a
-            key={idx}
+            key={`${track.songUrl}-${track.playedAt}`}
             href={track.songUrl}
             target='_blank'
             rel='noopener noreferrer'
@@ -60,6 +59,7 @@ export default function RecentlyPlayed() {
                 alt={track.title}
                 fill
                 className='object-cover'
+                sizes='40px'
               />
             </div>
             <div className='flex-1 min-w-0'>

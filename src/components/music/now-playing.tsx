@@ -34,7 +34,7 @@ export default function NowPlaying() {
   return (
     <div className='bg-secondary/30 border border-border p-6'>
       <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        // Now Playing
+        {'// Now Playing'}
       </h2>
 
       {data?.isPlaying ? (
@@ -45,6 +45,7 @@ export default function NowPlaying() {
               alt={data.song.title}
               fill
               className='object-cover'
+              sizes='(max-width: 768px) 100vw, 33vw'
             />
           </div>
 
