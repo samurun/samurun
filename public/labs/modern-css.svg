@@ -1,0 +1,45 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#0a0a0a"/>
+  
+  <defs>
+    <linearGradient id="modernGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M100 250 L300 150 L500 250 L300 350 Z" fill="#111" stroke="#262626" stroke-width="1"/>
+
+  <g transform="translate(300, 250)">
+    <g>
+      <rect x="-40" y="-40" width="80" height="80" rx="10" fill="url(#modernGrad)" stroke="#fff" stroke-width="1" stroke-opacity="0.2">
+        <animateTransform 
+          attributeName="transform" 
+          type="skewX" 
+          values="0; 15; -15; 0" 
+          dur="5s" 
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"
+        />
+        <animate attributeName="width" values="80; 90; 70; 80" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="height" values="80; 70; 90; 80" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="x" values="-40; -45; -35; -40" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="-40; -35; -45; -40" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <rect x="-100" y="-100" width="30" height="30" rx="5" fill="#38bdf8" opacity="0.6">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 10 -10; 0 0" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="70" y="-80" width="25" height="25" rx="5" fill="#a855f7" opacity="0.6">
+        <animateTransform attributeName="transform" type="translate" values="0 0; -10 10; 0 0" dur="3.5s" repeatCount="indefinite"/>
+    </rect>
+     <rect x="-90" y="60" width="20" height="20" rx="4" fill="#fff" opacity="0.3">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 15 15; 0 0" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <path d="M100 250 L500 250" stroke="#333" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M300 150 L300 350" stroke="#333" stroke-width="1" stroke-dasharray="4 4"/>
+</svg>
