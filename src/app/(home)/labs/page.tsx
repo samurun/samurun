@@ -31,6 +31,12 @@ export default function Page() {
       image: '/labs/react-virtual.svg',
       href: '/labs/virtual',
     },
+    {
+      title: 'Modern CSS',
+      description: 'A collection of modern CSS techniques and experiments.',
+      image: '/labs/modern-css.svg',
+      href: '/labs/css',
+    },
   ];
   return (
     <div>
@@ -51,7 +57,7 @@ export default function Page() {
                       fill
                       src={lab.image}
                       alt={lab.title}
-                      className='object-contain'
+                      className='object-cover'
                       sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     />
                   </div>

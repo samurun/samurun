@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx velite && next dev --turbo",
+    "dev": "npx velite && next dev",
     "build": "npx velite && next build",
     "start": "next start",
     "lint": "eslint ."
