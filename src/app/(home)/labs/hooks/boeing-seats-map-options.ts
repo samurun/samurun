@@ -7,6 +7,10 @@ interface BoeingSeatsMapOptions {
     selected: string[]
 }
 
+type SeatFormatterParams = {
+    name: string
+}
+
 function makeSelectedRegions(selectedSeatNames: string[]) {
     return selectedSeatNames.map(name => ({
         name,
@@ -32,7 +36,7 @@ export function useBoeingSeatsMapOptions({ selected }: BoeingSeatsMapOptions) {
         fontFamily: 'Inter, sans-serif',
         tooltip: {
             show: true,
-            formatter: (params: any) => {
+            formatter: (params: SeatFormatterParams) => {
                 const seatN = params.name.split('-');
                 return seatN[0];
             },
@@ -47,7 +51,7 @@ export function useBoeingSeatsMapOptions({ selected }: BoeingSeatsMapOptions) {
                 show: false,
             },
             tooltip: {
-                formatter: (params: any) => {
+                formatter: (params: SeatFormatterParams) => {
                     return formatSeat(params.name);
                 },
             },

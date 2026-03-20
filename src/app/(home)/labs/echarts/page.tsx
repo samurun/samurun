@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import {
@@ -10,6 +11,11 @@ import {
 import { ElectionSeatsMap } from './components/election-seats-map/election-seats-map';
 import ChartSkeleton from './components/chart-skeleton';
 import { Boeing737900ERSeatsMap } from './components/boeing-737-900er/boeing-737-900er';
+
+export const metadata: Metadata = {
+  title: 'ECharts Lab',
+  description: 'Chart and map experiments built with ECharts.',
+};
 
 export default function Page() {
   const ECHART_LABS = [

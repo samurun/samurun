@@ -14,6 +14,7 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
               src={item.logo}
               alt={item.company}
               className='object-contain p-2'
+              sizes='48px'
             />
           </div>
           <div>
@@ -38,9 +39,9 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
         </div>
       </div>
       <ul className='mt-4 list-disc pl-4 space-y-2 max-w-2xl'>
-        {item.description.map((desc, i) => (
+        {item.description.map((desc) => (
           <li
-            key={i}
+            key={desc}
             className='text-[11px] text-muted-foreground leading-relaxed'
           >
             {desc}
@@ -48,8 +49,8 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
         ))}
       </ul>
       <div className='mt-4 flex flex-wrap gap-2 pl-4'>
-        {item.skills.map((skill, i) => (
-          <span key={i} className='text-[10px] font-mono tracking-widest'>
+        {item.skills.map((skill) => (
+          <span key={skill} className='text-[10px] font-mono tracking-widest'>
             #{skill}
           </span>
         ))}
@@ -64,7 +65,7 @@ export default function MyExperience() {
       <div className='container py-20'>
         <div className='flex items-center gap-4 mb-12'>
           <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // EXPERIENCE
+            {'// EXPERIENCE'}
           </h2>
           <div className='h-1px flex-1 bg-border/50' />
         </div>

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import {
   Card,
   CardContent,
@@ -10,13 +11,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon } from 'lucide-react';
 
+export const metadata: Metadata = {
+  title: 'Labs',
+  description: 'Interactive frontend and visualization experiments.',
+};
+
 export default function Page() {
   const labs = [
     {
       title: 'ECharts',
       description: 'ECharts is a powerful charting library.',
-      image: '/echart-thumbnail.png',
+      image: '/labs/echart.svg',
       href: '/labs/echarts',
+    },
+    {
+      title: ' @tanstack/react-virtual',
+      description:
+        'Virtualize only the visible content for massive scrollable DOM',
+      image: '/labs/react-virtual.svg',
+      href: '/labs/virtual',
+    },
+    {
+      title: 'Modern CSS',
+      description: 'A collection of modern CSS techniques and experiments.',
+      image: '/labs/modern-css.svg',
+      href: '/labs/css',
     },
   ];
   return (
@@ -27,16 +46,19 @@ export default function Page() {
             <Card>
               <CardHeader>
                 <CardTitle>{lab.title}</CardTitle>
-                <CardDescription>{lab.description}</CardDescription>
+                <CardDescription className=' line-clamp-1'>
+                  {lab.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className='relative aspect-video p-0'>
                 {lab.image && (
-                  <div className='bg-black absolute inset-0'>
+                  <div className='bg-black absolute inset-0 w-full'>
                     <Image
                       fill
                       src={lab.image}
                       alt={lab.title}
-                      className='object-contain'
+                      className='object-cover'
+                      sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     />
                   </div>
                 )}
@@ -44,7 +66,7 @@ export default function Page() {
               <CardFooter>
                 <Link
                   href={lab.href}
-                  className='text-sx text-muted-foreground inline-flex items-center gap-1 hover:text-primary transition-colors'
+                  className='text-xs text-muted-foreground inline-flex items-center gap-1 hover:text-primary transition-colors'
                 >
                   View Lab <ArrowRightIcon size={12} />
                 </Link>
