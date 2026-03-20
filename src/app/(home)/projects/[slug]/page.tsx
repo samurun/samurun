@@ -85,7 +85,7 @@ export default async function Page({ params }: PageProps) {
                   src={project!.cover}
                   alt={project!.title}
                   fill
-                  className='object-contain'
+                  className='object-cover'
                   priority
                   sizes='(max-width: 1024px) 100vw, 1200px'
                 />
