@@ -63,13 +63,13 @@ export default function AboutMe() {
       colSpan: 1,
     },
     {
-      id: 'empty-8',
-      colSpan: 2,
-      logo: <AntdIcon />,
-    },
-    {
       id: 'empty-9',
       colSpan: 1,
+    },
+    {
+      id: 'antd',
+      colSpan: 2,
+      logo: <AntdIcon />,
     },
     {
       id: 'empty-10',
@@ -82,13 +82,13 @@ export default function AboutMe() {
     },
     // Row 2
     {
+      id: 'empty-11',
+      colSpan: 1,
+    },
+    {
       id: 'nestjs',
       colSpan: 2,
       logo: <NestjsIcon />,
-    },
-    {
-      id: 'empty-11',
-      colSpan: 1,
     },
     {
       id: 'postgresql',

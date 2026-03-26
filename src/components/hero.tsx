@@ -57,7 +57,7 @@ export default function Hero() {
           {siteConfig.name}
         </h1>
 
-        <p className='fade-in slide-in-from-bottom-10 mx-auto max-w-md animate-in fill-mode-backwards text-center text-base text-foreground/80 tracking-wider delay-200 duration-500 ease-out sm:text-lg md:text-xl'>
+        <p className='fade-in slide-in-from-bottom-10 px-4 mx-auto max-w-md animate-in fill-mode-backwards text-center text-base text-foreground/80 tracking-wider delay-200 duration-500 ease-out sm:text-lg md:text-xl'>
           {siteConfig.description}
         </p>
 
