@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
+
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { ReactNode } from 'react';
 
 type Porps = {
   children: ReactNode;
