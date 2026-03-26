@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './globals.css';
 import './rc-image.css';
 import { siteConfig } from '@/config/siteConfig';
@@ -8,11 +7,11 @@ import Providers from '@/components/providers';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { cn } from '@/lib/utils';
+import { Outfit } from 'next/font/google';
 
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
+export const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap', // optional, 'swap' is a good default
 });
 
 export const metadata: Metadata = {
@@ -36,7 +35,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${geistMono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${outfit.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <Providers>
           <main className='flex-1'>{children}</main>

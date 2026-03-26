@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import React from 'react';
 
 import AboutMe from '@/components/about-me';
 import Hero from '@/components/hero';
@@ -12,11 +13,11 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <React.Fragment>
       <Hero />
       <AboutMe />
       <LatestProjects />
       <MyExperience />
-    </main>
+    </React.Fragment>
   );
 }
