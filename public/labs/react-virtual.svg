@@ -1,54 +1,96 @@
 <svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
   <rect width="600" height="400" fill="#0a0a0a"/>
-  
+
   <defs>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <linearGradient id="virtualGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <mask id="virtualMask">
+      <rect x="200" y="100" width="200" height="200" fill="white"/>
+    </mask>
   </defs>
 
-  <path d="M100 200 H500" stroke="#262626" stroke-width="2" stroke-dasharray="8 8"/>
+  <!-- Grid background -->
+  <g stroke="#1f1f1f" stroke-width="1">
+    <line x1="100" y1="100" x2="500" y2="100"/>
+    <line x1="100" y1="150" x2="500" y2="150"/>
+    <line x1="100" y1="200" x2="500" y2="200"/>
+    <line x1="100" y1="250" x2="500" y2="250"/>
+    <line x1="100" y1="300" x2="500" y2="300"/>
+    <line x1="100" y1="100" x2="100" y2="300"/>
+    <line x1="200" y1="100" x2="200" y2="300"/>
+    <line x1="300" y1="100" x2="300" y2="300"/>
+    <line x1="400" y1="100" x2="400" y2="300"/>
+    <line x1="500" y1="100" x2="500" y2="300"/>
+  </g>
 
-  <rect x="225" y="150" width="150" height="100" rx="8" fill="none" stroke="#0ea5e9" stroke-width="2" filter="url(#glow)">
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  <!-- Scrollable container frame -->
+  <rect x="200" y="100" width="200" height="200" fill="#111" stroke="#262626" stroke-width="2" rx="4"/>
+
+  <!-- Virtual items (visible viewport) -->
+  <g mask="url(#virtualMask)">
+    <g transform="translate(0, 0)">
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 -40; 0 0" dur="2s" repeatCount="indefinite"/>
+
+      <!-- Item 1 -->
+      <rect x="210" y="110" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="120" width="60" height="10" fill="#333" rx="1"/>
+      <rect x="290" y="120" width="80" height="10" fill="#1f1f1f" rx="1"/>
+
+      <!-- Item 2 -->
+      <rect x="210" y="150" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="160" width="40" height="10" fill="#333" rx="1"/>
+      <rect x="270" y="160" width="100" height="10" fill="#1f1f1f" rx="1"/>
+
+      <!-- Item 3 (active/highlighted) -->
+      <rect x="210" y="190" width="180" height="30" fill="url(#virtualGrad)" opacity="0.2" stroke="#38bdf8" stroke-width="1" rx="2"/>
+      <rect x="220" y="200" width="80" height="10" fill="#38bdf8" opacity="0.8" rx="1"/>
+      <rect x="310" y="200" width="60" height="10" fill="#a855f7" opacity="0.6" rx="1"/>
+
+      <!-- Item 4 -->
+      <rect x="210" y="230" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="240" width="50" height="10" fill="#333" rx="1"/>
+      <rect x="280" y="240" width="90" height="10" fill="#1f1f1f" rx="1"/>
+
+      <!-- Item 5 -->
+      <rect x="210" y="270" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="280" width="70" height="10" fill="#333" rx="1"/>
+      <rect x="300" y="280" width="70" height="10" fill="#1f1f1f" rx="1"/>
+
+      <!-- Extra items for scroll effect -->
+      <rect x="210" y="310" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="320" width="55" height="10" fill="#333" rx="1"/>
+
+      <rect x="210" y="350" width="180" height="30" fill="#171717" stroke="#262626" rx="2"/>
+      <rect x="220" y="360" width="45" height="10" fill="#333" rx="1"/>
+    </g>
+  </g>
+
+  <!-- Viewport highlight -->
+  <rect x="210" y="190" width="180" height="30" fill="none" stroke="url(#virtualGrad)" stroke-width="2" rx="2" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
   </rect>
 
-  <g transform="translate(100, 200)">
-    <g id="cube">
-      <rect x="-10" y="-10" width="20" height="20" rx="4" fill="#404040" stroke="#525252" stroke-width="1">
-        <animate attributeName="fill" values="#404040;#38bdf8;#404040" dur="4s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="stroke" values="#525252;#38bdf8;#525252" dur="4s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="width" values="20;25;20" dur="4s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="height" values="20;25;20" dur="4s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="x" values="-10;-12.5;-10" dur="4s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="y" values="-10;-12.5;-10" dur="4s" repeatCount="indefinite" begin="0s"/>
-      </rect>
-    </g>
-    
-    <animateTransform 
-      attributeName="transform" 
-      type="translate" 
-      from="-100 200" 
-      to="700 200" 
-      dur="4s" 
-      repeatCount="indefinite"
-    />
+  <!-- Scrollbar -->
+  <rect x="395" y="110" width="4" height="180" fill="#262626" rx="2"/>
+  <rect x="395" y="140" width="4" height="40" fill="#38bdf8" rx="2">
+    <animate attributeName="y" values="140;180;140" dur="2s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Counter -->
+  <g fill="#38bdf8" font-family="monospace" font-size="8" opacity="0.6">
+    <text x="150" y="200" text-anchor="end">rendered: 4</text>
+    <text x="150" y="215" text-anchor="end">total: 10,000</text>
   </g>
 
-  <g transform="translate(100, 200)">
-     <use href="#cube" x="0" y="0">
-       <animate attributeName="fill" values="#404040;#38bdf8;#404040" dur="4s" repeatCount="indefinite" begin="1s"/>
-       </use>
-     <animateTransform attributeName="transform" type="translate" from="-250 200" to="550 200" dur="4s" repeatCount="indefinite" begin="1s"/>
-  </g>
-    <g transform="translate(100, 200)">
-     <use href="#cube" x="0" y="0">
-       <animate attributeName="fill" values="#404040;#38bdf8;#404040" dur="4s" repeatCount="indefinite" begin="2s"/>
-     </use>
-     <animateTransform attributeName="transform" type="translate" from="-400 200" to="400 200" dur="4s" repeatCount="indefinite" begin="2s"/>
+  <!-- Decorative -->
+  <g fill="#a855f7" opacity="0.2">
+    <circle cx="120" cy="120" r="2">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="480" cy="280" r="3">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" begin="1s"/>
+    </circle>
   </g>
 </svg>
