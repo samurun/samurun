@@ -27,11 +27,11 @@ export default function Playlists() {
 
   if (isError) {
     return (
-      <div className='bg-secondary/30 border border-border p-6'>
-        <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-          {'// Playlists'}
+      <div className='border border-border/50 rounded-xl bg-card p-6'>
+        <h2 className='text-lg font-semibold tracking-tight mb-6'>
+          Playlists
         </h2>
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           Unable to load playlists right now.
         </p>
       </div>
@@ -41,12 +41,12 @@ export default function Playlists() {
   const playlists = data?.playlists ?? [];
 
   return (
-    <div className='bg-secondary/30 border border-border p-6'>
-      <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        {'// Playlists'}
+    <div className='border border-border/50 rounded-xl bg-card p-6'>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>
+        Playlists
       </h2>
       {playlists.length === 0 ? (
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           {data?.message || 'No playlists found for this account.'}
         </p>
       ) : (
@@ -59,7 +59,7 @@ export default function Playlists() {
               rel='noopener noreferrer'
               className='group block'
             >
-              <div className='relative aspect-square w-full mb-3 grayscale group-hover:grayscale-0 transition-all border border-border'>
+              <div className='relative aspect-square w-full mb-3 rounded-md overflow-hidden border border-border/50'>
                 {playlist.coverImage ? (
                   <Image
                     src={playlist.coverImage}
@@ -77,10 +77,10 @@ export default function Playlists() {
                 )}
               </div>
               <div>
-                <p className='text-xs font-bold font-mono uppercase tracking-wider truncate group-hover:text-primary transition-colors'>
+                <p className='text-xs font-semibold tracking-tight truncate group-hover:text-primary transition-colors'>
                   {playlist.name}
                 </p>
-                <p className='text-[10px] text-muted-foreground font-mono'>
+                <p className='text-xs text-muted-foreground'>
                   {playlist.tracks} Tracks
                 </p>
               </div>

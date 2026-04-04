@@ -8,27 +8,25 @@ import { cn } from '@/lib/utils';
 
 export default function LatestProjects() {
   return (
-    <section className='border-b border-border'>
+    <section className='border-b border-border/50'>
       <div className='container py-20'>
         <div className='flex items-center justify-between mb-12'>
-          <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // LATEST PROJECTS
+          <h2 className='text-lg font-semibold tracking-tight'>
+            Latest Projects
           </h2>
           <Link
             href={'/projects'}
             className={cn(
               buttonVariants({ variant: 'link' }),
-              'font-mono text-[10px] uppercase tracking-widest',
+              'text-sm text-muted-foreground',
             )}
           >
             All Projects &rarr;
           </Link>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 border-t border-l border-border'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {projects.map((project) => (
-            <div key={project.slug} className='border-r border-b border-border'>
-              <ProjectCard project={project} />
-            </div>
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
       </div>

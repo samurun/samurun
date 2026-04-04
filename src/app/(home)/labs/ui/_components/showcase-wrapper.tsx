@@ -103,7 +103,7 @@ export function ShowcaseWrapper({
       </CardHeader>
       <CardContent className='pt-4'>
         {tabsValue === 'preview' && (
-          <div className='flex items-center justify-center min-h-96'>
+          <div className='flex items-center justify-center min-h-96 max-h-96 overflow-auto'>
             {children}
           </div>
         )}

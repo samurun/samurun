@@ -28,11 +28,11 @@ export default function TopTracks() {
 
   if (isError) {
     return (
-      <div className='bg-secondary/30 border border-border p-6'>
-        <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-          {'// Top Tracks'}
+      <div className='border border-border/50 rounded-xl bg-card p-6'>
+        <h2 className='text-lg font-semibold tracking-tight mb-6'>
+          Top Tracks
         </h2>
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           Unable to load tracks right now.
         </p>
       </div>
@@ -42,12 +42,12 @@ export default function TopTracks() {
   const tracks = data?.tracks ?? [];
 
   return (
-    <div className='bg-secondary/30 border border-border p-6'>
-      <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        {'// Top Tracks'}
+    <div className='border border-border/50 rounded-xl bg-card p-6'>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>
+        Top Tracks
       </h2>
       {tracks.length === 0 ? (
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           {data?.message || 'No top tracks found for this account.'}
         </p>
       ) : (
@@ -60,10 +60,10 @@ export default function TopTracks() {
               rel='noopener noreferrer'
               className='flex items-center gap-4 group'
             >
-              <span className='font-mono text-muted-foreground w-4 text-right'>
+              <span className='text-xs text-muted-foreground w-4 text-right'>
                 {idx + 1}
               </span>
-              <div className='relative size-12 flex-none grayscale group-hover:grayscale-0 transition-all'>
+              <div className='relative size-12 flex-none rounded-md overflow-hidden'>
                 <Image
                   src={track.albumImageUrl}
                   alt={track.title}
@@ -73,7 +73,7 @@ export default function TopTracks() {
                 />
               </div>
               <div className='flex-1 min-w-0'>
-                <p className='text-sm font-bold truncate group-hover:text-primary transition-colors'>
+                <p className='text-sm font-semibold tracking-tight truncate group-hover:text-primary transition-colors'>
                   {track.title}
                 </p>
                 <p className='text-xs text-muted-foreground truncate'>

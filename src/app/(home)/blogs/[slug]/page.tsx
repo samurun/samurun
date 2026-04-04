@@ -40,7 +40,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <main className="border-b border-border min-h-screen">
+    <main className="border-b border-border/50 min-h-screen">
       <div className="container py-20">
         <div className="mb-12">
           <BackButton />
@@ -50,11 +50,10 @@ export default async function Page({ params }: PageProps) {
           <div className="flex items-center gap-4">
             <time
               dateTime={post.date}
-              className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground"
+              className="text-xs text-muted-foreground"
             >
               {formatDate(post.date, 'MMMM dd, yyyy')}
             </time>
-            <div className="h-[1px] flex-1 bg-border/50" />
           </div>
           <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
           {post.tags && post.tags.length > 0 && (
@@ -62,9 +61,9 @@ export default async function Page({ params }: PageProps) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-mono text-[9px] px-2 py-0.5 border border-border bg-secondary text-muted-foreground uppercase tracking-widest"
+                  className="text-[11px] px-2 py-0.5 rounded-md bg-secondary text-muted-foreground"
                 >
-                  #{tag}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -74,8 +73,8 @@ export default async function Page({ params }: PageProps) {
         <article className="prose dark:prose-invert prose-zinc max-w-none">
           <MDXContent code={post.body} />
         </article>
-        <div className="mt-20 pt-8 border-t border-border">
-          <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+        <div className="mt-20 pt-8 border-t border-border/50">
+          <p className="text-xs text-muted-foreground">
             Last updated: {formatDate(post.date, 'yyyy-MM-dd')}
           </p>
         </div>

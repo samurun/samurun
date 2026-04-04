@@ -9,13 +9,13 @@ export const metadata = {
 
 function PostItem({ post }: { post: any }) {
   return (
-    <div className='group border-b border-border p-6 hover:bg-secondary transition-colors'>
+    <div className='group rounded-xl p-5 hover:bg-secondary/50 transition-colors duration-200'>
       <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
         <div className='flex flex-col gap-1'>
-          <h3 className='text-sm font-bold uppercase tracking-widest'>
+          <h3 className='text-sm font-semibold tracking-tight'>
             <Link
               href={`/blogs/${post.slugAsParams}`}
-              className='hover:underline underline-offset-4'
+              className='group-hover:text-primary transition-colors'
             >
               {post.title}
             </Link>
@@ -26,18 +26,18 @@ function PostItem({ post }: { post: any }) {
             </p>
           )}
         </div>
-        <div className='flex items-center gap-4'>
-          <div className='font-mono text-[10px] text-muted-foreground uppercase tracking-widest'>
+        <div className='flex items-center gap-3'>
+          <span className='text-xs text-muted-foreground'>
             {formatDate(post.date, 'MMM dd, yyyy')}
-          </div>
+          </span>
           {post.tags && post.tags.length > 0 && (
-            <div className='hidden sm:flex items-center gap-2'>
+            <div className='hidden sm:flex items-center gap-1.5'>
               {post.tags.slice(0, 2).map((tag: string) => (
                 <span
                   key={tag}
-                  className='font-mono text-[9px] px-2 py-0.5 border border-border bg-background text-muted-foreground uppercase tracking-tighter'
+                  className='text-[11px] px-2 py-0.5 rounded-md bg-secondary text-muted-foreground'
                 >
-                  #{tag}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -54,15 +54,14 @@ export default function Page() {
   );
 
   return (
-    <main className='border-b border-border min-h-screen'>
+    <main className='border-b border-border/50 min-h-screen'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // BLOGS & ARTICLES
+        <div className='mb-12'>
+          <h1 className='text-lg font-semibold tracking-tight'>
+            Blogs & Articles
           </h1>
-          <div className='h-[1px] flex-1 bg-border/50' />
         </div>
-        <div className='border-t border-x border-border'>
+        <div className='space-y-1'>
           {sortedPosts.map((post) => (
             <PostItem key={post.slug} post={post} />
           ))}

@@ -1,16 +1,22 @@
 .rc-image-preview-close,
 .rc-image-preview-switch-right,
 .rc-image-preview-switch-left {
-  border-radius: 0px !important;
-  border: 1px var(--color-border) solid !important;
+  border-radius: 9999px !important;
+  border: 1px rgba(255, 255, 255, 0.1) solid !important;
   padding: 8px !important;
-  background-color: #00000073 !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
   color: #fff !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 36px !important;
+  height: 36px !important;
+  transition: all 0.2s ease !important;
 }
 
-.rc-image-preview-close:hover {
+.rc-image-preview-close:hover,
+.rc-image-preview-switch-right:hover,
+.rc-image-preview-switch-left:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
   opacity: 1 !important;
 }
 
@@ -22,10 +28,11 @@
 }
 
 .rc-image-preview-operations {
-  border-radius: 0px !important;
-  border: 1px var(--color-border) solid !important;
-  padding-right: 4px !important;
-  padding-left: 4px !important;
+  border-radius: 12px !important;
+  border: 1px rgba(255, 255, 255, 0.1) solid !important;
+  padding: 4px 8px !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .rc-image-preview-operations svg {
