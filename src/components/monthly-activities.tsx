@@ -1,5 +1,3 @@
-import { Card, CardContent } from './ui/card';
-
 export default function MonthlyActivities() {
   const activities = [
     { label: 'Total Activities', value: '1' },
@@ -8,24 +6,23 @@ export default function MonthlyActivities() {
   ];
 
   return (
-    <section className='border-b border-border bg-secondary/10'>
+    <section className='border-b border-border/50'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // MONTHLY STATS
+        <div className='mb-12'>
+          <h2 className='text-lg font-semibold tracking-tight'>
+            Monthly Stats
           </h2>
-          <div className='h-[1px] flex-1 bg-border/50' />
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 border-t border-l border-border'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
           {activities.map((item, i) => (
             <div
               key={i}
-              className='p-8 border-r border-b border-border hover:bg-secondary/50 transition-colors'
+              className='rounded-xl border border-border/50 bg-card p-8 hover:border-border transition-colors'
             >
-              <div className='text-3xl font-bold tracking-tighter font-mono'>
+              <div className='text-3xl font-bold tracking-tight'>
                 {item.value}
               </div>
-              <div className='text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-2'>
+              <div className='text-xs text-muted-foreground mt-2'>
                 {item.label}
               </div>
             </div>

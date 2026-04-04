@@ -27,11 +27,11 @@ export default function TopArtists() {
 
   if (isError) {
     return (
-      <div className='bg-secondary/30 border border-border p-6'>
-        <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-          {'// Top Artists'}
+      <div className='border border-border/50 rounded-xl bg-card p-6'>
+        <h2 className='text-lg font-semibold tracking-tight mb-6'>
+          Top Artists
         </h2>
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           Unable to load artists right now.
         </p>
       </div>
@@ -41,12 +41,12 @@ export default function TopArtists() {
   const artists = data?.artists ?? [];
 
   return (
-    <div className='bg-secondary/30 border border-border p-6'>
-      <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        {'// Top Artists'}
+    <div className='border border-border/50 rounded-xl bg-card p-6'>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>
+        Top Artists
       </h2>
       {artists.length === 0 ? (
-        <p className='text-xs text-muted-foreground font-mono'>
+        <p className='text-xs text-muted-foreground'>
           {data?.message || 'No top artists found for this account.'}
         </p>
       ) : (
@@ -59,7 +59,7 @@ export default function TopArtists() {
               rel='noopener noreferrer'
               className='group flex flex-col items-center text-center gap-3'
             >
-              <div className='relative size-24 rounded-full overflow-hidden grayscale group-hover:grayscale-0 transition-all border border-border'>
+              <div className='relative size-24 rounded-full overflow-hidden border border-border/50'>
                 <Image
                   src={artist.coverImage}
                   alt={artist.name}
@@ -69,10 +69,10 @@ export default function TopArtists() {
                 />
               </div>
               <div>
-                <p className='text-xs font-bold group-hover:text-primary transition-colors'>
+                <p className='text-xs font-semibold tracking-tight group-hover:text-primary transition-colors'>
                   {artist.name}
                 </p>
-                <p className='text-[10px] text-muted-foreground font-mono mt-1'>
+                <p className='text-xs text-muted-foreground mt-1'>
                   {artist.followers.toLocaleString()} Followers
                 </p>
               </div>

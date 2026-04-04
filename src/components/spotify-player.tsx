@@ -16,11 +16,11 @@ export type Song = {
 };
 
 const SpotifySkeleton = () => (
-  <div className='border border-border p-2 bg-secondary/50 rounded-none w-fit flex items-center gap-3 animate-pulse'>
-    <div className='size-8 bg-border' />
+  <div className='border border-border/50 p-2.5 bg-card/50 rounded-lg w-fit flex items-center gap-3 animate-pulse'>
+    <div className='size-8 bg-secondary rounded-md' />
     <div className='space-y-1'>
-      <div className='w-24 h-3 bg-border' />
-      <div className='w-16 h-2 bg-border' />
+      <div className='w-24 h-3 bg-secondary rounded' />
+      <div className='w-16 h-2 bg-secondary rounded' />
     </div>
   </div>
 );
@@ -35,9 +35,7 @@ const StatusIndicator = () => (
 const NotPlaying = () => (
   <>
     <SpotifyIcon className='size-6 text-muted-foreground' />
-    <p className='text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground'>
-      Not Playing
-    </p>
+    <p className='text-xs text-muted-foreground'>Not Playing</p>
   </>
 );
 
@@ -52,10 +50,10 @@ export default function SpotifyPlayer() {
   }
 
   return (
-    <div className='group border border-border p-2 bg-secondary/30 hover:bg-secondary/50 transition-colors rounded-none w-fit flex items-center gap-3'>
+    <div className='group border border-border/50 p-2.5 bg-card/50 hover:bg-card transition-colors rounded-lg w-fit flex items-center gap-3'>
       {data?.isPlaying ? (
         <>
-          <div className='size-8 relative grayscale group-hover:grayscale-0 transition-all'>
+          <div className='size-8 relative rounded-md overflow-hidden'>
             <Image
               fill
               src={data.song.albumImageUrl}
@@ -67,11 +65,11 @@ export default function SpotifyPlayer() {
           <div className='text-start'>
             <div className='flex items-center gap-2'>
               <StatusIndicator />
-              <p className='text-[11px] font-bold tracking-tight line-clamp-1 max-w-[120px]'>
+              <p className='text-[11px] font-semibold tracking-tight line-clamp-1 max-w-[120px]'>
                 {data.song.title}
               </p>
             </div>
-            <p className='text-[9px] font-mono text-muted-foreground uppercase tracking-widest'>
+            <p className='text-[10px] text-muted-foreground'>
               {data.song.artist}
             </p>
           </div>

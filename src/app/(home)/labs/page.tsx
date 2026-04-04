@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
-import Card from '@/components/card';
+import Card from '@/components/lab-card';
+import {
+  UiComponentsIllustration,
+  ModernCssIllustration,
+  EchartIllustration,
+  ReactVirtualIllustration,
+} from '@/components/lab-illustrations';
+import LabCard from '@/components/lab-card';
 
 export const metadata: Metadata = {
   title: 'Labs',
@@ -11,7 +18,7 @@ const labs = [
     title: 'UI Components',
     description:
       'Handcrafted UI components built from scratch for specific use cases.',
-    image: '/labs/ui-components.svg',
+    thumbnail: <UiComponentsIllustration />,
     href: '/labs/ui',
     tags: ['ui', 'components'],
   },
@@ -19,7 +26,7 @@ const labs = [
     title: 'Modern CSS',
     description:
       'Exploring modern CSS features and techniques for responsive design.',
-    image: '/labs/modern-css.svg',
+    thumbnail: <ModernCssIllustration />,
     href: '/labs/modern-css',
     tags: ['css', 'responsive'],
   },
@@ -27,7 +34,7 @@ const labs = [
     title: 'ECharts',
     description:
       'Interactive charts and data visualizations using Apache ECharts.',
-    image: '/labs/echart.svg',
+    thumbnail: <EchartIllustration />,
     href: '/labs/echarts',
     tags: ['charts', 'data-viz'],
   },
@@ -35,7 +42,7 @@ const labs = [
     title: 'React Virtual',
     description:
       'Virtualize only the visible content for massive scrollable DOM.',
-    image: '/labs/react-virtual.svg',
+    thumbnail: <ReactVirtualIllustration />,
     href: '/labs/virtual',
     tags: ['performance', 'virtualization'],
   },
@@ -43,19 +50,19 @@ const labs = [
 
 export default function Page() {
   return (
-    <main className='border-b border-border min-h-screen'>
+    <main className='border-b border-border/50 min-h-screen'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // ALL LABS {labs.length}
+        <div className='mb-12'>
+          <h1 className='text-lg font-semibold tracking-tight'>
+            Labs
+            <span className='text-sm text-muted-foreground ml-2'>
+              {labs.length}
+            </span>
           </h1>
-          <div className='h-px flex-1 bg-border/50' />
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 border-t border-l border-border'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {labs.map((lab) => (
-            <div key={lab.title} className='border-r border-b border-border'>
-              <Card item={lab} />
-            </div>
+            <LabCard key={lab.title} item={lab} />
           ))}
         </div>
       </div>

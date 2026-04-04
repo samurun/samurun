@@ -40,9 +40,9 @@ export default function RecentlyPlayed() {
   }
 
   return (
-    <div className='bg-secondary/30 border border-border p-6'>
-      <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        {'// Recently Played'}
+    <div className='border border-border/50 rounded-xl bg-card p-6'>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>
+        Recently Played
       </h2>
       <div className='flex flex-col gap-4'>
         {data?.tracks.map((track) => (
@@ -53,7 +53,7 @@ export default function RecentlyPlayed() {
             rel='noopener noreferrer'
             className='flex items-center gap-4 group'
           >
-            <div className='relative size-10 flex-none grayscale group-hover:grayscale-0 transition-all'>
+            <div className='relative size-10 flex-none rounded-md overflow-hidden'>
               <Image
                 src={track.albumImageUrl}
                 alt={track.title}
@@ -63,14 +63,14 @@ export default function RecentlyPlayed() {
               />
             </div>
             <div className='flex-1 min-w-0'>
-              <p className='text-xs font-bold truncate group-hover:text-primary transition-colors'>
+              <p className='text-xs font-semibold tracking-tight truncate group-hover:text-primary transition-colors'>
                 {track.title}
               </p>
               <p className='text-[10px] text-muted-foreground truncate'>
                 {track.artist}
               </p>
             </div>
-            <span className='text-[10px] font-mono text-muted-foreground whitespace-nowrap'>
+            <span className='text-xs text-muted-foreground whitespace-nowrap'>
               {timeAgo(track.playedAt)}
             </span>
           </a>

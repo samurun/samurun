@@ -32,14 +32,14 @@ export default function NowPlaying() {
   }
 
   return (
-    <div className='bg-secondary/30 border border-border p-6'>
-      <h2 className='text-sm font-mono font-bold uppercase tracking-widest mb-6'>
-        {'// Now Playing'}
+    <div className='border border-border/50 rounded-xl bg-card p-6'>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>
+        Now Playing
       </h2>
 
       {data?.isPlaying ? (
         <div className='flex flex-col gap-4'>
-          <div className='relative aspect-square w-full grayscale group-hover:grayscale-0 transition-all border border-border'>
+          <div className='relative aspect-square w-full rounded-md overflow-hidden border border-border/50'>
             <Image
               src={data.song.albumImageUrl}
               alt={data.song.title}
@@ -55,16 +55,16 @@ export default function NowPlaying() {
                 href={data.song.songUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-lg font-bold hover:text-primary transition-colors truncate'
+                className='text-lg font-semibold tracking-tight hover:text-primary transition-colors truncate'
               >
                 {data.song.title}
               </a>
               <StatusIndicator />
             </div>
-            <p className='text-sm text-muted-foreground font-mono truncate'>
+            <p className='text-sm text-muted-foreground truncate'>
               {data.song.artist}
             </p>
-            <p className='text-xs text-muted-foreground/60 font-mono truncate'>
+            <p className='text-xs text-muted-foreground/60 truncate'>
               {data.song.album}
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function NowPlaying() {
       ) : (
         <div className='flex flex-col items-center justify-center h-48 gap-4 text-muted-foreground'>
           <SpotifyIcon className='size-12 opacity-50' />
-          <p className='text-xs font-mono uppercase tracking-widest'>
+          <p className='text-xs text-muted-foreground'>
             Not Playing
           </p>
         </div>

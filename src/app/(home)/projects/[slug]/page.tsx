@@ -51,7 +51,7 @@ export default async function Page({ params }: PageProps) {
   const projectImages = getProjectImages(project!);
 
   return (
-    <main className='border-b border-border min-h-screen'>
+    <main className='border-b border-border/50 min-h-screen'>
       <div className='container py-20'>
         <div className='mb-12'>
           <BackButton />
@@ -59,10 +59,9 @@ export default async function Page({ params }: PageProps) {
 
         <div className='flex items-center justify-between gap-4 mb-12'>
           <div className='flex items-center gap-4 flex-1'>
-            <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
+            <h1 className='text-lg font-semibold tracking-tight'>
               {project!.title}
             </h1>
-            <div className='h-px flex-1 bg-border/50' />
           </div>
           {project!.links.demo && (
             <Link
@@ -80,7 +79,7 @@ export default async function Page({ params }: PageProps) {
         <div className='grid grid-cols-1 gap-4'>
           <div>
             {project!.cover && (
-              <div className='relative w-full aspect-video border border-border overflow-hidden mb-12 bg-muted/20'>
+              <div className='relative w-full aspect-video border border-border/50 rounded-xl overflow-hidden mb-12 bg-muted/20'>
                 <Image
                   src={project!.cover}
                   alt={project!.title}

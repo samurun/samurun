@@ -37,11 +37,11 @@ function ActivityCard({ activity }: { activity: StravaActivity }) {
     : null;
 
   return (
-    <div className='group flex flex-col h-full overflow-hidden'>
-      <div className='aspect-video relative overflow-hidden bg-secondary border-b border-border'>
+    <div className='group flex flex-col h-full overflow-hidden rounded-xl border border-border/50 bg-card hover:border-border transition-all duration-200'>
+      <div className='aspect-video relative overflow-hidden rounded-t-xl bg-secondary'>
         <div className='absolute inset-0 flex items-center justify-center bg-linear-to-br from-[#fc4c02]/10 to-transparent'>
           <div className='text-center'>
-            <span className='font-mono text-4xl font-bold text-[#fc4c02]/30'>
+            <span className='text-4xl font-bold text-[#fc4c02]/30'>
               {activity.type === 'Run'
                 ? '🏃'
                 : activity.type === 'Ride'
@@ -52,54 +52,53 @@ function ActivityCard({ activity }: { activity: StravaActivity }) {
             </span>
           </div>
         </div>
-        <div className='absolute top-2 right-2 flex gap-1'>
-          <span className='font-mono text-[8px] px-1.5 py-0.5 border border-[#fc4c02]/30 bg-background/80 text-[#fc4c02] uppercase tracking-wider'>
+        <div className='absolute top-3 right-3'>
+          <span className='text-[11px] px-2 py-0.5 rounded-md bg-background/80 text-[#fc4c02] border border-[#fc4c02]/20'>
             {activity.type}
           </span>
         </div>
       </div>
-      <div className='space-y-3 flex-1 flex flex-col'>
-        <div className='space-y-1 flex-1 p-4 m-0'>
+      <div className='p-5 flex-1 flex flex-col gap-3'>
+        <div className='flex-1'>
           <Link
             href={`https://www.strava.com/activities/${activity.id}`}
             target='_blank'
-            className='inline-block'
           >
-            <h3 className='text-sm font-bold uppercase tracking-widest group-hover:underline line-clamp-1'>
+            <h3 className='text-sm font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-1'>
               {activity.name}
             </h3>
           </Link>
-          <div className='flex flex-wrap gap-3 pt-2'>
-            <div className='flex items-center gap-1 text-[10px] font-mono text-muted-foreground'>
+          <div className='flex flex-wrap gap-3 mt-2'>
+            <div className='flex items-center gap-1 text-xs text-muted-foreground'>
               <FootprintsIcon size={12} />
               <span>{distance} km</span>
             </div>
-            <div className='flex items-center gap-1 text-[10px] font-mono text-muted-foreground'>
+            <div className='flex items-center gap-1 text-xs text-muted-foreground'>
               <ClockIcon size={12} />
               <span>{duration}</span>
             </div>
-            <div className='flex items-center gap-1 text-[10px] font-mono text-muted-foreground'>
+            <div className='flex items-center gap-1 text-xs text-muted-foreground'>
               <MountainIcon size={12} />
               <span>{activity.total_elevation_gain} m</span>
             </div>
           </div>
           {location && (
-            <div className='flex items-center gap-1 text-[10px] font-mono text-muted-foreground pt-1'>
+            <div className='flex items-center gap-1 text-xs text-muted-foreground mt-1'>
               <MapPinIcon size={12} />
               <span className='line-clamp-1'>{location}</span>
             </div>
           )}
         </div>
-        <div className='flex items-center justify-between pt-4 border-t border-border/50 p-4'>
-          <div className='font-mono text-[9px] uppercase tracking-tighter text-muted-foreground'>
+        <div className='flex items-center justify-between pt-3 border-t border-border/30'>
+          <span className='text-xs text-muted-foreground'>
             {formatDistanceToNow(new Date(activity.start_date), {
               addSuffix: true,
             })}
-          </div>
+          </span>
           <Link
             href={`https://www.strava.com/activities/${activity.id}`}
             target='_blank'
-            className='font-mono text-[9px] uppercase hover:underline text-[#fc4c02]'
+            className='text-xs text-[#fc4c02] hover:underline'
           >
             View on Strava &rarr;
           </Link>
@@ -124,28 +123,25 @@ export default async function ActivitiesPage() {
   }
 
   return (
-    <main className='border-b border-border min-h-screen'>
+    <main className='border-b border-border/50 min-h-screen'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // RECENT ACTIVITIES {activities.length}
+        <div className='mb-12'>
+          <h1 className='text-lg font-semibold tracking-tight'>
+            Recent Activities
+            <span className='text-sm text-muted-foreground ml-2'>
+              {activities.length}
+            </span>
           </h1>
-          <div className='h-px flex-1 bg-border/50' />
         </div>
         {activities.length > 0 ? (
-          <div className='grid grid-cols-1 md:grid-cols-2 border-t border-l border-border'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             {activities.map((activity) => (
-              <div
-                key={activity.id}
-                className='border-r border-b border-border'
-              >
-                <ActivityCard activity={activity} />
-              </div>
+              <ActivityCard key={activity.id} activity={activity} />
             ))}
           </div>
         ) : (
-          <div className='text-center py-20 border border-border'>
-            <p className='text-muted-foreground font-mono text-sm'>
+          <div className='text-center py-20 rounded-xl border border-border/50 bg-card'>
+            <p className='text-muted-foreground text-sm'>
               No activities found
             </p>
           </div>

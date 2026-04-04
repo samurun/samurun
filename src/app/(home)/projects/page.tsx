@@ -8,19 +8,19 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <main className='border-b border-border min-h-screen'>
+    <main className='border-b border-border/50 min-h-screen'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h1 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            // ALL PROJECTS {projects.length}
+        <div className='mb-12'>
+          <h1 className='text-lg font-semibold tracking-tight'>
+            Projects
+            <span className='text-sm text-muted-foreground ml-2'>
+              {projects.length}
+            </span>
           </h1>
-          <div className='h-px flex-1 bg-border/50' />
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 border-t border-l border-border'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {projects.map((project) => (
-            <div key={project.slug} className='border-r border-b border-border'>
-              <ProjectCard project={project} />
-            </div>
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
       </div>

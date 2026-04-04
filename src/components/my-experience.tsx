@@ -5,53 +5,54 @@ import { calculateDuration } from '@/lib/utils';
 
 function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
   return (
-    <div className='group border-b border-border p-6 hover:bg-secondary transition-colors'>
+    <div className='group rounded-xl p-5 hover:bg-secondary/50 transition-colors duration-200'>
       <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
         <div className='flex items-center gap-4'>
-          <div className='flex-none grid place-content-center size-12 bg-secondary border border-border rounded-sm relative p-2 grayscale group-hover:grayscale-0 transition-all'>
+          <div className='flex-none grid place-content-center size-10 bg-secondary border border-border/50 rounded-lg relative p-2'>
             <Image
               fill
               src={item.logo}
               alt={item.company}
-              className='object-contain p-2'
-              sizes='48px'
+              className='object-contain p-1.5'
+              sizes='40px'
             />
           </div>
           <div>
-            <h3 className='text-sm font-bold uppercase tracking-widest'>
+            <h3 className='text-sm font-semibold tracking-tight'>
               {item.position}
             </h3>
-            <p className='text-xs font-mono text-muted-foreground'>
+            <p className='text-xs text-muted-foreground'>
               {item.company}{' '}
-              <span className='text-xs font-mono text-muted-foreground uppercase'>
-                ({item.type})
-              </span>
+              <span className='text-muted-foreground/70'>({item.type})</span>
             </p>
           </div>
         </div>
-        <div className='flex items-center gap-4'>
-          <div className='font-mono text-[10px] text-muted-foreground uppercase tracking-widest'>
+        <div className='flex items-center gap-3'>
+          <span className='text-xs text-muted-foreground'>
             {item.startDate} — {item.endDate ? item.endDate : 'Present'}
-          </div>
-          <div className='hidden sm:block font-mono text-[10px] px-2 py-0.5 border border-border bg-background text-muted-foreground'>
+          </span>
+          <span className='hidden sm:block text-xs px-2 py-0.5 rounded-md bg-secondary text-muted-foreground'>
             {calculateDuration(item.startDate, item.endDate)}
-          </div>
+          </span>
         </div>
       </div>
-      <ul className='mt-4 list-disc pl-4 space-y-2 max-w-2xl'>
+      <ul className='mt-3 list-disc pl-4 space-y-1.5 max-w-2xl'>
         {item.description.map((desc) => (
           <li
             key={desc}
-            className='text-[11px] text-muted-foreground leading-relaxed'
+            className='text-xs text-muted-foreground leading-relaxed'
           >
             {desc}
           </li>
         ))}
       </ul>
-      <div className='mt-4 flex flex-wrap gap-2 pl-4'>
+      <div className='mt-3 flex flex-wrap gap-1.5 pl-4'>
         {item.skills.map((skill) => (
-          <span key={skill} className='text-[10px] font-mono tracking-widest'>
-            #{skill}
+          <span
+            key={skill}
+            className='text-[11px] px-2 py-0.5 rounded-md bg-secondary text-muted-foreground'
+          >
+            {skill}
           </span>
         ))}
       </div>
@@ -61,15 +62,12 @@ function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
 
 export default function MyExperience() {
   return (
-    <section className='border-b border-border'>
+    <section className='border-b border-border/50'>
       <div className='container py-20'>
-        <div className='flex items-center gap-4 mb-12'>
-          <h2 className='text-sm font-mono font-bold uppercase tracking-[0.2em]'>
-            {'// EXPERIENCE'}
-          </h2>
-          <div className='h-1px flex-1 bg-border/50' />
+        <div className='mb-12'>
+          <h2 className='text-lg font-semibold tracking-tight'>Experience</h2>
         </div>
-        <div className='border-t border-x border-border'>
+        <div className='space-y-1'>
           {experiences.map((item, idx) => (
             <ExperienceItem
               key={`${item.company}-${item.startDate}`}

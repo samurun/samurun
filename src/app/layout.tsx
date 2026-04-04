@@ -7,11 +7,11 @@ import Providers from '@/components/providers';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { cn } from '@/lib/utils';
-import { Outfit } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-export const outfit = Outfit({
+const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // optional, 'swap' is a good default
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${outfit.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${inter.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <Providers>
           <main className='flex-1'>{children}</main>
