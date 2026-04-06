@@ -13,6 +13,18 @@ const nextConfig: NextConfig = {
       {
         hostname: 'mosaic.scdn.co',
       },
+      {
+        hostname: 'opengraph.githubassets.com',
+      },
+      {
+        hostname: 'raw.githubusercontent.com',
+      },
+      {
+        hostname: 'user-images.githubusercontent.com',
+      },
+      {
+        hostname: 'github.com',
+      },
     ],
   },
 };

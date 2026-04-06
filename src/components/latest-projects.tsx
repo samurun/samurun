@@ -4,9 +4,13 @@ import { buttonVariants } from './ui/button';
 import ProjectCard from './project-card';
 
 import { projects } from '@/data/project';
+import { getMergedProjects } from '@/lib/github';
 import { cn } from '@/lib/utils';
 
-export default function LatestProjects() {
+export default async function LatestProjects() {
+  const merged = await getMergedProjects(projects);
+  const latest = merged.slice(0, 4);
+
   return (
     <section className='border-b border-border/50'>
       <div className='container py-20'>
@@ -25,7 +29,7 @@ export default function LatestProjects() {
           </Link>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          {projects.map((project) => (
+          {latest.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
