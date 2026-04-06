@@ -1,5 +1,6 @@
-export const projects = [
+export const projects: ProjectType[] = [
   {
+    source: 'mdx',
     date: '2024-01-12',
     slug: 'xrb-farm',
     name: 'XRB Farm',
@@ -12,6 +13,7 @@ export const projects = [
     tags: ['vite', 'react', 'typescript', 'shadcn', 'tailwindcss', 'viem.sh'],
   },
   {
+    source: 'mdx',
     date: '2024-03-12',
     slug: 'land-manager',
     name: 'Land Manager',
@@ -31,6 +33,7 @@ export const projects = [
     ],
   },
   {
+    source: 'mdx',
     date: '2022-03-12',
     slug: 'net-zero-man',
     name: 'Net Zero Man',
@@ -44,4 +47,18 @@ export const projects = [
   },
 ];
 
-export type ProjectType = (typeof projects)[0];
+export type ProjectType = {
+  source: 'github' | 'mdx';
+  date: string;
+  slug: string;
+  name: string;
+  description: string;
+  cover: string;
+  links: {
+    github?: string | null;
+    demo?: string;
+  };
+  tags: string[];
+  /** If set, card links to this URL (external) instead of /projects/[slug] */
+  href?: string;
+};
