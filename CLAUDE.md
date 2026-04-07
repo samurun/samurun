@@ -1,4 +1,4 @@
-/# CLAUDE.md
+# CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -19,7 +19,7 @@ No test framework is configured.
 
 ## Architecture
 
-**Next.js 16 App Router** portfolio site with TypeScript, React 19, Tailwind CSS v4, and shadcn/ui (radix-lyra style).
+**Next.js 16 App Router** portfolio site with TypeScript, React 19.2, Tailwind CSS v4, and shadcn/ui. UI primitives mix `@radix-ui/*`, `radix-ui` (umbrella package), and `@base-ui/react`.
 
 ### Routing
 
@@ -28,6 +28,7 @@ All pages live under `src/app/(home)/` route group, which wraps content in Heade
 - `/` — Home (Hero, AboutMe, LatestProjects, MyExperience)
 - `/labs/*` — Interactive experiments (UI components, Modern CSS, ECharts, React Virtual)
 - `/projects/[slug]`, `/blogs/[slug]` — Dynamic MDX content pages
+- `/writings` — Long-form writing index
 - `/music` — Spotify integration dashboard
 - `/hiking`, `/activities` — Strava activity tracking
 - `/api/spotify/*` — Spotify API proxy routes
@@ -45,6 +46,7 @@ Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive 
 - **ShowcaseWrapper** (`src/app/(home)/labs/ui/_components/showcase-wrapper.tsx`): Wraps lab demos with Preview/Code tabs and Shiki syntax highlighting
 - **Card** (`src/components/card.tsx`): Reusable card accepting a `thumbnail: ReactNode` for inline SVG illustrations that respond to theme
 - **Lab illustrations** (`src/components/lab-illustrations/`): Inline SVG React components using Tailwind theme classes (`stroke-foreground`, `fill-card`, etc.) for dark/light mode support
+- **Tech stack icons** (`src/components/icons/`): Brand SVG components consumed by `AboutMe`. Icons should NOT hardcode `width`/`height` attributes — let the parent control sizing via Tailwind (e.g. `[&_svg]:h-6 [&_svg]:w-auto`) so wordmarks and square marks line up at the same optical height
 - **Providers** (`src/components/providers.tsx`): ThemeProvider + React Query QueryClientProvider
 
 ### External Integrations
@@ -61,3 +63,8 @@ Configured via `components.json`. Components live in `src/components/ui/`. Add n
 
 - `@/*` → `./src/*`
 - `#site/content` → `./.velite`
+
+### Dependency Notes
+
+- **`overrides.brace-expansion`** in `package.json` forces a safe version because ESLint 9.x still pins an old `minimatch@3` → `brace-expansion@1.1.12` (CVE GHSA-f886-m6hf-6m8v). Do not remove the override until ESLint upstream bumps its own deps — `npm audit` will regress to 1 moderate vuln.
+- **React Compiler** is active in Next 16.2 via `babel-plugin-react-compiler`. Lint will emit `react-hooks/incompatible-library` warnings on `useVirtualizer()` calls in `src/components/virtual/*` and the `/labs/virtual` page. These are informational — the compiler gracefully skips memoizing those components, TanStack Virtual handles its own memoization. Do not try to "fix" by wrapping or refactoring.
