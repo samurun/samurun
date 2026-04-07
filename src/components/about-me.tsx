@@ -71,7 +71,7 @@ export default function AboutMe() {
                 : 'bg-secondary/30 border-border/20',
             )}
             style={{
-              gridColumn: `span ${tile.colSpan || 1} / span ${tile.colSpan || 1};`,
+              gridColumn: `span ${tile.colSpan || 1} / span ${tile.colSpan || 1}`,
             }}
           >
             {tile.logo && (
