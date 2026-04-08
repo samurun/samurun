@@ -32,6 +32,7 @@ All pages live under `src/app/(home)/` route group, which wraps content in Heade
 - `/music` — Spotify integration dashboard
 - `/hiking`, `/activities` — Strava activity tracking
 - `/api/spotify/*` — Spotify API proxy routes
+- `/api/resume` — Server-rendered resume PDF (`force-static`, prerendered at build time)
 
 ### Content System
 
@@ -48,6 +49,8 @@ Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive 
 - **Lab illustrations** (`src/components/lab-illustrations/`): Inline SVG React components using Tailwind theme classes (`stroke-foreground`, `fill-card`, etc.) for dark/light mode support
 - **Tech stack icons** (`src/components/icons/`): Brand SVG components consumed by `AboutMe`. Icons should NOT hardcode `width`/`height` attributes — let the parent control sizing via Tailwind (e.g. `[&_svg]:h-6 [&_svg]:w-auto`) so wordmarks and square marks line up at the same optical height
 - **Providers** (`src/components/providers.tsx`): ThemeProvider + React Query QueryClientProvider
+- **Resume PDF** (`src/components/resume-pdf/ResumeDocument.tsx` + `src/app/api/resume/route.tsx`): JSX-based resume rendered with `@react-pdf/renderer`. **The PDF is the resume — there is no markdown source.** Content comes from two single sources of truth: experience entries from `src/data/experiences.ts` (shared with the on-page `MyExperience` component) and header/summary/skills/education from `src/data/resume-meta.ts`. Edit those data files, never try to regenerate from a markdown file. Inter variable TTF lives in `src/components/resume-pdf/fonts/` (server-only, NOT in `public/`) and is loaded via `process.cwd()` path so Next.js output file tracing bundles it for Vercel functions. The route is `runtime = 'nodejs'` + `dynamic = 'force-static'` so the PDF prerenders once at build time and serves as a cached static asset
+- **Experience data** (`src/data/experiences.ts`): Typed object literals with `as const satisfies readonly Experience[]` pattern (NOT class instances). The `Experience` type lives in `src/lib/experience.ts`. This shape is consumed by both `MyExperience` (web) and `ResumeDocument` (PDF) — keep them in sync by editing the data file alone
 
 ### External Integrations
 
@@ -68,3 +71,4 @@ Configured via `components.json`. Components live in `src/components/ui/`. Add n
 
 - **`overrides.brace-expansion`** in `package.json` forces a safe version because ESLint 9.x still pins an old `minimatch@3` → `brace-expansion@1.1.12` (CVE GHSA-f886-m6hf-6m8v). Do not remove the override until ESLint upstream bumps its own deps — `npm audit` will regress to 1 moderate vuln.
 - **React Compiler** is active in Next 16.2 via `babel-plugin-react-compiler`. Lint will emit `react-hooks/incompatible-library` warnings on `useVirtualizer()` calls in `src/components/virtual/*` and the `/labs/virtual` page. These are informational — the compiler gracefully skips memoizing those components, TanStack Virtual handles its own memoization. Do not try to "fix" by wrapping or refactoring.
+- **`@react-pdf/renderer`** powers `/api/resume`. It only supports a Flexbox subset of CSS (no grid, no media queries), embedded fonts must be **TTF or OTF only** (woff/woff2 are NOT supported), and the route must run on `runtime = 'nodejs'` (edge runtime will not work). React-PDF auto-subsets fonts, so the final PDF stays small even though `Inter.ttf` is 856 KB on disk.
