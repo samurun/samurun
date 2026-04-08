@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
+import { Download } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { TypescriptIcon } from './icons/typescrip-icon';
 import { ReactjsIcon } from './icons/reactjs-icon';
 import { NextjsIcon } from './icons/nextjs-icon';
@@ -57,6 +59,12 @@ export default function AboutMe() {
           pixel-perfect designs, I&apos;ve had the opportunity to work on
           various projects that have honed my skills and expertise.
         </p>
+        <Button asChild variant='outline' size='sm'>
+          <a href='/api/resume' download>
+            <Download className='size-4' />
+            Resume
+          </a>
+        </Button>
       </div>
 
       <div className='relative grid grid-cols-4 sm:grid-cols-8 gap-3'>
