@@ -6,14 +6,19 @@ import { VirtualizedSelect } from '@/components/virtual/virtualized-select';
 
 export const metadata: Metadata = {
   title: 'Virtualized Select Lab',
-  description: 'Virtualized select experiments with fixed and dynamic row heights.',
+  description:
+    'Virtualized select experiments with fixed and dynamic row heights.',
 };
 
 export default function Page() {
-  // The scrollable element for your list
-
   return (
-    <div>
+    <div className='space-y-6'>
+      <div>
+        <h1 className='font-bold'>Virtualized Select Lab</h1>
+        <p className='text-muted-foreground text-sm'>
+          Virtualized select experiments with fixed and dynamic row heights.
+        </p>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Virtualized Select</CardTitle>
