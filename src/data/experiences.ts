@@ -1,67 +1,114 @@
-import { Experience } from '@/lib/experience';
+import type { Experience } from '@/lib/experience';
 
-const datawow = new Experience({
-  logo: '/datawowio_logo.jpeg',
-  company: 'Data Wow',
-  position: 'Fullstack Developer',
-  type: 'Contract',
-  startDate: 'Dec 2024',
-  endDate: 'Dec 2025',
-  skills: ['TypeScript', "React", "Nextjs", "Vite", "Nestjs", "Docker"],
-  isRemote: true,
-  description: [
-    'Built a scalable design system and dynamic schema-based form architecture using Next.js, MUI, React Query, Formik, Yup, integrated i18next, enforced high maintainability with ESLint, Prettier, and developed backend features for master-data CRUD that feed the water-data.',
-    'Developed a responsive disaster data visualization platform using Next.js. Managed global state with React Context and built reusable UI components with Tailwind CSS. Integrated Axios and ECharts for data fetching and visualization. Enforced code quality with ESLint and Prettier. Implemented backend features for invitations, including email templates using react-mail and a cron-based user synchronization flow.',
-    'Designed and developed an end-to-end dashboard using React, TypeScript, and Vite. Implemented data synchronization with TanStack Query and built dynamic forms using React Hook Form and Zod. Created reusable UI components with Tailwind CSS and shadcn/ui, and containerized the application with Docker.',
-  ],
-});
+export const experiences = [
+  {
+    logo: '/datawowio_logo.jpeg',
+    company: 'Data Wow',
+    position: 'Fullstack Developer',
+    type: 'Contract',
+    startDate: 'Dec 2024',
+    endDate: 'Dec 2025',
+    isRemote: true,
+    skills: [
+      'TypeScript',
+      'React',
+      'Next.js',
+      'MUI',
+      'Tailwind CSS',
+      'shadcn/ui',
+      'TanStack Query',
+      'React Hook Form',
+      'Zod',
+      'Formik',
+      'Yup',
+      'ECharts',
+      'i18next',
+      'NestJS',
+      'Vite',
+      'Docker',
+      'Nginx',
+    ],
+    description: [
+      'Design System & Schema-Driven Form Architecture — Built a scalable design system and dynamic schema-based form engine in Next.js + MUI + Formik/Yup + React Query, enabling non-engineers to configure complex forms without code changes. Integrated i18next for full EN/TH localization, developed backend CRUD endpoints for master-data that powers downstream water-data pipelines, and enforced code quality with ESLint, Prettier, and shared lint configs across the team.',
+      'Disaster Data Visualization Platform — Shipped a responsive disaster monitoring dashboard with Next.js, React Context, Tailwind CSS, Axios, and ECharts, surfacing real-time disaster data to government stakeholders. Built reusable chart and layout components consumed across multiple internal dashboards. Implemented invitation flow on the backend with react-email templates and a cron-based user synchronization job.',
+      'End-to-End Internal Dashboard — Designed and delivered a full dashboard using React, TypeScript, Vite, TanStack Query, React Hook Form + Zod, Tailwind CSS, and shadcn/ui. Containerized with Docker + Nginx for reproducible deployments.',
+    ],
+  },
+  {
+    logo: '/the-monk-games.png',
+    company: 'The Monk Studios',
+    position: 'Frontend Web Developer',
+    type: 'Contract · Freelance',
+    startDate: 'Sep 2023',
+    endDate: 'Aug 2024',
+    isRemote: true,
+    skills: [
+      'React',
+      'TypeScript',
+      'Next.js',
+      'Tailwind CSS',
+      'Bitkub NEXT',
+      'Web3',
+      'Blockchain',
+      'NFT',
+      'Leaflet.js',
+    ],
+    description: [
+      'Developed a blockchain-based game web app with Bitkub NEXT wallet authentication and reward systems.',
+      'Built interactive maps for managing in-game buildings, concessions, and land plots.',
+      'Created an NFT asset management page (view, add/remove, access control) for user-owned items.',
+      'Built a React + TypeScript admin tool for game economy monitoring and asset control.',
+    ],
+  },
+  {
+    logo: '/kathi-logo.svg',
+    company: 'Kathi Studio Co.,Ltd',
+    position: 'Frontend Web Developer',
+    type: 'Full-time',
+    startDate: 'Sep 2021',
+    endDate: 'Sep 2023',
+    isRemote: true,
+    skills: [
+      'React',
+      'TypeScript',
+      'JavaScript',
+      'Flutter',
+      'Leaflet.js',
+      'ChillPay',
+      'Payment Gateway',
+      'i18next',
+      'REST APIs',
+      'Responsive Design',
+    ],
+    description: [
+      'Thai Net Zero Man (thainetzeroman.com) — Built a React/TypeScript carbon footprint calculator considering household size, electricity use, commute, and diet. Visualized emissions with charts and integrated ChillPay payment gateway for purchasing carbon credit offsets.',
+      'Noise4Thai (noise4thai.net) — Developed the frontend of a responsive noise-level monitoring platform with React and Leaflet.js, including map markers, location search, and bilingual EN/TH support via i18next.',
+      'ERG4Thai (erg4thai.com) — Built a responsive React frontend for an energy data visualization and reporting platform.',
+    ],
+  },
+  {
+    logo: '/isaac-tech-logo.jpeg',
+    company: 'iSAAC TECH',
+    position: 'Frontend Web Developer',
+    type: 'Full-time',
+    startDate: 'Jul 2019',
+    endDate: 'Oct 2020',
+    isRemote: false,
+    skills: [
+      'React',
+      'JavaScript',
+      'Vue.js',
+      'HTML5',
+      'CSS3',
+      'SCSS',
+      'CMS',
+      'UI Design',
+    ],
+    description: [
+      'Built a React-based CMS for media uploads and content scheduling across player devices.',
+      'Contributed Vue.js frontend and UI design for e-commerce client projects.',
+    ],
+  },
+] as const satisfies readonly Experience[];
 
-const themonkgames = new Experience({
-  logo: '/the-monk-games.png',
-  company: 'The Monk Studios',
-  position: 'Frontend Web Developer',
-  type: 'Contract',
-  startDate: 'Sep 2023',
-  endDate: 'Aug 2024',
-  description: [
-    'Developed a web app for a blockchain game with Bitkub NEXT wallet authentication. Implemented interactive maps for managing buildings, concessions, and land plots. Created a management page for organizing user-owned assets, including viewing, adding/removing NFTs, and setting access controls.',
-    'I developed a React website for a blockchain game, offering smooth user experiences and boosting player engagement. Additionally, I integrated wallet connection, character creation, and reward harvesting features, leveraging cutting-edge technologies',
-    'Developed a comprehensive in-game database management system using React and TypeScript, facilitating seamless asset control and economic monitoring.',
-  ],
-  skills: ['React.js', 'TypeScript'],
-  isRemote: true,
-});
-
-const kathi = new Experience({
-  logo: '/kathi-logo.svg',
-  company: 'Kathi Studio Co.,Ltd',
-  position: 'Frontend Web Developer',
-  type: 'Full-time',
-  startDate: 'Sep 2021',
-  endDate: 'Sep 2023',
-  description: [
-    'I built a React.js application with TypeScript to calculate your greenhouse gas emissions. It considers factors like household size, electricity use, commuting habits, and food choices. The app visualizes your footprint in a clear pie chart, and to empower action, it even allows you to offset emissions through carbon credit purchases.',
-    'Developed user interfaces using React.js to ensure responsive and interactive web applications, while integrating Leaflet.js for displaying noise levels and markers, enhancing search functionality. Implemented multilingual support for English and Thai languages',
-  ],
-  skills: ['React.js', 'TypeScript'],
-  isRemote: true,
-});
-
-const isaac = new Experience({
-  logo: '/isaac-tech-logo.jpeg',
-  company: 'iSAAC TECH',
-  position: 'Frontend Web Developer',
-  type: 'Full-time',
-  startDate: 'Jul 2019',
-  endDate: 'Oct 2020',
-  description: [
-    'Provide support for the implementation of E-commerce websites, including wireframing, front-end development, mobile application development, and user interface design with vue.js',
-    'Built a powerful Content Management System (CMS) using React.js. This CMS allows for efficient media uploads and content management, ensuring seamless content display on any playback device (player).',
-  ],
-  skills: ['React.js', 'JavaScript', 'Vue.js'],
-  isRemote: true,
-});
-
-export const experiences = [datawow, themonkgames, kathi, isaac];
-
-export type ExperienceType = (typeof experiences)[0];
+export type ExperienceType = (typeof experiences)[number];
