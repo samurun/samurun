@@ -15,7 +15,7 @@ export default async function Playlists() {
   let playlists: {
     name: string;
     url: string;
-    coverImage: string;
+    coverImage?: string;
     tracks: number;
   }[] = [];
   let message: string | undefined;
