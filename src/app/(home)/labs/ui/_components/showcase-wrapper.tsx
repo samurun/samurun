@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { Suspense, use } from 'react';
 import { CodeBlock } from './code-block';
 import { codeToHtml } from 'shiki';
 
@@ -42,6 +42,25 @@ async function highlightFiles(files: CodeFile[]): Promise<CodeFile[]> {
   );
 }
 
+function highlightCode(code: string): Promise<CodeFile[]> {
+  return codeToHtml(code, {
+    lang: 'tsx',
+    theme: 'github-dark',
+  }).then((highlightedCode) => [
+    {
+      filename: 'component.tsx',
+      code,
+      highlightedCode,
+      language: 'tsx',
+    },
+  ]);
+}
+
+function HighlightedCodeBlock({ filesPromise }: { filesPromise: Promise<CodeFile[]> }) {
+  const files = use(filesPromise);
+  return <CodeBlock files={files} />;
+}
+
 export function ShowcaseWrapper({
   title,
   description,
@@ -51,36 +70,11 @@ export function ShowcaseWrapper({
   className,
 }: ShowcaseWrapperProps) {
   const [tabsValue, setTabsValue] = React.useState('preview');
-  const [files, setFiles] = React.useState<CodeFile[] | undefined>(undefined);
-  const [isLoading, setIsLoading] = React.useState(!!filesProp || !!code);
 
-  React.useEffect(() => {
-    if (filesProp) {
-      setIsLoading(true);
-      highlightFiles(filesProp).then((highlightedFiles) => {
-        setFiles(highlightedFiles);
-        setIsLoading(false);
-      });
-      return;
-    }
-
-    if (code) {
-      setIsLoading(true);
-      codeToHtml(code, {
-        lang: 'tsx',
-        theme: 'github-dark',
-      }).then((highlightedCode) => {
-        setFiles([
-          {
-            filename: 'component.tsx',
-            code,
-            highlightedCode,
-            language: 'tsx',
-          },
-        ]);
-        setIsLoading(false);
-      });
-    }
+  const filesPromise = React.useMemo(() => {
+    if (filesProp) return highlightFiles(filesProp);
+    if (code) return highlightCode(code);
+    return null;
   }, [code, filesProp]);
 
   return (
@@ -107,14 +101,17 @@ export function ShowcaseWrapper({
             {children}
           </div>
         )}
-        {tabsValue === 'code' && files && (
+        {tabsValue === 'code' && filesPromise && (
           <div className='max-h-96 overflow-auto'>
-            <CodeBlock files={files} />
-          </div>
-        )}
-        {tabsValue === 'code' && isLoading && (
-          <div className='flex items-center justify-center py-8 text-muted-foreground'>
-            Loading code...
+            <Suspense
+              fallback={
+                <div className='flex items-center justify-center py-8 text-muted-foreground'>
+                  Loading code...
+                </div>
+              }
+            >
+              <HighlightedCodeBlock filesPromise={filesPromise} />
+            </Suspense>
           </div>
         )}
       </CardContent>

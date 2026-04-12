@@ -2,6 +2,9 @@ import { hikings } from '@/data/hikings';
 import HikingItem from '@/components/hiking/hiking-item';
 import { getHikingActivities } from '@/lib/strava';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
+
 export const metadata = {
   title: 'Hiking',
   description: 'My hiking adventures',
