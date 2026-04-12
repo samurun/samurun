@@ -4,9 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-inter), 'SF Pro Display', -apple-system, system-ui,
-    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-    sans-serif;
+  --font-sans:
+    var(--font-inter), 'SF Pro Display', -apple-system, system-ui, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --font-mono: 'Berkeley Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --font-weight-emphasis: 510;
@@ -35,7 +35,8 @@
   --shadow-inset-panel: inset 0 0 12px 0 rgba(0, 0, 0, 0.2);
   --shadow-ring-1: 0 0 0 1px rgba(0, 0, 0, 0.2);
   --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.4);
-  --shadow-dialog: 0 8px 2px rgba(0, 0, 0, 0), 0 5px 2px rgba(0, 0, 0, 0.01),
+  --shadow-dialog:
+    0 8px 2px rgba(0, 0, 0, 0), 0 5px 2px rgba(0, 0, 0, 0.01),
     0 3px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.07),
     0 0 1px rgba(0, 0, 0, 0.08);
   --shadow-focus: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -395,5 +396,38 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ── Theme toggle view transition ─────────────────── */
+::view-transition-group(root) {
+  animation-timing-function: var(--expo-in);
+}
+
+::view-transition-new(root) {
+  mask: url('https://media.tenor.com/iB2zknoEp94AAAAi/shooting-fire-din-djarin.gif')
+    center / 0 no-repeat;
+  animation: scale 1.5s;
+  animation-fill-mode: both;
+}
+
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: scale 1.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes scale {
+  0% {
+    mask-size: 0;
+  }
+  10% {
+    mask-size: 30vmax;
+  }
+  90% {
+    mask-size: 30vmax;
+  }
+  100% {
+    mask-size: 2000vmax;
   }
 }
