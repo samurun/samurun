@@ -51,7 +51,7 @@ const labs = [
 export default function Page() {
   return (
     <main className='border-b border-border/50 min-h-screen'>
-      <div className='container py-20'>
+      <div className=''>
         <div className='mb-12'>
           <h1 className='text-lg font-semibold tracking-tight'>
             Labs
