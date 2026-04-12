@@ -1,53 +1,50 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
-interface Playlist {
-  name: string;
-  url: string;
-  coverImage: string;
-  tracks: number;
-}
+import { getPlaylists } from '@/lib/spotify';
 
-type PlaylistsResponse = {
-  playlists: Playlist[];
-  message?: string;
+type SpotifyPlaylist = {
+  name: string;
+  external_urls: { spotify: string };
+  images: Array<{ url: string }>;
+  tracks: { total: number };
 };
 
-export default function Playlists() {
-  const { data, isLoading, isError } = useQuery<PlaylistsResponse>({
-    queryKey: ['playlists'],
-    queryFn: () => fetch('/api/spotify/playlists').then((res) => res.json()),
-  });
+export default async function Playlists() {
+  const response = await getPlaylists();
 
-  if (isLoading) {
-    return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;
+  let playlists: {
+    name: string;
+    url: string;
+    coverImage?: string;
+    tracks: number;
+  }[] = [];
+  let message: string | undefined;
+
+  if (!response.ok) {
+    message = 'Unable to load playlists right now.';
+  } else {
+    const { items } = (await response.json()) as {
+      items?: SpotifyPlaylist[];
+    };
+
+    if (!items?.length) {
+      message = 'No playlists found for this account.';
+    } else {
+      playlists = items.map((playlist) => ({
+        name: playlist.name,
+        url: playlist.external_urls.spotify,
+        coverImage: playlist.images[0]?.url,
+        tracks: playlist.tracks.total,
+      }));
+    }
   }
-
-  if (isError) {
-    return (
-      <div className='border border-border/50 rounded-xl bg-card p-6'>
-        <h2 className='text-lg font-semibold tracking-tight mb-6'>
-          Playlists
-        </h2>
-        <p className='text-xs text-muted-foreground'>
-          Unable to load playlists right now.
-        </p>
-      </div>
-    );
-  }
-
-  const playlists = data?.playlists ?? [];
 
   return (
     <div className='border border-border/50 rounded-xl bg-card p-6'>
-      <h2 className='text-lg font-semibold tracking-tight mb-6'>
-        Playlists
-      </h2>
+      <h2 className='text-lg font-semibold tracking-tight mb-6'>Playlists</h2>
       {playlists.length === 0 ? (
         <p className='text-xs text-muted-foreground'>
-          {data?.message || 'No playlists found for this account.'}
+          {message || 'No playlists found for this account.'}
         </p>
       ) : (
         <div className='grid grid-cols-2 gap-4'>

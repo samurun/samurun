@@ -399,25 +399,50 @@
   }
 }
 
-/* ── Theme toggle view transition ─────────────────── */
-::view-transition-group(root) {
-  animation-timing-function: var(--expo-in);
+/* ── Route view transition ─────────────────────────── */
+::view-transition-old(root) {
+  pointer-events: none;
+  animation: vt-fade-out 200ms ease-in both;
 }
 
 ::view-transition-new(root) {
+  animation: vt-fade-in 300ms ease-out 100ms both;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+/* ── Theme toggle view transition (only when .theme-transition is set) ── */
+
+.theme-transition::view-transition-group(root) {
+  animation-timing-function: var(--expo-in);
+}
+
+.theme-transition::view-transition-new(root) {
   mask: url('https://media.tenor.com/iB2zknoEp94AAAAi/shooting-fire-din-djarin.gif')
     center / 0 no-repeat;
-  animation: scale 1.5s;
+  animation: theme-scale 1.5s;
   animation-fill-mode: both;
 }
 
-::view-transition-old(root),
-.dark::view-transition-old(root) {
-  animation: scale 1.5s;
+.theme-transition::view-transition-old(root),
+.theme-transition.dark::view-transition-old(root) {
+  animation: theme-scale 1.5s;
   animation-fill-mode: both;
 }
 
-@keyframes scale {
+@keyframes theme-scale {
   0% {
     mask-size: 0;
   }

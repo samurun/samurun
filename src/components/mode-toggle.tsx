@@ -27,8 +27,14 @@ function toggleTheme(
     return;
   }
 
-  document.startViewTransition(() => {
+  document.documentElement.classList.add('theme-transition');
+
+  const transition = document.startViewTransition(() => {
     setTheme(theme);
+  });
+
+  transition.finished.then(() => {
+    document.documentElement.classList.remove('theme-transition');
   });
 }
 
