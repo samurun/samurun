@@ -3,5 +3,5 @@ interface LabLayoutProps {
 }
 
 export default function LabLayout({ children }: LabLayoutProps) {
-  return <div className='container py-6'>{children}</div>;
+  return <div className='container py-20'>{children}</div>;
 }

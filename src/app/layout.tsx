@@ -12,6 +12,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-inter',
+  axes: ['opsz'],
 });
 
 export const metadata: Metadata = {
@@ -35,7 +37,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${inter.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${inter.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        style={{ fontFeatureSettings: '"cv01", "ss03"' }}
       >
         <Providers>
           <main className='flex-1'>{children}</main>

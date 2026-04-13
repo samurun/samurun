@@ -79,7 +79,7 @@ export default async function Page({ params }: PageProps) {
         <div className='grid grid-cols-1 gap-4'>
           <div>
             {project!.cover && (
-              <div className='relative w-full aspect-video border border-border/50 rounded-xl overflow-hidden mb-12 bg-muted/20'>
+              <div className='relative w-full aspect-2/1 border border-border/50 rounded-xl overflow-hidden mb-12 bg-muted/20'>
                 <Image
                   src={project!.cover}
                   alt={project!.title}
