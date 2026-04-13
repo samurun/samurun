@@ -10,7 +10,7 @@ export const resumeMeta = {
     { label: 'LinkedIn', url: 'https://linkedin.com/in/fadlan-jehteerokee' },
   ],
   summary:
-    'Full Stack Developer with 4+ years building production React/Next.js applications, specializing in frontend architecture with 1+ year of full-stack delivery. Experienced in design systems, schema-driven forms, and data visualization platforms using TypeScript, React, Next.js, and Node.js.',
+    'Full Stack Developer with 4+ years delivering production React/Next.js applications for government, gaming, and environmental clients. Specializes in frontend architecture — design systems, schema-driven forms, and data visualization platforms — with hands-on full-stack delivery using Node.js and PostgreSQL. Proven ability to ship scalable, maintainable UIs in TypeScript with modern tooling. Seeking a mid-to-senior frontend or full-stack role where I can own architecture and drive technical decisions.',
   skills: [
     {
       label: 'Frontend',
