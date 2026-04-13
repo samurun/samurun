@@ -29,9 +29,9 @@ export const experiences = [
       'Nginx',
     ],
     description: [
-      'Design System & Schema-Driven Form Architecture — Built a scalable design system and dynamic schema-based form engine in Next.js + MUI + Formik/Yup + React Query, enabling non-engineers to configure complex forms without code changes. Integrated i18next for full EN/TH localization, developed backend CRUD endpoints for master-data that powers downstream water-data pipelines, and enforced code quality with ESLint, Prettier, and shared lint configs across the team.',
-      'Disaster Data Visualization Platform — Shipped a responsive disaster monitoring dashboard with Next.js, React Context, Tailwind CSS, Axios, and ECharts, surfacing real-time disaster data to government stakeholders. Built reusable chart and layout components consumed across multiple internal dashboards. Implemented invitation flow on the backend with react-email templates and a cron-based user synchronization job.',
-      'End-to-End Internal Dashboard — Designed and delivered a full dashboard using React, TypeScript, Vite, TanStack Query, React Hook Form + Zod, Tailwind CSS, and shadcn/ui. Containerized with Docker + Nginx for reproducible deployments.',
+      'Contributed frontend features and bug fixes to an in-progress schema-driven form engine built on Next.js + MUI + Formik/Yup + React Query, helping deliver the project on schedule. Developed backend CRUD endpoints for master-data that powers downstream water-data pipelines. Maintained code quality with shared ESLint/Prettier configs across the team.',
+      'Shipped a responsive disaster monitoring dashboard adopted by the Department of Disaster Prevention and Mitigation (DDPM), Ministry of Interior. Built with Next.js, ECharts, and Tailwind CSS, surfacing real-time disaster data to government stakeholders across multiple regions. Implemented invitation flow with react-email and a cron-based user sync job.',
+      'Designed and delivered a full internal dashboard deployed on factory intranet, built with React, TypeScript, Vite, TanStack Query, React Hook Form + Zod, and shadcn/ui. Containerized with Docker + Nginx for reproducible deployments.',
     ],
   },
   {
@@ -54,10 +54,7 @@ export const experiences = [
       'Leaflet.js',
     ],
     description: [
-      'Developed a blockchain-based game web app with Bitkub NEXT wallet authentication and reward systems.',
-      'Built interactive maps for managing in-game buildings, concessions, and land plots.',
-      'Created an NFT asset management page (view, add/remove, access control) for user-owned items.',
-      'Built a React + TypeScript admin tool for game economy monitoring and asset control.',
+      'Built the web frontend for XRB GALAXY, a blockchain-based game, covering multiple facets of the platform: integrated Bitkub NEXT wallet authentication and reward systems, developed interactive maps for managing in-game buildings, concessions, and land plots, and built an NFT asset management interface with access control. Also delivered a React + TypeScript admin tool for game economy monitoring and asset control.',
     ],
   },
   {
@@ -82,7 +79,7 @@ export const experiences = [
     ],
     description: [
       'Thai Net Zero Man (thainetzeroman.com) — Built a React/TypeScript carbon footprint calculator considering household size, electricity use, commute, and diet. Visualized emissions with charts and integrated ChillPay payment gateway for purchasing carbon credit offsets.',
-      'Noise4Thai (noise4thai.net) — Developed the frontend of a responsive noise-level monitoring platform with React and Leaflet.js, including map markers, location search, and bilingual EN/TH support via i18next.',
+      'Developed a responsive noise-level monitoring platform visualizing data from 26 sensor locations nationwide, built with React and Leaflet.js. Included interactive map markers, location search, and bilingual EN/TH support via i18next.',
       'ERG4Thai (erg4thai.com) — Built a responsive React frontend for an energy data visualization and reporting platform.',
     ],
   },
