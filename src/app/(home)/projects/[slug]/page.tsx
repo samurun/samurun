@@ -52,7 +52,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className='border-b border-border/50 min-h-screen'>
-      <div className='container py-20'>
+      <div className='container max-w-3xl py-20'>
         <div className='mb-12'>
           <BackButton />
         </div>
