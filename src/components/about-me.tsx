@@ -59,6 +59,13 @@ export default function AboutMe() {
           pixel-perfect designs, I&apos;ve had the opportunity to work on
           various projects that have honed my skills and expertise.
         </p>
+        <p className='text-lg text-muted-foreground leading-8'>
+          Beyond the code, I thrive in remote, cross-functional teams —
+          collaborating with designers, backend engineers, and product
+          owners across government, gaming, and environmental domains. I
+          value clear communication, shared code-quality standards, and
+          shipping on schedule.
+        </p>
         <Button asChild variant='outline' size='sm'>
           <a href='/api/resume' download>
             <Download className='size-4' />
