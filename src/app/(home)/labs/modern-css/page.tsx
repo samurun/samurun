@@ -1,16 +1,12 @@
 import { readCodeFile } from '@/lib/read-code-file';
 import { ShowcaseWrapper } from '../ui/_components/showcase-wrapper';
 import { HighlightAPI } from './_components/highlight-api';
-import { Carousel } from './_components/carousel';
 
 export default function Page() {
   const highlightAPICode = readCodeFile(
     'app/(home)/labs/modern-css/_components/highlight-api.tsx',
   );
 
-  const carouselCode = readCodeFile(
-    'app/(home)/labs/modern-css/_components/carousel.tsx',
-  );
   return (
     <div className='space-y-8'>
       <div>
@@ -35,20 +31,6 @@ export default function Page() {
           ]}
         >
           <HighlightAPI />
-        </ShowcaseWrapper>
-        <ShowcaseWrapper
-          title='Carousel Component'
-          description='This lab demonstrates how to create a simple carousel component using modern CSS techniques.'
-          files={[
-            {
-              filename: 'carousel.tsx',
-              code: carouselCode,
-              highlightedCode: carouselCode,
-              language: 'tsx',
-            },
-          ]}
-        >
-          <Carousel />
         </ShowcaseWrapper>
       </div>
     </div>
