@@ -1,7 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+
+import { useSpotifyQuery } from '@/hooks/use-spotify-query';
 
 interface Artist {
   name: string;
@@ -16,10 +17,8 @@ type TopArtistsResponse = {
 };
 
 export default function TopArtists() {
-  const { data, isLoading, isError } = useQuery<TopArtistsResponse>({
-    queryKey: ['top-artists'],
-    queryFn: () => fetch('/api/spotify/top-artists').then((res) => res.json()),
-  });
+  const { data, isLoading, isError } =
+    useSpotifyQuery<TopArtistsResponse>('top-artists');
 
   if (isLoading) {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;

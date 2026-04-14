@@ -1,30 +1,31 @@
-import { recentlyPlayed } from '@/lib/spotify';
+import { SpotifyError, spotifyFetch } from '@/lib/spotify';
+import type { SpotifyPaginated, SpotifyRecentItem } from '@/types/spotify';
+
+const RECENT_LIMIT = 10;
 
 export async function GET() {
-    try {
-        const response = await recentlyPlayed();
+  try {
+    const data = await spotifyFetch<SpotifyPaginated<SpotifyRecentItem>>(
+      '/me/player/recently-played',
+      { next: { revalidate: 60 } }
+    );
 
-        if (!response.ok) {
-            return Response.json({ tracks: [] });
-        }
+    const items = data?.items ?? [];
 
-        const { items } = await response.json();
+    const tracks = items.slice(0, RECENT_LIMIT).map((item) => ({
+      artist: item.track.artists.map((a) => a.name).join(', '),
+      songUrl: item.track.external_urls.spotify,
+      title: item.track.name,
+      albumImageUrl: item.track.album.images[0]?.url,
+      playedAt: item.played_at,
+    }));
 
-        if (!items) {
-            return Response.json({ tracks: [] });
-        }
-
-        const tracks = items.slice(0, 10).map((item: any) => ({
-            artist: item.track.artists.map((_artist: any) => _artist.name).join(', '),
-            songUrl: item.track.external_urls.spotify,
-            title: item.track.name,
-            albumImageUrl: item.track.album.images[0].url,
-            playedAt: item.played_at,
-        }));
-
-        return Response.json({ tracks });
-    } catch (error) {
-        console.error('Error in recently-played route:', error);
-        return Response.json({ tracks: [] });
+    return Response.json({ tracks });
+  } catch (error) {
+    if (error instanceof SpotifyError) {
+      return Response.json({ tracks: [], status: error.status });
     }
+    console.error('Error in recently-played route:', error);
+    return Response.json({ tracks: [] }, { status: 500 });
+  }
 }

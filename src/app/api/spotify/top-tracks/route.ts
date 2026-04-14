@@ -1,62 +1,50 @@
-import { topTracks } from '@/lib/spotify';
+import { SpotifyError, spotifyFetch } from '@/lib/spotify';
+import type { SpotifyPaginated, SpotifyTrack } from '@/types/spotify';
 
-type SpotifyApiErrorPayload = {
-    error?: {
-        status?: number;
-        message?: string;
-    };
-};
-
-type SpotifyTrack = {
-    artists: Array<{ name: string }>;
-    external_urls: { spotify: string };
-    name: string;
-    album: {
-        images: Array<{ url: string }>;
-        name: string;
-    };
-};
+const TOP_LIMIT = 10;
 
 export async function GET() {
-    try {
-        const response = await topTracks();
+  try {
+    const data = await spotifyFetch<SpotifyPaginated<SpotifyTrack>>(
+      '/me/top/tracks'
+    );
 
-        if (!response.ok) {
-            const errorPayload = (await response
-                .json()
-                .catch(() => null)) as SpotifyApiErrorPayload | null;
-            const message =
-                errorPayload?.error?.message ||
-                'Spotify top tracks unavailable. Check token scopes (user-top-read).';
-
-            return Response.json({ tracks: [], status: response.status, message });
-        }
-
-        const { items } = (await response.json()) as { items?: SpotifyTrack[] };
-
-        if (!items?.length) {
-            return Response.json({
-                tracks: [],
-                status: response.status,
-                message: 'No top tracks found for this account.',
-            });
-        }
-
-        const tracks = items.slice(0, 10).map((track) => ({
-            artist: track.artists.map((_artist) => _artist.name).join(', '),
-            songUrl: track.external_urls.spotify,
-            title: track.name,
-            albumImageUrl: track.album.images[0]?.url,
-            album: track.album.name,
-        }));
-
-        return Response.json({ tracks, status: response.status });
-    } catch (error) {
-        console.error('Error in top-tracks route:', error);
-        return Response.json({
-            tracks: [],
-            status: 500,
-            message: 'Internal error while fetching top tracks.',
-        });
+    const items = data?.items ?? [];
+    if (!items.length) {
+      return Response.json({
+        tracks: [],
+        status: 200,
+        message: 'No top tracks found for this account.',
+      });
     }
+
+    const tracks = items.slice(0, TOP_LIMIT).map((track) => ({
+      artist: track.artists.map((a) => a.name).join(', '),
+      songUrl: track.external_urls.spotify,
+      title: track.name,
+      albumImageUrl: track.album.images[0]?.url,
+      album: track.album.name,
+    }));
+
+    return Response.json({ tracks, status: 200 });
+  } catch (error) {
+    if (error instanceof SpotifyError) {
+      return Response.json({
+        tracks: [],
+        status: error.status,
+        message:
+          error.message ||
+          'Spotify top tracks unavailable. Check token scopes (user-top-read).',
+      });
+    }
+    console.error('Error in top-tracks route:', error);
+    return Response.json(
+      {
+        tracks: [],
+        status: 500,
+        message: 'Internal error while fetching top tracks.',
+      },
+      { status: 500 }
+    );
+  }
 }

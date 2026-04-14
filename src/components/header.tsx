@@ -1,9 +1,9 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { PercentIcon } from 'lucide-react';
 import Link from 'next/link';
 
+import { useSpotifyQuery } from '@/hooks/use-spotify-query';
 import { Song } from './music/now-playing';
 import { Equalizer } from './music/equalizer';
 import ModeToggle from './mode-toggle';
@@ -16,11 +16,10 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
-  const { data } = useQuery<{ isPlaying: boolean; song: Song }>({
-    queryKey: ['now-playing-large'],
-    queryFn: () => fetch('/api/spotify/now-playing').then((res) => res.json()),
-    refetchInterval: 10000,
-  });
+  const { data } = useSpotifyQuery<{ isPlaying: boolean; song: Song }>(
+    'now-playing',
+    { refetchInterval: 30_000, refetchIntervalInBackground: false }
+  );
 
   return (
     <header className='sticky top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-border/50'>

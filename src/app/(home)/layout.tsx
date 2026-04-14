@@ -1,4 +1,4 @@
-import { ReactNode, ViewTransition } from 'react';
+import { ReactNode } from 'react';
 
 import Footer from '@/components/footer';
 import Header from '@/components/header';
@@ -10,9 +10,7 @@ export default function HomeLayout({ children }: Props) {
   return (
     <div>
       <Header />
-      <ViewTransition>
-        <div className='min-h-[calc(100vh-15rem)]'>{children}</div>
-      </ViewTransition>
+      <div className='min-h-[calc(100vh-15rem)]'>{children}</div>
       <Footer />
     </div>
   );

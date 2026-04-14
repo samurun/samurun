@@ -1,7 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+
+import { useSpotifyQuery } from '@/hooks/use-spotify-query';
 
 const timeAgo = (date: string) => {
   const seconds = Math.floor(
@@ -29,11 +30,9 @@ interface Track {
 }
 
 export default function RecentlyPlayed() {
-  const { data, isLoading } = useQuery<{ tracks: Track[] }>({
-    queryKey: ['recently-played'],
-    queryFn: () =>
-      fetch('/api/spotify/recently-played').then((res) => res.json()),
-  });
+  const { data, isLoading } = useSpotifyQuery<{ tracks: Track[] }>(
+    'recently-played'
+  );
 
   if (isLoading) {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;

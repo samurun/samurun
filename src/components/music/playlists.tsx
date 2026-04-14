@@ -1,17 +1,9 @@
 import Image from 'next/image';
 
-import { getPlaylists } from '@/lib/spotify';
-
-type SpotifyPlaylist = {
-  name: string;
-  external_urls: { spotify: string };
-  images: Array<{ url: string }>;
-  tracks: { total: number };
-};
+import { SpotifyError, spotifyFetch } from '@/lib/spotify';
+import type { SpotifyPaginated, SpotifyPlaylist } from '@/types/spotify';
 
 export default async function Playlists() {
-  const response = await getPlaylists();
-
   let playlists: {
     name: string;
     url: string;
@@ -20,14 +12,14 @@ export default async function Playlists() {
   }[] = [];
   let message: string | undefined;
 
-  if (!response.ok) {
-    message = 'Unable to load playlists right now.';
-  } else {
-    const { items } = (await response.json()) as {
-      items?: SpotifyPlaylist[];
-    };
+  try {
+    const data = await spotifyFetch<SpotifyPaginated<SpotifyPlaylist>>(
+      '/me/playlists',
+      { next: { revalidate: 3600 } }
+    );
 
-    if (!items?.length) {
+    const items = data?.items ?? [];
+    if (!items.length) {
       message = 'No playlists found for this account.';
     } else {
       playlists = items.map((playlist) => ({
@@ -37,6 +29,11 @@ export default async function Playlists() {
         tracks: playlist.tracks.total,
       }));
     }
+  } catch (error) {
+    if (!(error instanceof SpotifyError)) {
+      console.error('Error loading playlists:', error);
+    }
+    message = 'Unable to load playlists right now.';
   }
 
   return (
