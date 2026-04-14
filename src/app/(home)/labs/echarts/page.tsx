@@ -8,9 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ElectionSeatsMap } from './components/election-seats-map/election-seats-map';
 import ChartSkeleton from './components/chart-skeleton';
-import { Boeing737900ERSeatsMap } from './components/boeing-737-900er/boeing-737-900er';
+import {
+  Boeing737900ERSeatsMap,
+  ElectionSeatsMap,
+} from './components/lazy-charts';
 
 export const metadata: Metadata = {
   title: 'ECharts Lab',

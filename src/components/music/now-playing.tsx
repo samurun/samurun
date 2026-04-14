@@ -1,7 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+
+import { useSpotifyQuery } from '@/hooks/use-spotify-query';
 import { SpotifyIcon } from '../icons';
 
 export type Song = {
@@ -22,10 +23,10 @@ const StatusIndicator = () => (
 );
 
 export default function NowPlaying() {
-  const { data, isLoading } = useQuery<{ isPlaying: boolean; song: Song }>({
-    queryKey: ['now-playing-large'],
-    queryFn: () => fetch('/api/spotify/now-playing').then((res) => res.json()),
-  });
+  const { data, isLoading } = useSpotifyQuery<{
+    isPlaying: boolean;
+    song: Song;
+  }>('now-playing');
 
   if (isLoading) {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;

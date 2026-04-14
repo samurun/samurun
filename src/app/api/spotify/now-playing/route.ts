@@ -1,40 +1,36 @@
-import { currentlyPlayingSong } from '@/lib/spotify';
+import { SpotifyError, spotifyFetch } from '@/lib/spotify';
+import type { SpotifyNowPlaying } from '@/types/spotify';
 
 export async function GET() {
   try {
-    const response = await currentlyPlayingSong();
+    const data = await spotifyFetch<SpotifyNowPlaying>(
+      '/me/player/currently-playing',
+      { cache: 'no-cache' }
+    );
 
-    if (response.status === 204 || response.status > 400) {
+    if (!data || !data.item) {
       return Response.json({ status: 200, isPlaying: false });
     }
-    const song = await response.json();
-
-    if (song.item === null) {
-      return Response.json({ status: 200, isPlaying: false });
-    }
-
-    const isPlaying = song.is_playing;
-    const title = song.item.name;
-    const artist = song.item.artists
-      .map((_artist: { name: string }) => _artist.name)
-      .join(', ');
-    const album = song.item.album.name;
-    const albumImageUrl = song.item.album.images[0].url;
-    const songUrl = song.item.external_urls.spotify;
 
     return Response.json({
       status: 200,
-      isPlaying,
+      isPlaying: data.is_playing,
       song: {
-        album,
-        albumImageUrl,
-        artist,
-        songUrl,
-        title,
+        album: data.item.album.name,
+        albumImageUrl: data.item.album.images[0]?.url,
+        artist: data.item.artists.map((a) => a.name).join(', '),
+        songUrl: data.item.external_urls.spotify,
+        title: data.item.name,
       },
     });
   } catch (error) {
-    console.error(error);
-    return Response.json({ message: 'some thing went wrong' });
+    if (error instanceof SpotifyError) {
+      return Response.json({ status: error.status, isPlaying: false });
+    }
+    console.error('Error in now-playing route:', error);
+    return Response.json(
+      { status: 500, isPlaying: false, message: 'Something went wrong' },
+      { status: 500 }
+    );
   }
 }

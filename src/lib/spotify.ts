@@ -1,3 +1,5 @@
+import type { SpotifyApiErrorPayload } from '@/types/spotify';
+
 interface SpotifyAccessTokenResponse {
   access_token: string;
   token_type: string;
@@ -5,21 +7,24 @@ interface SpotifyAccessTokenResponse {
   scope: string;
 }
 
-const getAccessToken = async (): Promise<SpotifyAccessTokenResponse> => {
-  const refresh_token: string | undefined = process.env.SPOTIFY_REFRESH_TOKEN;
+const SPOTIFY_API = 'https://api.spotify.com/v1';
+const TOKEN_SAFETY_BUFFER_MS = 60_000;
 
+let cachedToken: { value: string; expiresAt: number } | null = null;
+
+const fetchAccessToken = async (): Promise<SpotifyAccessTokenResponse> => {
+  const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
   if (!refresh_token) {
     throw new Error('Refresh token not provided');
   }
 
-  const clientId: string | undefined = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret: string | undefined = process.env.SPOTIFY_CLIENT_SECRET;
-
+  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
     throw new Error('Client ID or Client Secret not provided');
   }
 
-  const authHeader: string = `Basic ${Buffer.from(
+  const authHeader = `Basic ${Buffer.from(
     `${clientId}:${clientSecret}`
   ).toString('base64')}`;
 
@@ -43,55 +48,55 @@ const getAccessToken = async (): Promise<SpotifyAccessTokenResponse> => {
   return response.json();
 };
 
-export const topTracks = async () => {
-  const { access_token } = await getAccessToken();
+const getAccessToken = async (): Promise<string> => {
+  if (cachedToken && Date.now() < cachedToken.expiresAt - TOKEN_SAFETY_BUFFER_MS) {
+    return cachedToken.value;
+  }
 
-  return fetch('https://api.spotify.com/v1/me/top/tracks', {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  });
+  const data = await fetchAccessToken();
+  cachedToken = {
+    value: data.access_token,
+    expiresAt: Date.now() + data.expires_in * 1000,
+  };
+  return cachedToken.value;
 };
 
-export const topArtists = async () => {
-  const { access_token } = await getAccessToken();
+export class SpotifyError extends Error {
+  constructor(
+    public status: number,
+    public payload: SpotifyApiErrorPayload | null
+  ) {
+    super(payload?.error?.message || `Spotify API error ${status}`);
+    this.name = 'SpotifyError';
+  }
+}
 
-  return fetch('https://api.spotify.com/v1/me/top/artists', {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  });
+type SpotifyFetchInit = RequestInit & {
+  next?: { revalidate?: number | false; tags?: string[] };
 };
 
-export const currentlyPlayingSong = async () => {
-  const { access_token } = await getAccessToken();
+export async function spotifyFetch<T>(
+  endpoint: string,
+  init?: SpotifyFetchInit
+): Promise<T | null> {
+  const token = await getAccessToken();
 
-  return fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+  const res = await fetch(`${SPOTIFY_API}${endpoint}`, {
+    ...init,
     headers: {
-      Authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${token}`,
+      ...init?.headers,
     },
-    cache: 'no-cache',
   });
-};
 
-export const recentlyPlayed = async () => {
-  const { access_token } = await getAccessToken();
+  if (res.status === 204) return null;
 
-  return fetch('https://api.spotify.com/v1/me/player/recently-played', {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 60 },
-  });
-};
+  if (!res.ok) {
+    const payload = (await res
+      .json()
+      .catch(() => null)) as SpotifyApiErrorPayload | null;
+    throw new SpotifyError(res.status, payload);
+  }
 
-export const getPlaylists = async () => {
-  const { access_token } = await getAccessToken();
-
-  return fetch('https://api.spotify.com/v1/me/playlists', {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 3600 },
-  });
-};
+  return res.json() as Promise<T>;
+}
