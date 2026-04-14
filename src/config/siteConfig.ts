@@ -6,7 +6,6 @@ export const siteConfig = {
     'samurun is a portfolio built using tailwind, shadcn, velite and Nextjs 15.',
   links: {
     github: 'https://github.com/samurun',
-    posts: 'https://blog.samurun.dev/',
   },
 };
 

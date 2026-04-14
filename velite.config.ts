@@ -8,21 +8,6 @@ const computedFields = <T extends { path: string }>(data: T) => ({
   slugAsParams: data.path.split('/').slice(1).join('/'),
 });
 
-const posts = defineCollection({
-  name: 'Post',
-  pattern: 'posts/**/*.mdx',
-  schema: s
-    .object({
-      path: s.path(),
-      title: s.string().max(99),
-      tags: s.array(s.string()).optional(),
-      description: s.string().max(999).optional(),
-      date: s.isodate(),
-      body: s.mdx(),
-    })
-    .transform(computedFields),
-});
-
 const projects = defineCollection({
   name: 'Project',
   pattern: 'projects/**/*.mdx',
@@ -34,7 +19,7 @@ const projects = defineCollection({
       tags: s.array(s.string()).optional(),
       description: s.string().max(999).optional(),
       date: s.isodate(),
-      links: s.object({ demo: s.string(), git: s.string() }),
+      links: s.object({ demo: s.string(), git: s.string().optional() }),
       body: s.mdx(),
     })
     .transform(computedFields),
@@ -49,7 +34,7 @@ export default defineConfig({
     name: '[name]-[hash:6].[ext]',
     clean: true,
   },
-  collections: { posts, projects },
+  collections: { projects },
   mdx: {
     rehypePlugins: [
       [rehypePrettyCode, { theme: 'github-dark' }],

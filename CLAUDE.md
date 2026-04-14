@@ -27,8 +27,7 @@ All pages live under `src/app/(home)/` route group, which wraps content in Heade
 
 - `/` — Home (Hero, AboutMe, LatestProjects, MyExperience)
 - `/labs/*` — Interactive experiments (UI components, Modern CSS, ECharts, React Virtual)
-- `/projects/[slug]`, `/blogs/[slug]` — Dynamic MDX content pages
-- `/writings` — Long-form writing index
+- `/projects/[slug]` — Dynamic MDX content pages
 - `/music` — Spotify integration dashboard
 - `/hiking`, `/activities` — Strava activity tracking
 - `/api/spotify/*` — Spotify API proxy routes
@@ -36,7 +35,7 @@ All pages live under `src/app/(home)/` route group, which wraps content in Heade
 
 ### Content System
 
-**Velite** compiles MDX from `content/posts/` and `content/projects/` into `.velite/` (gitignored). Config in `velite.config.ts`. Content is imported as `#site/content` (path alias to `.velite/`). Code blocks use `rehype-pretty-code` with `github-dark` theme.
+**Velite** compiles MDX from `content/projects/` into `.velite/` (gitignored). Config in `velite.config.ts`. Content is imported as `#site/content` (path alias to `.velite/`). Code blocks use `rehype-pretty-code` with `github-dark` theme.
 
 ### Styling
 
