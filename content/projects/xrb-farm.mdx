@@ -3,20 +3,43 @@ title: XRB Farm
 cover: '/projects/xrb-farm/farm.png'
 description: XRB Farm เป็นแพลตฟอร์มที่ช่วยให้ผู้ใช้สามารถฝากและจัดการสินทรัพย์ดิจิทัล (fruit) เพื่อแลกเปลี่ยนเป็น KKUB ซึ่งเป็นโครงการเสริมที่ออกแบบมาเพื่อสนับสนุนการเล่นเกมในจักรวาล XRB (XRB Galaxy) โดยมุ่งเน้นให้ผู้ใช้สามารถฟาร์มได้อย่างสะดวกและมีประสิทธิภาพมากยิ่งขึ้น พร้อมทั้งมีฟีเจอร์ที่ช่วยให้การจัดการสินทรัพย์เป็นเรื่องง่ายและรวดเร็ว
 date: 2024-03-04
-published: false
+published: true
 slug: xrb-farm
-links: { demo: 'https://xrb-farm.vercel.app', git: 'www.example.com' }
+links: { demo: 'https://xrb-farm.vercel.app' }
 ---
 
 ## Overview
 
-XRB Farm เป็นแพลตฟอร์มที่ช่วยให้ผู้ใช้สามารถฝากและจัดการสินทรัพย์ดิจิทัล (fruit) เพื่อแลกเปลี่ยนเป็น KKUB ซึ่งเป็นโครงการเสริมที่ออกแบบมาเพื่อสนับสนุนการเล่นเกมในจักรวาล XRB (XRB Galaxy) โดยมุ่งเน้นให้ผู้ใช้สามารถฟาร์มได้อย่างสะดวกและมีประสิทธิภาพมากยิ่งขึ้น พร้อมทั้งมีฟีเจอร์ที่ช่วยให้การจัดการสินทรัพย์เป็นเรื่องง่ายและรวดเร็ว
+XRB Farm เป็นแพลตฟอร์มที่ช่วยให้ผู้ใช้สามารถฝากและจัดการสินทรัพย์ดิจิทัล (fruit) เพื่อแลกเปลี่ยนเป็น KKUB ซึ่งเป็นโครงการเสริมที่ออกแบบมาเพื่อสนับสนุนการเล่นเกมในจักรวาล XRB (XRB Galaxy) โดยมุ่งเน้นให้ผู้ใช้สามารถฟาร์มได้อย่างสะดวกและมีประสิทธิภาพมากยิ่งขึ้น
+
+## Problem
+
+ในเกม XRB Galaxy กิจกรรมเช่น harvest ผลผลิต ซื้อ item หรือเก็บไอเทม ผู้เล่นต้องเข้าเกมทุกครั้ง ซึ่งไม่สะดวกสำหรับผู้เล่นที่อยากจัดการสินทรัพย์แบบเร็วๆ ระหว่างวัน เป้าหมายของ XRB Farm คือสร้าง web app ที่ให้ผู้เล่นทำกิจกรรมหลักของเกม (harvest, ซื้อ/เก็บ item) ได้จากเบราว์เซอร์โดยตรง ผ่านการเชื่อมต่อ Bitkub NEXT wallet
 
 ## Features
 
-- Authentication (bitkubnext)
-- Deposit KKUB as seed (item in game)
-- Harvest
+- Authentication ผ่าน Bitkub NEXT wallet
+- Deposit KKUB เป็น seed (item ในเกม)
+- Harvest ผลผลิตจากหน้าเว็บโดยไม่ต้องเข้าเกม
+- ซื้อและเก็บ item ผ่าน wallet transaction
+
+## Constraints
+
+- **Bitkub NEXT wallet integration** — ต้องจัดการ flow การ authenticate และ sign transaction ผ่าน wallet ของ third-party
+- **Web3 chain connection** — ข้อมูล on-chain ที่ได้กลับมาไม่ type-safe โดย default ต้อง cast และ validate เองหลายจุด
+- **Documentation ไม่ครบ** — ไม่มี official doc ที่สมบูรณ์ ต้องอาศัย community docs ที่ dev คนอื่นเขียนแชร์กันเอง ทำให้ต้องลอง trial-and-error เยอะในช่วงเริ่มต้น
+
+## Approach
+
+- **Stack**: Vite + React + TypeScript สำหรับ build speed และ DX, Tailwind CSS + shadcn/ui สำหรับ design system ที่ customize ง่าย
+- **Web3 layer**: ใช้ [viem](https://viem.sh) เป็น client สำหรับ chain interaction เพราะ type inference ดีกว่า ethers เดิม
+- **Wallet flow**: แยก Bitkub NEXT auth state ออกจาก app state เพื่อให้ reconnect ได้โดยไม่เสีย session
+
+## Lessons Learned
+
+- **Transaction confirmation ต้องรอ block ให้ confirm ครบก่อน** จะถือว่าสำเร็จ — ถ้าอัปเดต UI เร็วเกินไปจะเจอ race condition ตอน user กด action ซ้ำ แก้ด้วย polling transaction receipt + disable button จนกว่า block จะ confirm
+- การต่อกับ chain ที่ไม่มี official SDK ต้องสร้าง type layer ของตัวเองเพื่อป้องกัน runtime error ในโปรเจกต์ที่ type safety สำคัญ
+- Community documentation มีคุณค่ามาก — การมีส่วนร่วมกับ dev community เป็นสิ่งจำเป็นเวลาทำงานกับ emerging platforms
 
 ## Tech stack
 

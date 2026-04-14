@@ -3,41 +3,53 @@ title: Land manager
 cover: '/projects/landmanager/map.png'
 description: เป็นแพลตฟอร์มจัดการทรัพย์สิน (ที่ดิน, สิ่งก่อสร้าง, NFT, การจัดการประตู) เพื่อให้ผู้ใช้สามารถจัดสรรทรัพยากรต่างๆ ได้สะดวกผ่านเว็บไซต์
 date: 2024-03-04
-published: false
+published: true
 slug: land-manager
-links:
-  { demo: 'https://landmanager.themonkgames.online', git: 'www.example.com' }
+links: { demo: 'https://landmanager.themonkgames.online' }
 ---
 
 ## Overview
 
-เป็นแพลตฟอร์มจัดการทรัพย์สิน (ที่ดิน, สิ่งก่อสร้าง, NFT, การจัดการประตู) เพื่อให้ผู้ใช้สามารถจัดสรรทรัพยากรต่างๆ ได้สะดวกผ่านเว็บไซต์
+Land Manager เป็นแพลตฟอร์มจัดการทรัพย์สินใน XRB Galaxy (ที่ดิน, สิ่งก่อสร้าง, NFT, ประตู) ที่ให้ผู้เล่นจัดการทรัพย์สินในเกมได้จากเว็บไซต์โดยตรง
+
+## Problem
+
+ผู้เล่น XRB Galaxy ต้องเข้าเกมเพื่อจัดการที่ดินและสิ่งปลูกสร้าง เป้าหมายของ Land Manager คือให้ผู้เล่นวางสิ่งปลูกสร้างลงบนที่ดินของตัวเอง จัดการ concession และนำ NFT ที่มีอยู่มาวางในสิ่งปลูกสร้างได้จากหน้าเว็บ
 
 ## Features
 
-- Authentication (bitkubnext)
-- Map
-  - switch area (bitkub city, mutelulu)
-  - filter land and buildings by sizes (X,S,M,L,XL)
-  - filter Type (Land, Living house, Concession, My Land)
-  - search Concession or Living house
-  - zoom in and out
-- Concession
-  - add, remove NFT in concession (from bitkub chain)
-  - door setting
-  - show floor plan
+- Authentication ผ่าน Bitkub NEXT wallet
+- Interactive map แสดงพื้นที่ในเกม (Bitkub City, Mutelulu)
+- Filter ที่ดินและสิ่งก่อสร้างตามขนาด (XS, S, M, L, XL) และประเภท (Land, Living House, Concession, My Land)
+- ค้นหา concession หรือ living house
+- เพิ่ม/ลบ NFT ใน concession (ดึงจาก Bitkub chain)
+- Door setting และแสดง floor plan
+
+## Constraints
+
+- **แสดงแผนที่เกมบนเว็บ** — ต้อง export แผนที่จากเกมมาแสดงให้ตรงกับ coordinate system ที่ในเกมใช้ ใช้ [Leaflet.js](https://leafletjs.com) เป็น base แล้วสร้าง custom tile layer โดยคำนวณ tile จากแผนที่เกม + scope ตาม zoom level
+- **Tile performance** — ใช้ Figma สไลซ์ sprite tile ออกมา และต้องลด resolution เพื่อให้ pan/zoom smooth โดยเฉพาะบน mobile
+- **NFT integration** — ต้องต่อ Bitkub NEXT wallet เพื่อดึง NFT ของผู้เล่นมาแสดง แล้วให้เลือกไปวางในสิ่งปลูกสร้าง
+
+## Approach
+
+- **Stack**: Next.js + TypeScript + Tailwind CSS + shadcn/ui — เลือก Next.js เพื่อ handle routing + API routes ใน framework เดียว ไม่ต้อง setup backend server แยก
+- **Map**: Leaflet.js พร้อม custom tile layer ที่ generate จาก asset ในเกม
+- **Web3**: [viem](https://viem.sh) สำหรับ chain interaction และ NextAuth.js สำหรับ session
+
+## Lessons Learned
+
+- **Leaflet รองรับ custom tile ได้เต็มรูปแบบ** — ไม่จำเป็นต้องใช้ map ของ OpenStreetMap การสร้าง tile server เองให้ scope ตรงกับ coordinate ในเกมเป็นไปได้และให้ UX ดีกว่าการ embed image
+- **การ optimize tile resolution สำคัญกับ mobile UX** — resolution สูงเกินไปทำให้ pan/zoom กระตุก ต้อง balance ระหว่างคมชัดและ smoothness
+- ใช้ shadcn/ui ครั้งแรกในโปรเจกต์นี้ — component composition + customization ผ่าน Tailwind ทำให้ปรับตาม design system ของเกมได้คล่อง
+- viem ให้ type safety ดีกว่า ethers เวลาทำงานกับ chain ที่ schema ไม่แน่นอน
 
 ## Tech stack
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- shadcn
-- viem.sh
-- Leaflet.js
-- NextAuth.js
-
-## Additional Information
-
-- User-friendly interface for easy navigation
-- Integration with blockchain for secure transactions
+- [next.js](https://nextjs.org)
+- [typescript](https://www.typescriptlang.org)
+- [tailwindcss](https://tailwindcss.com)
+- [shadcn](https://ui.shadcn.com)
+- [viem.sh](https://viem.sh/)
+- [leaflet.js](https://leafletjs.com)
+- [next-auth](https://next-auth.js.org)

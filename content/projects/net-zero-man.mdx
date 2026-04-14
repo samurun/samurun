@@ -3,11 +3,50 @@ title: Net Zero Man
 cover: '/projects/net-zero-man/cover.png'
 description: กิจกรรมในแต่ละวันของท่านมีการปล่อยก๊าซเรือนกระจก ซึ่งเป็นสาเหตุสำคัญที่ก่อให้เกิดภาวะโลกร้อนและการเปลี่ยนแปลง สภาพภูมิอากาศเท่าใดสามารถคำนวณได้แล้วง่ายๆ
 date: 2022-03-04
-published: false
+published: true
 slug: net-zero-man
-links: { demo: 'https://thainetzeroman.com', git: 'www.example.com' }
+links: { demo: 'https://thainetzeroman.com' }
 ---
 
 ## Overview
 
-Net Zero Man คือ
+Net Zero Man (thainetzeroman.com) เป็น web application สำหรับคำนวณปริมาณการปล่อยก๊าซเรือนกระจกจากกิจกรรมประจำวันของผู้ใช้ พร้อมฟีเจอร์ซื้อ carbon credit offset ผ่าน ChillPay เพื่อชดเชย carbon footprint
+
+## Problem
+
+คนทั่วไปไม่รู้ว่ากิจกรรมประจำวันของตัวเอง (การเดินทาง, อาหาร, การใช้ไฟฟ้า, ฯลฯ) ปล่อย carbon footprint เท่าไหร่ และไม่มีช่องทางที่สะดวกในการชดเชยค่าที่ปล่อยออกไป Net Zero Man แก้ปัญหานี้ด้วยการให้ผู้ใช้กรอก lifestyle ของตัวเองแล้ว visualize emission เป็นตัวเลขที่จับต้องได้ พร้อมช่องทางซื้อ carbon credit
+
+## Features
+
+- แบบฟอร์มคำนวณ carbon footprint จากหลายมิติ: การเดินทาง, อาหาร, การใช้ไฟฟ้า, และปัจจัยอื่นๆ
+- Visualize ผลลัพธ์ด้วย chart ที่เปรียบเทียบกับ benchmark
+- ซื้อ carbon credit offset ผ่าน ChillPay payment gateway
+- รองรับทั้ง mobile banking app (deeplink) และ desktop (QR / checkout form)
+
+## Constraints
+
+- **Form ใหญ่หลายมิติ** — ต้องจัดการ state และ validation ของ input หลายหมวด (transport, diet, electricity, อื่นๆ) โดยไม่ให้ UX ติดขัด
+- **ChillPay integration ที่ต่างกันตาม device** — ต้อง detect ว่าผู้ใช้เปิดจาก mobile หรือ desktop:
+  - **Mobile**: ต้อง deeplink ไปที่ banking app ของผู้ใช้
+  - **Desktop**: แสดง QR code หรือ checkout form
+- **Documentation ของ payment gateway** — ต้องทำงานกับ ChillPay API โดยต้องทดสอบ edge cases ของ deeplink หลาย banking apps
+
+## Approach
+
+- **Stack**: Vite + React + TypeScript — เลือก Vite เพราะ app เป็น form-heavy SPA ไม่ต้องการ SSR และ build speed ของ Vite ช่วยให้ iterate UI เร็ว
+- **Form management**: component-based form ที่แบ่งตามหมวดกิจกรรม เพื่อให้ maintain ง่ายและขยายเพิ่มปัจจัยใหม่ได้
+- **Payment flow**: detect user agent แล้ว switch UI path ระหว่าง deeplink (mobile) กับ QR/checkout (desktop)
+
+## Lessons Learned
+
+- **การ integrate payment gateway ต้องคิดเรื่อง device context ตั้งแต่แรก** — การใช้ deeplink ไป banking app บน mobile ให้ UX ที่ดีกว่ามาก แต่ต้องจัดการ fallback กรณี app ไม่ได้ติดตั้งหรือ deeplink ไม่เปิด
+- **Deeplink behavior แตกต่างกันในแต่ละ banking app** — ต้องเทสกับ app จริงหลายเจ้าเพื่อเข้าใจว่าแต่ละเจ้า handle URL scheme อย่างไร
+- Form ใหญ่ที่มีหลายหมวด ถ้า split ให้ดีตั้งแต่ต้นจะ maintain ง่ายกว่าการใช้ form เดียวยาว ๆ — แบ่ง state เป็น section และ validate ทีละหมวด
+
+## Tech stack
+
+- [vite](https://vitejs.dev)
+- [react](https://react.dev)
+- [typescript](https://www.typescriptlang.org)
+- [tailwindcss](https://tailwindcss.com)
+- ChillPay Payment Gateway

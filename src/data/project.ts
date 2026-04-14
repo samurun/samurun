@@ -37,8 +37,7 @@ export const projects: ProjectType[] = [
     date: '2022-03-12',
     slug: 'net-zero-man',
     name: 'Net Zero Man',
-    description:
-      'กิจกรรมในแต่ละวันของท่านมีการปล่อยก๊าซเรือนกระจก ซึ่งเป็นสาเหตุสำคัญที่ก่อให้เกิดภาวะโลกร้อนและการเปลี่ยนแปลง สภาพภูมิอากาศเท่าใดสามารถคำนวณได้แล้วง่ายๆ',
+    description: 'Calculate Your Daily Carbon Footprint & Offset It',
     cover: '/projects/net-zero-man/cover.png',
     links: {
       demo: 'https://thainetzeroman.com/',
