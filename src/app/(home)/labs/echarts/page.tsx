@@ -43,7 +43,7 @@ export default function Page() {
         </p>
       </div>
       <div>
-        <ul>
+        <ul className='space-y-4'>
           {ECHART_LABS.map((lab, index) => (
             <li key={lab.title}>
               <Card className={`${index >= 1 ? 'border-t-0' : ''}`}>

@@ -1,67 +1,80 @@
 import type { Metadata } from 'next';
-import Card from '@/components/lab-card';
+import LabCard, { LabCardItem } from '@/components/lab-card';
 import {
   UiComponentsIllustration,
   ModernCssIllustration,
   EchartIllustration,
   ReactVirtualIllustration,
 } from '@/components/lab-illustrations';
-import LabCard from '@/components/lab-card';
 
 export const metadata: Metadata = {
   title: 'Labs',
   description: 'Interactive frontend and visualization experiments.',
 };
 
-const labs = [
-  {
-    title: 'UI Components',
-    description:
-      'Handcrafted UI components built from scratch for specific use cases.',
-    thumbnail: <UiComponentsIllustration />,
-    href: '/labs/ui',
-    tags: ['ui', 'components'],
-  },
-  {
-    title: 'Modern CSS',
-    description:
-      'Exploring modern CSS features and techniques for responsive design.',
-    thumbnail: <ModernCssIllustration />,
-    href: '/labs/modern-css',
-    tags: ['css', 'responsive'],
-  },
+const labs: LabCardItem[] = [
   {
     title: 'ECharts',
     description:
-      'Interactive charts and data visualizations using Apache ECharts.',
+      'Interactive charts and data visualizations using Apache ECharts — from basic line/bar to custom geo maps and composable option builders.',
     thumbnail: <EchartIllustration />,
     href: '/labs/echarts',
-    tags: ['charts', 'data-viz'],
+    techStack: ['Apache ECharts', 'TypeScript', 'Interactive'],
+    updatedAt: '2026-04-15',
+  },
+  {
+    title: 'UI Components',
+    description:
+      'Handcrafted components built from scratch: advanced data table with TanStack Table, anchor tooltip, and segmented control with live code side-by-side.',
+    thumbnail: <UiComponentsIllustration />,
+    href: '/labs/ui',
+    techStack: ['TanStack Table', 'Radix UI', 'shadcn/ui'],
+    updatedAt: '2026-04-12',
   },
   {
     title: 'React Virtual',
     description:
-      'Virtualize only the visible content for massive scrollable DOM.',
+      'Virtualize only the visible portion of massive scrollable lists and grids — keeping DOM small while rendering tens of thousands of rows smoothly.',
     thumbnail: <ReactVirtualIllustration />,
     href: '/labs/virtual',
-    tags: ['performance', 'virtualization'],
+    techStack: ['TanStack Virtual', 'Performance'],
+    updatedAt: '2026-04-08',
+  },
+  {
+    title: 'Modern CSS',
+    description:
+      'Exploring modern CSS features: container queries, :has(), view transitions, and responsive patterns without JS overhead.',
+    thumbnail: <ModernCssIllustration />,
+    href: '/labs/modern-css',
+    techStack: ['Container Queries', ':has()', 'Tailwind v4'],
+    updatedAt: '2026-04-02',
   },
 ];
+
+const [featured, ...rest] = labs;
 
 export default function Page() {
   return (
     <main className='border-b border-border/50 min-h-screen'>
-      <div className=''>
-        <div className='mb-12'>
+      <div className='container py-20'>
+        <div className='mb-8 max-w-2xl'>
           <h1 className='text-lg font-semibold tracking-tight'>
             Labs
             <span className='text-sm text-muted-foreground ml-2'>
               {labs.length}
             </span>
           </h1>
+          <p className='text-sm text-muted-foreground mt-3 leading-relaxed'>
+            A space for exploring tech beyond day-job work — libraries I want to
+            understand deeply, patterns I want to pressure-test, and techniques
+            that might land in a real project later. Each lab ships with a live
+            demo and source code.
+          </p>
         </div>
+
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          {labs.map((lab) => (
+          <LabCard item={featured} featured />
+          {rest.map((lab) => (
             <LabCard key={lab.title} item={lab} />
           ))}
         </div>
