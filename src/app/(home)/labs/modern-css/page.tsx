@@ -7,6 +7,7 @@ export default function Page() {
     'app/(home)/labs/modern-css/_components/highlight-api.tsx',
   );
 
+
   return (
     <div className='space-y-8'>
       <div>
@@ -17,7 +18,7 @@ export default function Page() {
           A collection of demos showcasing modern CSS features and techniques,
         </p>
       </div>
-      <div>
+      <div className='space-y-8'>
         <ShowcaseWrapper
           title='The CSS Custom Highlight API lets you highlight search results'
           description='The CSS Custom Highlight API allows developers to create custom highlights on web pages, such as highlighting search results or specific elements. This lab demonstrates how to use the API to implement a search result highlighting feature.'

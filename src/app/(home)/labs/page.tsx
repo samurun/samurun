@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import LabCard, { LabCardItem } from '@/components/lab-card';
 import {
-  UiComponentsIllustration,
   ModernCssIllustration,
   EchartIllustration,
   ReactVirtualIllustration,
@@ -23,15 +22,6 @@ const labs: LabCardItem[] = [
     updatedAt: '2026-04-15',
   },
   {
-    title: 'UI Components',
-    description:
-      'Handcrafted components built from scratch: advanced data table with TanStack Table, anchor tooltip, and segmented control with live code side-by-side.',
-    thumbnail: <UiComponentsIllustration />,
-    href: '/labs/ui',
-    techStack: ['TanStack Table', 'Radix UI', 'shadcn/ui'],
-    updatedAt: '2026-04-12',
-  },
-  {
     title: 'React Virtual',
     description:
       'Virtualize only the visible portion of massive scrollable lists and grids — keeping DOM small while rendering tens of thousands of rows smoothly.',
@@ -43,11 +33,11 @@ const labs: LabCardItem[] = [
   {
     title: 'Modern CSS',
     description:
-      'Exploring modern CSS features: container queries, :has(), view transitions, and responsive patterns without JS overhead.',
+      'Exploring modern CSS features: corner-shape, the Custom Highlight API, and progressive-enhancement patterns without JS overhead.',
     thumbnail: <ModernCssIllustration />,
     href: '/labs/modern-css',
-    techStack: ['Container Queries', ':has()', 'Tailwind v4'],
-    updatedAt: '2026-04-02',
+    techStack: ['corner-shape', 'Highlight API', 'Tailwind v4'],
+    updatedAt: '2026-04-30',
   },
 ];
 
