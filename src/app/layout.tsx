@@ -6,6 +6,7 @@ import Script from 'next/script';
 import Providers from '@/components/providers';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { cn } from '@/lib/utils';
 import { Inter } from 'next/font/google';
 
@@ -47,6 +48,9 @@ export default function RootLayout({
         <SpeedInsights />
       </body>
       <Script src='https://strava-embeds.com/embed.js' strategy='lazyOnload' />
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   );
 }
