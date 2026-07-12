@@ -2,12 +2,7 @@
 
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 
-type SpotifyEndpoint =
-  | 'now-playing'
-  | 'top-artists'
-  | 'top-tracks'
-  | 'recently-played'
-  | 'playlists';
+type SpotifyEndpoint = 'now-playing';
 
 type Options<T> = Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>;
 

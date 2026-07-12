@@ -9,11 +9,16 @@ const useMDXComponent = (code: string) => {
   return fn({ ...runtime }).default;
 };
 
-const extractText = (node: any): string => {
+const extractText = (node: React.ReactNode): string => {
   if (typeof node === 'string') return node;
   if (!node) return '';
   if (Array.isArray(node)) return node.map(extractText).join('');
-  if (node.props?.children) return extractText(node.props.children);
+  if (
+    React.isValidElement<{ children?: React.ReactNode }>(node) &&
+    node.props.children
+  ) {
+    return extractText(node.props.children);
+  }
   return '';
 };
 
@@ -165,6 +170,9 @@ export function MDXContent({ code }: MdxProps) {
   const Component = useMDXComponent(code);
   return (
     <div className='mdx'>
+      {/* Server component: the compiled MDX component is stateless and rebuilt
+          per render by design (standard Velite pattern). */}
+      {/* eslint-disable-next-line react-hooks/static-components */}
       <Component components={components} />
     </div>
   );

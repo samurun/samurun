@@ -26,7 +26,7 @@ export default function NowPlaying() {
   const { data, isLoading } = useSpotifyQuery<{
     isPlaying: boolean;
     song: Song;
-  }>('now-playing');
+  }>('now-playing', { refetchInterval: 60_000 });
 
   if (isLoading) {
     return <div className='animate-pulse h-64 bg-secondary/50 rounded-md' />;

@@ -4,6 +4,19 @@ interface StravaAccessTokenResponse {
     expires_at: number;
 }
 
+interface StravaApiActivity {
+    id: number;
+    name: string;
+    type: string;
+    distance: number;
+    moving_time: number;
+    total_elevation_gain: number;
+    start_date: string;
+    map?: { summary_polyline?: string };
+    location_city?: string | null;
+    location_country?: string | null;
+}
+
 const getAccessToken = async (): Promise<string> => {
     const clientId = process.env.STRAVA_CLIENT_ID;
     const clientSecret = process.env.STRAVA_CLIENT_SECRET;
@@ -24,7 +37,6 @@ const getAccessToken = async (): Promise<string> => {
             refresh_token: refreshToken,
             grant_type: 'refresh_token',
         }),
-        cache: 'no-cache',
     });
 
     if (!response.ok) {
@@ -57,14 +69,14 @@ export const getHikingActivities = async (limit = 100) => {
         const response = await getActivities(limit);
         if (!response.ok) return [];
 
-        const activities = await response.json();
+        const activities: StravaApiActivity[] = await response.json();
         if (!Array.isArray(activities)) return [];
 
         return activities
             .filter(
-                (activity: any) => activity.type === 'Hike' || activity.type === 'Walk'
+                (activity) => activity.type === 'Hike' || activity.type === 'Walk'
             )
-            .map((activity: any) => ({
+            .map((activity) => ({
                 id: activity.id,
                 name: activity.name,
                 distance: (activity.distance / 1000).toFixed(2), // Convert meters to km

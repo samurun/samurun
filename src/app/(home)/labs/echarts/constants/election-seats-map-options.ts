@@ -20,7 +20,7 @@ export function useElectionSeatsMapOptions() {
                 borderWidth: 0,
                 shadowBlur: 0,
                 extraCssText: 'box-shadow: none; border: none !important; padding: 0 !important;',
-                formatter: (params: any) => {
+                formatter: (params: { name: string }) => {
                     const [province, electorate] = params.name.split('-');
                     const candidateName = 'นายสมชาย ใจดี';
                     const partyName = 'พรรคผ่อนคลาย';

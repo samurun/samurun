@@ -1,8 +1,9 @@
 import { projects } from '@/data/project';
 import { getMergedProjects } from '@/lib/github';
 import ProjectCard from '@/components/project-card';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Projects',
   description: 'A showcase of my projects',
 };
