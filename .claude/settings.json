@@ -1,4 +1,19 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm audit *)",
+      "Bash(npm outdated *)",
+      "Bash(npm run *)",
+      "Read(//Users/fadlan.j/.claude/skills/next-best-practices/**)",
+      "Read(//Users/fadlan.j/.agents/skills/next-best-practices/**)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(npx eslint *)",
+      "Bash(node -e \"const r=JSON.parse\\(require\\('fs'\\).readFileSync\\(0\\)\\);r[0].messages.forEach\\(m=>console.log\\(m.severity,m.ruleId,m.line\\)\\)\")",
+      "Skill(commit-commands:commit-push-pr)",
+      "Skill(commit-commands:commit-push-pr:*)"
+    ]
+  },
   "enabledPlugins": {
     "explanatory-output-style@claude-plugins-official": true
   }

@@ -6,6 +6,7 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  RowData,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
@@ -31,7 +32,8 @@ import { cn } from '@/lib/utils';
 import { DataTableEmpty } from './data-table-empty';
 
 declare module '@tanstack/react-table' {
-  interface ColumnMeta<TData extends unknown, TValue> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
     sticky?: 'left' | 'right';
   }
 }
@@ -55,8 +57,8 @@ interface DataTableProps<TData, TValue> {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function getStickyColumnKeys<TData>(
-  columns: ColumnDef<TData, any>[],
+function getStickyColumnKeys<TData, TValue>(
+  columns: ColumnDef<TData, TValue>[],
   side: 'left' | 'right',
 ): string[] {
   return columns
@@ -169,7 +171,7 @@ export function DataTable<TData, TValue>({
     columns: finalColumns,
     pageCount,
     manualPagination: true,
-    getRowId: (row) => (row as any).id,
+    getRowId: (row) => (row as { id: string }).id,
     state: {
       sorting,
       pagination: {

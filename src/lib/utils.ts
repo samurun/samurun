@@ -26,8 +26,8 @@ export function calculateDuration(startDate: string, endDate?: string | null) {
 
 export function decodePolyline(encoded: string) {
   const points = [];
-  let index = 0,
-    len = encoded.length;
+  let index = 0;
+  const len = encoded.length;
   let lat = 0,
     lng = 0;
 

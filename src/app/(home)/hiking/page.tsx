@@ -2,11 +2,11 @@ import { hikings } from '@/data/hikings';
 import HikingItem from '@/components/hiking/hiking-item';
 import HikingStats from '@/components/hiking/hiking-stats';
 import { getHikingActivities } from '@/lib/strava';
+import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Hiking',
   description: 'My hiking adventures',
 };
