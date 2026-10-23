@@ -2,12 +2,20 @@
 
 import React from 'react';
 import {
-  ColumnDef,
+  type ColumnDef,
+  columnPinningFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
+  createPaginatedRowModel,
   flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  SortingState,
-  useReactTable,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  type RowData,
+  type RowSelectionState,
+  rowSortingFeature,
+  type SortingState,
+  tableFeatures,
+  useTable,
 } from '@tanstack/react-table';
 import {
   ChevronDownIcon,
@@ -30,11 +38,32 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { DataTableEmpty } from './data-table-empty';
 
-declare module '@tanstack/react-table' {
-  interface ColumnMeta<TData extends unknown, TValue> {
-    sticky?: 'left' | 'right';
-  }
+interface DataTableColumnMeta {
+  sticky?: 'start' | 'end';
 }
+
+// v9 only exposes APIs for features registered here — keep in sync with what the table uses
+export const dataTableFeatures = tableFeatures({
+  rowSortingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  columnSizingFeature,
+  columnPinningFeature,
+  columnVisibilityFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+  columnMeta: {} as DataTableColumnMeta,
+});
+
+type Features = typeof dataTableFeatures;
+
+export type DataTableColumnDef<
+  TData extends RowData,
+  TValue = unknown,
+> = ColumnDef<Features, TData, TValue>;
+
+// Columns in one table hold different value types, so the array can't share a single TValue
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyColumnDef<TData extends RowData> = DataTableColumnDef<TData, any>;
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -44,8 +73,8 @@ interface Pagination {
   total: number;
 }
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends RowData> {
+  columns: AnyColumnDef<TData>[];
   data: TData[];
   pagination?: Pagination;
   onPageChange?: (page: number) => void;
@@ -55,22 +84,24 @@ interface DataTableProps<TData, TValue> {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function getStickyColumnKeys<TData>(
-  columns: ColumnDef<TData, any>[],
-  side: 'left' | 'right',
+function getStickyColumnKeys<TData extends RowData>(
+  columns: AnyColumnDef<TData>[],
+  side: 'start' | 'end',
 ): string[] {
   return columns
     .filter((col) => col.meta?.sticky === side && 'accessorKey' in col)
     .map((col) => (col as { accessorKey: string }).accessorKey);
 }
 
-function createSelectionColumn<TData>(): ColumnDef<TData> {
+function createSelectionColumn<
+  TData extends RowData,
+>(): AnyColumnDef<TData> {
   return {
     id: 'select',
     size: 40,
     enableSorting: false,
     enableHiding: false,
-    meta: { sticky: 'left' },
+    meta: { sticky: 'start' },
     header: ({ table }) => (
       <div className='flex items-center justify-center w-10'>
         <Checkbox
@@ -103,23 +134,26 @@ function SortIcon({ direction }: { direction: false | 'asc' | 'desc' }) {
 // ─── Sticky cell style helper ────────────────────────────────────────────────
 
 function getStickyStyle(
-  sticky: 'left' | 'right' | undefined,
-  column: { getStart: (side: 'left' | 'right' | 'center') => number },
+  sticky: 'start' | 'end' | undefined,
+  column: {
+    getStart: (side: 'start' | 'end' | 'center') => number;
+    getAfter: (side: 'start' | 'end' | 'center') => number;
+  },
   isHeader: boolean,
 ) {
   if (!sticky)
     return { style: { backgroundColor: 'var(--background)' }, className: '' };
 
-  const isLeft = sticky === 'left';
+  const isStart = sticky === 'start';
   return {
     style: {
       position: 'sticky' as const,
-      left: isLeft ? column.getStart('left') : undefined,
-      right: !isLeft ? column.getStart('right') : undefined,
-      zIndex: isHeader ? 20 : isLeft ? 10 : 11,
+      insetInlineStart: isStart ? column.getStart('start') : undefined,
+      insetInlineEnd: !isStart ? column.getAfter('end') : undefined,
+      zIndex: isHeader ? 20 : isStart ? 10 : 11,
       backgroundColor: 'var(--background)',
     },
-    className: isLeft
+    className: isStart
       ? 'shadow-[1px_0_0_0_var(--border)]'
       : 'shadow-[-1px_0_0_0_var(--border)]',
   };
@@ -127,18 +161,18 @@ function getStickyStyle(
 
 // ─── DataTable ───────────────────────────────────────────────────────────────
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
   pagination,
   onPageChange,
   onSortingChange: onSortingChangeProp,
   onRowSelectionChange: onRowSelectionChangeProp,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = React.useState<
-    Record<string, boolean>
-  >({});
+  const [rowSelection, setRowSelection] = React.useState<RowSelectionState>(
+    {},
+  );
 
   const hasSelection = !!onRowSelectionChangeProp;
 
@@ -151,12 +185,12 @@ export function DataTable<TData, TValue>({
     [hasSelection, selectionColumn, columns],
   );
 
-  const stickyLeft = React.useMemo(
-    () => getStickyColumnKeys(finalColumns, 'left'),
+  const stickyStart = React.useMemo(
+    () => getStickyColumnKeys(finalColumns, 'start'),
     [finalColumns],
   );
-  const stickyRight = React.useMemo(
-    () => getStickyColumnKeys(finalColumns, 'right'),
+  const stickyEnd = React.useMemo(
+    () => getStickyColumnKeys(finalColumns, 'end'),
     [finalColumns],
   );
 
@@ -164,7 +198,8 @@ export function DataTable<TData, TValue>({
     ? Math.ceil(pagination.total / pagination.pageSize)
     : undefined;
 
-  const table = useReactTable({
+  const table = useTable({
+    features: dataTableFeatures,
     data,
     columns: finalColumns,
     pageCount,
@@ -177,7 +212,7 @@ export function DataTable<TData, TValue>({
         pageSize: pagination?.pageSize ?? 10,
       },
       rowSelection,
-      columnPinning: { left: stickyLeft, right: stickyRight },
+      columnPinning: { start: stickyStart, end: stickyEnd },
     },
     onPaginationChange: (updater) => {
       if (typeof updater === 'function' && pagination) {
@@ -197,10 +232,8 @@ export function DataTable<TData, TValue>({
       const next =
         typeof updater === 'function' ? updater(rowSelection) : updater;
       setRowSelection(next);
-      onRowSelectionChangeProp?.(Object.keys(next).filter((id) => next[id]));
+      onRowSelectionChangeProp?.(Object.keys(next));
     },
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   const selectedCount = table.getSelectedRowModel().rows.length;

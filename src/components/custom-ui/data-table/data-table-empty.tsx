@@ -1,13 +1,14 @@
 import { TableCell, TableRow } from '@/components/ui/table';
-import { ColumnDef } from '@tanstack/react-table';
+import type { RowData } from '@tanstack/react-table';
+import type { AnyColumnDef } from './index';
 
-interface DataTableEmptyProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableEmptyProps<TData extends RowData> {
+  columns: AnyColumnDef<TData>[];
 }
 
-export function DataTableEmpty<TData, TValue>({
+export function DataTableEmpty<TData extends RowData>({
   columns,
-}: DataTableEmptyProps<TData, TValue>) {
+}: DataTableEmptyProps<TData>) {
   return (
     <TableRow>
       <TableCell colSpan={columns.length} className='h-24 text-center'>

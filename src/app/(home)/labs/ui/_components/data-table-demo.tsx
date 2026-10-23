@@ -1,7 +1,10 @@
 'use client';
 
-import { DataTable } from '@/components/custom-ui/data-table';
-import { ColumnDef, SortingState } from '@tanstack/react-table';
+import {
+  DataTable,
+  type DataTableColumnDef,
+} from '@/components/custom-ui/data-table';
+import type { SortingState } from '@tanstack/react-table';
 import React from 'react';
 
 interface Payment {
@@ -22,7 +25,7 @@ const data: Payment[] = [
   { id: '8', status: 'pending', email: 'frank@example.com', amount: 180 },
 ];
 
-const columns: ColumnDef<Payment>[] = [
+const columns: DataTableColumnDef<Payment>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
@@ -37,7 +40,7 @@ const columns: ColumnDef<Payment>[] = [
     header: 'Amount',
     enableSorting: true,
     meta: {
-      sticky: 'right',
+      sticky: 'end',
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'));

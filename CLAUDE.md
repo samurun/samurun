@@ -19,7 +19,7 @@ No test framework is configured.
 
 ## Architecture
 
-**Next.js 16 App Router** portfolio site with TypeScript, React 19.2, Tailwind CSS v4, and shadcn/ui. UI primitives mix `@radix-ui/*`, `radix-ui` (umbrella package), and `@base-ui/react`.
+**Next.js 16 App Router** portfolio site with TypeScript, React 19.3, Tailwind CSS v4, and shadcn/ui. UI primitives mix `@radix-ui/*`, `radix-ui` (umbrella package), and `@base-ui/react`.
 
 ### Routing
 
@@ -68,6 +68,8 @@ Configured via `components.json`. Components live in `src/components/ui/`. Add n
 
 ### Dependency Notes
 
-- **`overrides.brace-expansion`** in `package.json` forces a safe version because ESLint 9.x still pins an old `minimatch@3` → `brace-expansion@1.1.12` (CVE GHSA-f886-m6hf-6m8v). Do not remove the override until ESLint upstream bumps its own deps — `npm audit` will regress to 1 moderate vuln.
-- **React Compiler** is active in Next 16.2 via `babel-plugin-react-compiler`. Lint will emit `react-hooks/incompatible-library` warnings on `useVirtualizer()` calls in `src/components/virtual/*` and the `/labs/virtual` page. These are informational — the compiler gracefully skips memoizing those components, TanStack Virtual handles its own memoization. Do not try to "fix" by wrapping or refactoring.
+- **`overrides`** in `package.json` are scoped security pins: `velite → sharp ^0.35.5` (velite pins `^0.34.5`, which has libvips CVEs) and `@tailwindcss/typography → postcss-selector-parser ^7.1.7` (typography pins `6.0.10`, GHSA-rj75-hqrm-r3gf). Drop each once the parent package bumps its own range — `npm audit` should stay at 0. Do NOT re-add a global `brace-expansion` override: ESLint 10's minimatch needs brace-expansion v5 and a `^2` pin crashes lint.
+- **TypeScript is pinned `~6.0.3`, not 7.x**: `typescript-eslint` (pulled in by `eslint-config-next`) hard-fails on TS ≥ 7 and only supports `<6.1.0`. Bump once typescript-eslint adds TS 7 support (typescript-eslint/typescript-eslint#10940).
+- **TanStack Table v9** (`src/components/custom-ui/data-table/`): features are opt-in via `dataTableFeatures` (`tableFeatures({...})`). Using a new table/row/column API (filtering, visibility, etc.) requires registering its feature there first, or the method won't exist. Column pinning is logical (`start`/`end`, not `left`/`right`); column `meta.sticky` follows the same naming. Use `DataTableColumnDef<TData>` for column arrays.
+- **React Compiler** is active in Next 16.4 via `babel-plugin-react-compiler`. Lint will emit `react-hooks/incompatible-library` warnings on `useVirtualizer()` calls in `src/components/virtual/*` and the `/labs/virtual` page. These are informational — the compiler gracefully skips memoizing those components, TanStack Virtual handles its own memoization. Do not try to "fix" by wrapping or refactoring.
 - **`@react-pdf/renderer`** powers `/api/resume`. It only supports a Flexbox subset of CSS (no grid, no media queries), embedded fonts must be **TTF or OTF only** (woff/woff2 are NOT supported), and the route must run on `runtime = 'nodejs'` (edge runtime will not work). React-PDF auto-subsets fonts, so the final PDF stays small even though `Inter.ttf` is 856 KB on disk.
