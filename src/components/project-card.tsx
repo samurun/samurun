@@ -21,7 +21,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           src={project.cover}
           alt={project.name}
           fill
-          unoptimized
           className='object-contain bg-white w-full h-full group-hover:scale-[1.02] transition-transform duration-300 ease-out'
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />

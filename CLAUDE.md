@@ -29,6 +29,8 @@ No test framework is configured.
 - `/api/spotify/now-playing` — Spotify proxy; feeds the header equalizer and the footer player
 - `/api/resume` — Server-rendered resume PDF (`force-static`, prerendered at build time)
 
+Old paths (`/projects/*`, `/labs/*`, `/music`, `/hiking`, `/activities`) permanently redirect home via `redirects()` in `next.config.ts`; anything else hits `src/app/not-found.tsx`. Social previews come from `metadataBase` + `openGraph` in the root layout and the generated `src/app/opengraph-image.tsx` (`next/og`).
+
 The header has no nav — just the logo, the now-playing equalizer (only while something is playing), and the theme toggle. "View Projects" in the Hero scrolls to `#projects`; "All Projects" links to the GitHub profile.
 
 ### Projects

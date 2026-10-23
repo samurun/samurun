@@ -1,31 +1,27 @@
 import { NextConfig } from 'next';
 
-/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   experimental: {
-    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons", "clsx", "tailwind-merge"],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
   images: {
     remotePatterns: [
-      {
-        hostname: 'i.scdn.co',
-      },
-      {
-        hostname: 'mosaic.scdn.co',
-      },
-      {
-        hostname: 'opengraph.githubassets.com',
-      },
-      {
-        hostname: 'raw.githubusercontent.com',
-      },
-      {
-        hostname: 'user-images.githubusercontent.com',
-      },
-      {
-        hostname: 'github.com',
-      },
+      // Spotify album art (footer player)
+      { hostname: 'i.scdn.co' },
+      // GitHub repo cards
+      { hostname: 'opengraph.githubassets.com' },
     ],
+  },
+  // The site is home-only now; send links to the removed pages back home
+  async redirects() {
+    return [
+      { source: '/projects/:path*', destination: '/#projects', permanent: true },
+      ...['labs', 'music', 'hiking', 'activities'].map((page) => ({
+        source: `/${page}/:path*`,
+        destination: '/',
+        permanent: true,
+      })),
+    ];
   },
 };
 
