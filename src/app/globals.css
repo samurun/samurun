@@ -6,7 +6,7 @@
 
 @theme {
   --font-sans:
-    var(--font-inter), 'SF Pro Display', -apple-system, system-ui, 'Segoe UI',
+    var(--font-line-seed), 'SF Pro Display', -apple-system, system-ui, 'Segoe UI',
     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --font-mono: 'Berkeley Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 

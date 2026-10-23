@@ -8,13 +8,19 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { cn } from '@/lib/utils';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const inter = Inter({
-  subsets: ['latin'],
+// LINE Seed Sans TH (https://seed.line.me) — covers both Thai and Latin
+const lineSeed = localFont({
+  src: [
+    { path: './fonts/LINESeedSansTH_W_Th.woff2', weight: '100', style: 'normal' },
+    { path: './fonts/LINESeedSansTH_W_Rg.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/LINESeedSansTH_W_Bd.woff2', weight: '700', style: 'normal' },
+    { path: './fonts/LINESeedSansTH_W_XBd.woff2', weight: '800', style: 'normal' },
+    { path: './fonts/LINESeedSansTH_W_He.woff2', weight: '900', style: 'normal' },
+  ],
   display: 'swap',
-  variable: '--font-inter',
-  axes: ['opsz'],
+  variable: '--font-line-seed',
 });
 
 export const metadata: Metadata = {
@@ -33,13 +39,12 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={cn('dark', inter.variable)}
+      className={cn('dark', lineSeed.variable)}
       style={{ colorScheme: 'dark' }}
       suppressHydrationWarning
     >
       <body
         className={`font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
-        style={{ fontFeatureSettings: '"cv01", "ss03"' }}
       >
         <Providers>
           <main className='flex-1'>{children}</main>
