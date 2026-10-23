@@ -1,13 +1,9 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-dayjs.extend(duration);
+export { cn } from "cn"
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+dayjs.extend(duration);
 
 export function calculateDuration(startDate: string, endDate?: string | null) {
   const start = dayjs(startDate);

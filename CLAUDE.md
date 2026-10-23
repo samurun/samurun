@@ -39,7 +39,7 @@ All pages live under `src/app/(home)/` route group, which wraps content in Heade
 
 ### Styling
 
-Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive — no separate tailwind.config file. Theme uses OKLCH color space CSS variables (`--foreground`, `--background`, `--border`, `--muted-foreground`, etc.) with light/dark mode support via `next-themes`. The `--radius` is forced to `0` for sharp corners.
+Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive — no separate tailwind.config file. Theme uses OKLCH color space CSS variables (`--foreground`, `--background`, `--border`, `--muted-foreground`, etc.) with light/dark mode support via `next-themes`. The core shadcn tokens in the first `:root`/`.dark` blocks come from shadcn preset `b1D0dv72` (style `radix-mira`, neutral, `--radius: 0.625rem`); the later `:root`/`.dark` blocks only hold site-specific extras (`surface-*`, `foreground-secondary`, `success`/`info`/`warning`, `accent-violet`). Don't re-add shadcn slot tokens there — later blocks win and silently override the preset. `inter.variable` must stay on `<html>` (not `<body>`): `--font-sans` is declared on `:root` as `var(--font-inter)` and resolves to Times if the variable isn't defined at that level.
 
 ### Key Patterns
 
@@ -59,7 +59,7 @@ Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive 
 
 ### shadcn/ui
 
-Configured via `components.json`. Components live in `src/components/ui/`. Add new components with `npx shadcn@latest add <component>`.
+Configured via `components.json` (style `radix-mira`, installed with `bunx --bun shadcn@latest init --preset b1D0dv72 --template next`). Components live in `src/components/ui/` and import `cn` from shadcn's `cn` package (replacement for clsx + tailwind-merge); `@/lib/utils` re-exports it alongside app helpers (`calculateDuration`, `decodePolyline`). Re-running `init` overwrites `src/lib/utils.ts` and `globals.css` — restore the helpers and re-check the token blocks afterwards. Add new components with `npx shadcn@latest add <component>`.
 
 ### Path Aliases
 

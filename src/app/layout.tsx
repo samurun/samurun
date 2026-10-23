@@ -33,12 +33,12 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={cn('dark')}
+      className={cn('dark', inter.variable)}
       style={{ colorScheme: 'dark' }}
       suppressHydrationWarning
     >
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
         style={{ fontFeatureSettings: '"cv01", "ss03"' }}
       >
         <Providers>
