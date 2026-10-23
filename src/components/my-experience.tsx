@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { experiences, ExperienceType } from '@/data/experiences';
 import { calculateDuration } from '@/lib/utils';
 
-function ExperienceItem({ item }: { item: ExperienceType; isLast: boolean }) {
+function ExperienceItem({ item }: { item: ExperienceType }) {
   return (
     <div className='group rounded-xl p-5 hover:bg-secondary/50 transition-colors duration-200'>
       <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
@@ -68,12 +68,8 @@ export default function MyExperience() {
           <h2 className='text-lg font-semibold tracking-tight'>Experience</h2>
         </div>
         <div className='space-y-1'>
-          {experiences.map((item, idx) => (
-            <ExperienceItem
-              key={`${item.company}-${item.startDate}`}
-              item={item}
-              isLast={idx === experiences.length - 1}
-            />
+          {experiences.map((item) => (
+            <ExperienceItem key={`${item.company}-${item.startDate}`} item={item} />
           ))}
         </div>
       </div>

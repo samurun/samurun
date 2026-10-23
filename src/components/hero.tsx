@@ -42,7 +42,7 @@ export default function Hero() {
 
         <div className='fade-in slide-in-from-bottom-10 flex animate-in flex-row flex-wrap items-center justify-center gap-3 fill-mode-backwards pt-2 delay-300 duration-500 ease-out'>
           <Link
-            href={'/projects'}
+            href={'#projects'}
             className={cn(
               buttonVariants({ variant: 'default', size: 'lg' }),
               'gap-2 rounded-lg',

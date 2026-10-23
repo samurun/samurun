@@ -1,5 +1,3 @@
-import type { ProjectType } from '@/data/project';
-
 type GithubRepo = {
   id: number;
   name: string;
@@ -21,26 +19,18 @@ const GITHUB_USER = 'samurun';
 /** Only repos tagged with this GitHub topic will be shown. */
 const FEATURED_TOPIC = 'portfolio';
 
-/**
- * Merge static projects with GitHub repos.
- * - Dedupe by slug (static wins — richer MDX data)
- * - Sort by date desc
- */
-export async function getMergedProjects(
-  staticProjects: ProjectType[],
-): Promise<ProjectType[]> {
-  const ghProjects = await getGithubProjects();
-  const staticSlugs = new Set(staticProjects.map((p) => p.slug));
-  const merged = [
-    ...staticProjects,
-    ...ghProjects.filter((p) => !staticSlugs.has(p.slug)),
-  ];
-  return merged.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-}
+export type GithubProject = {
+  date: string;
+  slug: string;
+  name: string;
+  description: string;
+  cover: string;
+  url: string;
+  tags: string[];
+};
 
-export async function getGithubProjects(): Promise<ProjectType[]> {
+/** Public repos tagged with FEATURED_TOPIC, most recently pushed first. */
+export async function getGithubProjects(): Promise<GithubProject[]> {
   try {
     const res = await fetch(
       `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=100`,
@@ -70,23 +60,19 @@ export async function getGithubProjects(): Promise<ProjectType[]> {
           r.topics?.includes(FEATURED_TOPIC),
       )
       .map((r) => ({
-        source: 'github' as const,
         date: r.pushed_at,
         slug: r.name,
         name: r.name,
         description: r.description ?? '',
         cover: `https://opengraph.githubassets.com/1/${r.full_name}`,
-        links: {
-          github: r.html_url,
-          demo: r.homepage ?? undefined,
-        },
         tags: r.topics?.length
           ? r.topics.slice(0, 5)
           : r.language
             ? [r.language.toLowerCase()]
             : [],
-        href: r.html_url,
-      }));
+        url: r.html_url,
+      }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   } catch {
     return [];
   }

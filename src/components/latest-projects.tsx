@@ -3,23 +3,24 @@ import Link from 'next/link';
 import { buttonVariants } from './ui/button';
 import ProjectCard from './project-card';
 
-import { projects } from '@/data/project';
-import { getMergedProjects } from '@/lib/github';
+import { siteConfig } from '@/config/siteConfig';
+import { getGithubProjects } from '@/lib/github';
 import { cn } from '@/lib/utils';
 
 export default async function LatestProjects() {
-  const merged = await getMergedProjects(projects);
-  const latest = merged.slice(0, 4);
+  const latest = (await getGithubProjects()).slice(0, 4);
 
   return (
-    <section className='border-b border-border/50'>
+    <section id='projects' className='scroll-mt-14 border-b border-border/50'>
       <div className='container py-20'>
         <div className='flex items-center justify-between mb-12'>
           <h2 className='text-lg font-semibold tracking-tight'>
             Latest Projects
           </h2>
           <Link
-            href={'/projects'}
+            href={siteConfig.links.github}
+            target='_blank'
+            rel='noopener noreferrer'
             className={cn(
               buttonVariants({ variant: 'link' }),
               'text-sm text-muted-foreground',

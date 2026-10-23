@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import './rc-image.css';
 import { siteConfig } from '@/config/siteConfig';
-import Script from 'next/script';
 import Providers from '@/components/providers';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { cn } from '@/lib/utils';
 import localFont from 'next/font/local';
 
 // LINE Seed Sans TH (https://seed.line.me) — covers both Thai and Latin
@@ -24,11 +21,24 @@ const lineSeed = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
 };
 
 export default function RootLayout({
@@ -39,8 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={cn('dark', lineSeed.variable)}
-      style={{ colorScheme: 'dark' }}
+      className={lineSeed.variable}
       suppressHydrationWarning
     >
       <body
@@ -52,7 +61,6 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
-      <Script src='https://strava-embeds.com/embed.js' strategy='lazyOnload' />
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       )}

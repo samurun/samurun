@@ -2,18 +2,8 @@
 
 import Image from 'next/image';
 
-import { useSpotifyQuery } from '@/hooks/use-spotify-query';
+import { type Song, useSpotifyQuery } from '@/hooks/use-spotify-query';
 import { SpotifyIcon } from './icons';
-
-export type Song = {
-  status: number;
-  album: string;
-  albumImageUrl: string;
-  artist: string;
-  isPlaying: boolean;
-  songUrl: string;
-  title: string;
-};
 
 const SpotifySkeleton = () => (
   <div className='border border-border/50 p-2.5 bg-card/50 rounded-lg w-fit flex items-center gap-3 animate-pulse'>

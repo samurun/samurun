@@ -2,12 +2,17 @@
 
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 
-type SpotifyEndpoint =
-  | 'now-playing'
-  | 'top-artists'
-  | 'top-tracks'
-  | 'recently-played'
-  | 'playlists';
+type SpotifyEndpoint = 'now-playing';
+
+export type Song = {
+  status: number;
+  album: string;
+  albumImageUrl: string;
+  artist: string;
+  isPlaying: boolean;
+  songUrl: string;
+  title: string;
+};
 
 type Options<T> = Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>;
 

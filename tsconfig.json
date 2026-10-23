@@ -8,7 +8,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "types": ["node", "react", "react-dom", "mdx", "webpack"],
+    "types": ["node", "react", "react-dom"],
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -26,9 +26,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "#site/content": [
-        "./.velite"
       ]
     }
   },

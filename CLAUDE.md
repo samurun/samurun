@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Development (runs Velite content build, then Next.js dev server)
+# Development
 npm run dev
 
 # Production build
@@ -23,19 +23,19 @@ No test framework is configured.
 
 ### Routing
 
-All pages live under `src/app/(home)/` route group, which wraps content in Header + Footer via its layout. Key routes:
+**Single-page site** — the home page is the only page. It lives under the `src/app/(home)/` route group, whose layout wraps it in Header + Footer.
 
 - `/` — Home (Hero, AboutMe, LatestProjects, MyExperience)
-- `/labs/*` — Interactive experiments (UI components, Modern CSS, ECharts, React Virtual)
-- `/projects/[slug]` — Dynamic MDX content pages
-- `/music` — Spotify integration dashboard
-- `/hiking`, `/activities` — Strava activity tracking
-- `/api/spotify/*` — Spotify API proxy routes
+- `/api/spotify/now-playing` — Spotify proxy; feeds the header equalizer and the footer player
 - `/api/resume` — Server-rendered resume PDF (`force-static`, prerendered at build time)
 
-### Content System
+Old paths (`/projects/*`, `/labs/*`, `/music`, `/hiking`, `/activities`) permanently redirect home via `redirects()` in `next.config.ts`; anything else hits `src/app/not-found.tsx`. Social previews come from `metadataBase` + `openGraph` in the root layout and the generated `src/app/opengraph-image.tsx` (`next/og`).
 
-**Velite** compiles MDX from `content/projects/` into `.velite/` (gitignored). Config in `velite.config.ts`. Content is imported as `#site/content` (path alias to `.velite/`). Code blocks use `rehype-pretty-code` with `github-dark` theme.
+The header has no nav — just the logo, the now-playing equalizer (only while something is playing), and the theme toggle. "View Projects" in the Hero scrolls to `#projects`; "All Projects" links to the GitHub profile.
+
+### Projects
+
+`LatestProjects` shows GitHub repos only, via `getGithubProjects()` in `src/lib/github.ts`: public, non-fork, non-archived repos with a description and the `portfolio` topic, newest push first. To show a project on the site, add the `portfolio` topic to its GitHub repo. Cards link out to GitHub. (The old MDX/Velite project pages were removed.)
 
 ### Styling
 
@@ -43,9 +43,6 @@ Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive 
 
 ### Key Patterns
 
-- **ShowcaseWrapper** (`src/app/(home)/labs/ui/_components/showcase-wrapper.tsx`): Wraps lab demos with Preview/Code tabs and Shiki syntax highlighting
-- **Card** (`src/components/card.tsx`): Reusable card accepting a `thumbnail: ReactNode` for inline SVG illustrations that respond to theme
-- **Lab illustrations** (`src/components/lab-illustrations/`): Inline SVG React components using Tailwind theme classes (`stroke-foreground`, `fill-card`, etc.) for dark/light mode support
 - **Tech stack icons** (`src/components/icons/`): Brand SVG components consumed by `AboutMe`. Icons should NOT hardcode `width`/`height` attributes — let the parent control sizing via Tailwind (e.g. `[&_svg]:h-6 [&_svg]:w-auto`) so wordmarks and square marks line up at the same optical height
 - **Providers** (`src/components/providers.tsx`): ThemeProvider + React Query QueryClientProvider
 - **Resume PDF** (`src/components/resume-pdf/ResumeDocument.tsx` + `src/app/api/resume/route.tsx`): JSX-based resume rendered with `@react-pdf/renderer`. **The PDF is the resume — there is no markdown source.** Content comes from two single sources of truth: experience entries from `src/data/experiences.ts` (shared with the on-page `MyExperience` component) and header/summary/skills/education from `src/data/resume-meta.ts`. Edit those data files, never try to regenerate from a markdown file. Inter variable TTF lives in `src/components/resume-pdf/fonts/` (server-only, NOT in `public/`) and is loaded via `process.cwd()` path so Next.js output file tracing bundles it for Vercel functions. The route is `runtime = 'nodejs'` + `dynamic = 'force-static'` so the PDF prerenders once at build time and serves as a cached static asset
@@ -54,22 +51,20 @@ Tailwind v4 configured entirely in `src/app/globals.css` via `@theme` directive 
 ### External Integrations
 
 - **Spotify API**: Client credentials in env vars (`SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`)
-- **Strava API**: Activity data (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_ACCESS_TOKEN`, `STRAVA_REFRESH_TOKEN`)
+- **GitHub API**: project cards (`GITHUB_TOKEN` optional — raises the rate limit)
 - **Vercel**: `@vercel/analytics` + `@vercel/speed-insights`
 
 ### shadcn/ui
 
-Configured via `components.json` (style `radix-mira`, installed with `bunx --bun shadcn@latest init --preset b1D0dv72 --template next`). Components live in `src/components/ui/` and import `cn` from shadcn's `cn` package (replacement for clsx + tailwind-merge); `@/lib/utils` re-exports it alongside app helpers (`calculateDuration`, `decodePolyline`). Re-running `init` overwrites `src/lib/utils.ts` and `globals.css` — restore the helpers and re-check the token blocks afterwards. Add new components with `npx shadcn@latest add <component>`.
+Configured via `components.json` (style `radix-mira`, installed with `bunx --bun shadcn@latest init --preset b1D0dv72 --template next`). Components live in `src/components/ui/` and import `cn` from shadcn's `cn` package (replacement for clsx + tailwind-merge); `@/lib/utils` re-exports it alongside app helpers (`calculateDuration`). Re-running `init` overwrites `src/lib/utils.ts` and `globals.css` — restore the helpers and re-check the token blocks afterwards. Add new components with `npx shadcn@latest add <component>`.
 
 ### Path Aliases
 
 - `@/*` → `./src/*`
-- `#site/content` → `./.velite`
 
 ### Dependency Notes
 
-- **`overrides`** in `package.json` are scoped security pins: `velite → sharp ^0.35.5` (velite pins `^0.34.5`, which has libvips CVEs) and `@tailwindcss/typography → postcss-selector-parser ^7.1.7` (typography pins `6.0.10`, GHSA-rj75-hqrm-r3gf). Drop each once the parent package bumps its own range — `npm audit` should stay at 0. Do NOT re-add a global `brace-expansion` override: ESLint 10's minimatch needs brace-expansion v5 and a `^2` pin crashes lint.
+- Do NOT add a global `brace-expansion` override: ESLint 10's minimatch needs brace-expansion v5 and a `^2` pin crashes lint.
 - **TypeScript is pinned `~6.0.3`, not 7.x**: `typescript-eslint` (pulled in by `eslint-config-next`) hard-fails on TS ≥ 7 and only supports `<6.1.0`. Bump once typescript-eslint adds TS 7 support (typescript-eslint/typescript-eslint#10940).
-- **TanStack Table v9** (`src/components/custom-ui/data-table/`): features are opt-in via `dataTableFeatures` (`tableFeatures({...})`). Using a new table/row/column API (filtering, visibility, etc.) requires registering its feature there first, or the method won't exist. Column pinning is logical (`start`/`end`, not `left`/`right`); column `meta.sticky` follows the same naming. Use `DataTableColumnDef<TData>` for column arrays.
-- **React Compiler** is active in Next 16.4 via `babel-plugin-react-compiler`. Lint will emit `react-hooks/incompatible-library` warnings on `useVirtualizer()` calls in `src/components/virtual/*` and the `/labs/virtual` page. These are informational — the compiler gracefully skips memoizing those components, TanStack Virtual handles its own memoization. Do not try to "fix" by wrapping or refactoring.
+- **React Compiler** is active in Next 16.4 via `babel-plugin-react-compiler`.
 - **`@react-pdf/renderer`** powers `/api/resume`. It only supports a Flexbox subset of CSS (no grid, no media queries), embedded fonts must be **TTF or OTF only** (woff/woff2 are NOT supported), and the route must run on `runtime = 'nodejs'` (edge runtime will not work). React-PDF auto-subsets fonts, so the final PDF stays small even though `Inter.ttf` is 856 KB on disk.
