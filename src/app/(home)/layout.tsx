@@ -10,7 +10,7 @@ export default function HomeLayout({ children }: Props) {
   return (
     <div>
       <Header />
-      <div className='min-h-[calc(100vh-15rem)]'>{children}</div>
+      <main className='min-h-[calc(100vh-15rem)]'>{children}</main>
       <Footer />
     </div>
   );

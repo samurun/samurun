@@ -49,7 +49,7 @@ export default function AboutMe() {
   ];
 
   return (
-    <div className='mx-auto flex flex-col container py-20 grid-cols-1 gap-12 p-4 md:grid-cols-2 md:items-center'>
+    <section className='container grid grid-cols-1 gap-12 py-20 md:grid-cols-2 md:items-center'>
       <div className='max-w-xl space-y-5'>
         <h2 className='font-semibold text-3xl text-foreground tracking-tight sm:text-4xl md:text-5xl'>
           Hi, I&apos;m Fadlan
@@ -79,10 +79,10 @@ export default function AboutMe() {
           <div
             key={tile.id}
             className={cn(
-              'relative overflow-hidden flex h-auto items-center justify-center rounded-lg border transition-all w-full text-white p-2',
+              'relative overflow-hidden flex h-auto items-center justify-center rounded-lg border w-full text-white p-2',
               tile.colSpan === 1 && 'aspect-square',
               tile.logo
-                ? 'bg-card border-border/50 shadow-sm hover:border-primary/30'
+                ? 'bg-card border-border/50 shadow-sm'
                 : 'bg-secondary/30 border-border/20',
             )}
             style={{
@@ -97,6 +97,6 @@ export default function AboutMe() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
