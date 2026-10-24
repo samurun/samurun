@@ -5,15 +5,14 @@ export async function GET() {
   try {
     const data = await spotifyFetch<SpotifyNowPlaying>(
       '/me/player/currently-playing',
-      { cache: 'no-cache' }
+      { cache: 'no-store' }
     );
 
     if (!data || !data.item) {
-      return Response.json({ status: 200, isPlaying: false });
+      return Response.json({ isPlaying: false });
     }
 
     return Response.json({
-      status: 200,
       isPlaying: data.is_playing,
       song: {
         album: data.item.album.name,
@@ -24,12 +23,14 @@ export async function GET() {
       },
     });
   } catch (error) {
+    // Spotify being down or rate-limiting just means "not playing" for the UI
     if (error instanceof SpotifyError) {
-      return Response.json({ status: error.status, isPlaying: false });
+      console.warn(`Spotify API error ${error.status}: ${error.message}`);
+      return Response.json({ isPlaying: false });
     }
     console.error('Error in now-playing route:', error);
     return Response.json(
-      { status: 500, isPlaying: false, message: 'Something went wrong' },
+      { isPlaying: false, message: 'Something went wrong' },
       { status: 500 }
     );
   }

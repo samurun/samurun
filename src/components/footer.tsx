@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 import { siteConfig } from '@/config/siteConfig';
-import SpotifyPlayer, { SpotifySkeleton } from './spotify-player';
+import SpotifyPlayer from './spotify-player';
 
 export default function Footer() {
   return (
@@ -10,24 +9,23 @@ export default function Footer() {
       <div className='container py-16'>
         <div className='flex flex-col md:flex-row items-center justify-between gap-8'>
           <div className='flex flex-col items-center md:items-start gap-4'>
-            <Suspense fallback={<SpotifySkeleton />}>
-              <SpotifyPlayer />
-            </Suspense>
+            <SpotifyPlayer />
             <p className='text-xs text-muted-foreground'>
               © {new Date().getFullYear()} Samurun
             </p>
           </div>
-          <div className='flex items-center gap-6'>
+          <div className='flex items-center gap-4'>
             <Link
               href={siteConfig.links.github}
               target='_blank'
-              className='text-xs text-muted-foreground hover:text-foreground transition-colors'
+              rel='noopener noreferrer'
+              className='inline-flex min-h-11 items-center rounded-md px-2 text-xs text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring/50'
             >
               Github
             </Link>
             <Link
               href='mailto:fadlan.jehteerokee@gmail.com'
-              className='text-xs text-muted-foreground hover:text-foreground transition-colors'
+              className='inline-flex min-h-11 items-center rounded-md px-2 text-xs text-muted-foreground hover:text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring/50'
             >
               Email
             </Link>

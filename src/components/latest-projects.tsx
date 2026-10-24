@@ -29,11 +29,26 @@ export default async function LatestProjects() {
             All Projects &rarr;
           </Link>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          {latest.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
+        {latest.length > 0 ? (
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            {latest.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        ) : (
+          <p className='rounded-xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground'>
+            Projects couldn&apos;t be loaded right now.{' '}
+            <a
+              href={siteConfig.links.github}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-foreground underline underline-offset-4'
+            >
+              See them on GitHub
+            </a>
+            .
+          </p>
+        )}
       </div>
     </section>
   );
