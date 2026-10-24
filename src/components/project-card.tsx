@@ -11,7 +11,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       href={project.url}
       target='_blank'
       rel='noopener noreferrer'
-      className='group flex flex-col h-full overflow-hidden rounded-xl border border-border/50 bg-card hover:border-border transition-all duration-200'
+      className='group flex flex-col h-full overflow-hidden rounded-xl border border-border/50 bg-card hover:border-border transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring/50'
     >
       <div className='aspect-2/1 relative overflow-hidden rounded-t-xl bg-secondary'>
         <span className='absolute top-2 right-2 z-10 text-[10px] px-2 py-0.5 rounded-md bg-background/80 backdrop-blur text-muted-foreground border border-border/50'>

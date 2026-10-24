@@ -443,21 +443,38 @@
 
 /* ── Theme toggle view transition (only when .theme-transition is set) ── */
 
-::view-transition-group(root) {
-  animation-timing-function: var(--expo-in);
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transition::view-transition-group(root) {
+    animation-timing-function: var(--expo-in);
+  }
+
+  .theme-transition::view-transition-new(root) {
+    mask: url('https://media.tenor.com/iB2zknoEp94AAAAi/shooting-fire-din-djarin.gif')
+      center / 0 no-repeat;
+    animation: scale 2s;
+    animation-fill-mode: both;
+  }
+
+  .theme-transition::view-transition-old(root) {
+    animation: scale 2s;
+    animation-fill-mode: both;
+  }
 }
 
-::view-transition-new(root) {
-  mask: url('https://media.tenor.com/iB2zknoEp94AAAAi/shooting-fire-din-djarin.gif')
-    center / 0 no-repeat;
-  animation: scale 2s;
-  animation-fill-mode: both;
-}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 
-::view-transition-old(root),
-.dark::view-transition-old(root) {
-  animation: scale 2s;
-  animation-fill-mode: both;
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes scale {

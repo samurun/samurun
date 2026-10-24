@@ -12,7 +12,7 @@ export default function Hero() {
       {/* Subtle purple radial gradient */}
       <div
         aria-hidden='true'
-        className='absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.65_0.2_280_/_8%),transparent)]'
+        className='absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.65_0.2_280/8%),transparent)]'
       />
 
       {/* Main content */}
@@ -20,10 +20,10 @@ export default function Hero() {
         <p
           className={cn(
             'group mx-auto flex w-fit items-center gap-2 rounded-full border border-border/50 bg-secondary/50 px-4 py-1.5 shadow-sm',
-            'fade-in slide-in-from-bottom-10 animate-in fill-mode-backwards transition-all delay-500 duration-500 ease-out',
+            'fade-in slide-in-from-bottom-10 animate-in fill-mode-backwards delay-500 duration-500 ease-out',
           )}
         >
-          <span className='size-1.5 rounded-full bg-green-500' />
+          <span aria-hidden='true' className='size-1.5 rounded-full bg-success' />
           <span className='text-xs text-muted-foreground'>
             Available for work
           </span>
@@ -53,6 +53,7 @@ export default function Hero() {
           <Link
             href={siteConfig.links.github}
             target='_blank'
+            rel='noopener noreferrer'
             className={cn(
               buttonVariants({ variant: 'outline', size: 'lg' }),
               'gap-2 rounded-lg',

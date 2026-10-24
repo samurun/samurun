@@ -56,7 +56,7 @@ export default function RootLayout({
         className={`font-sans antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <Providers>
-          <main className='flex-1'>{children}</main>
+          <div className='flex-1'>{children}</div>
         </Providers>
         <Analytics />
         <SpeedInsights />

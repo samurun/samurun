@@ -23,7 +23,7 @@ function ExperienceItem({ item }: { item: ExperienceType }) {
             </h3>
             <p className='text-xs text-muted-foreground'>
               {item.company}{' '}
-              <span className='text-muted-foreground/70'>({item.type})</span>
+              <span>({item.type})</span>
             </p>
           </div>
         </div>
@@ -40,7 +40,7 @@ function ExperienceItem({ item }: { item: ExperienceType }) {
         {item.description.map((desc) => (
           <li
             key={desc}
-            className='text-xs text-muted-foreground leading-relaxed'
+            className='text-sm text-muted-foreground leading-relaxed'
           >
             {desc}
           </li>
