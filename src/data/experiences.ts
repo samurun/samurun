@@ -2,6 +2,28 @@ import type { Experience } from '@/lib/experience';
 
 export const experiences = [
   {
+    logo: '/placeholder.jpg',
+    company: 'Black Chip Solution Company Ltd.',
+    position: 'Full Stack Developer',
+    type: 'Contract',
+    startDate: 'May 2026',
+    endDate: null,
+    isRemote: true,
+    skills: [
+      'TypeScript',
+      'React',
+      'Next.js',
+      'MUI',
+      'TanStack Query',
+      'React Hook Form',
+      'Zod',
+      'Playwright',
+    ],
+    description: [
+      'Building a SaaS platform for Thai accounting firms covering monthly tax filing, social security and team workflows. Built tax calculation and review flows plus a task pipeline from document intake to filing, helped move the app to multi-organization with role-based permissions and invite-only Google SSO, and built the frontend from Figma with Playwright end-to-end tests.',
+    ],
+  },
+  {
     logo: '/datawowio_logo.jpeg',
     company: 'Data Wow',
     position: 'Fullstack Developer',
