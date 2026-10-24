@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { type Song, useSpotifyQuery } from '@/hooks/use-spotify-query';
+import { type NowPlaying, useSpotifyQuery } from '@/hooks/use-spotify-query';
 import { SpotifyIcon } from './icons';
 
 const SpotifySkeleton = () => (
@@ -16,9 +16,9 @@ const SpotifySkeleton = () => (
 );
 
 const StatusIndicator = () => (
-  <div className='relative flex h-2 w-2'>
-    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75'></span>
-    <span className='relative inline-flex rounded-full h-2 w-2 bg-green-500'></span>
+  <div aria-hidden='true' className='relative flex h-2 w-2'>
+    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75'></span>
+    <span className='relative inline-flex rounded-full h-2 w-2 bg-success'></span>
   </div>
 );
 
@@ -30,10 +30,7 @@ const NotPlaying = () => (
 );
 
 export default function SpotifyPlayer() {
-  const { data, isLoading } = useSpotifyQuery<{
-    isPlaying: boolean;
-    song: Song;
-  }>('now-playing');
+  const { data, isLoading } = useSpotifyQuery<NowPlaying>('now-playing');
 
   if (isLoading) {
     return <SpotifySkeleton />;
@@ -41,7 +38,7 @@ export default function SpotifyPlayer() {
 
   return (
     <div className='group border border-border/50 p-2.5 bg-card/50 hover:bg-card transition-colors rounded-lg w-fit flex items-center gap-3'>
-      {data?.isPlaying ? (
+      {data?.isPlaying && data.song ? (
         <>
           <div className='size-8 relative rounded-md overflow-hidden'>
             <Image
@@ -55,7 +52,7 @@ export default function SpotifyPlayer() {
           <div className='text-start'>
             <div className='flex items-center gap-2'>
               <StatusIndicator />
-              <p className='text-[11px] font-semibold tracking-tight line-clamp-1 max-w-[120px]'>
+              <p className='text-[11px] font-semibold tracking-tight line-clamp-1 max-w-30'>
                 {data.song.title}
               </p>
             </div>
@@ -70,5 +67,3 @@ export default function SpotifyPlayer() {
     </div>
   );
 }
-
-export { SpotifySkeleton };

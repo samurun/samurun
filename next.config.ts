@@ -2,7 +2,8 @@ import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    // lucide-react is already optimized by default
+    optimizePackageImports: ['@radix-ui/react-icons'],
   },
   images: {
     remotePatterns: [

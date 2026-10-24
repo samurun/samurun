@@ -6,8 +6,9 @@ import Hero from '@/components/hero';
 import LatestProjects from '@/components/latest-projects';
 import MyExperience from '@/components/my-experience';
 
+// No `title` here: the home page uses the root layout's `title.default` (the
+// site name) instead of rendering "Home | <site name>".
 export const metadata: Metadata = {
-  title: 'Home',
   description: 'Personal site and portfolio highlights.',
 };
 
